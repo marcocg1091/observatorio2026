@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panorama General – Observatorio OECE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:#1a2a3a;background:#f5f7fb;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+a:focus,button:focus,select:focus{outline:3px solid rgba(26,106,181,.4);outline-offset:2px}
+
+/* NAV */
+.nav{background:#1a3a5c;height:48px;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:999}
+.nav-logo{color:#fff;font-weight:800;font-size:15px;flex-shrink:0;display:flex;align-items:center}
+.nav-logo span{color:rgba(255,255,255,.45);font-weight:400;font-size:13px;border-left:1px solid rgba(255,255,255,.25);padding-left:10px;margin-left:10px}
+.nav-link{color:rgba(255,255,255,.82);font-size:13px;padding:0 11px;height:48px;display:flex;align-items:center;cursor:pointer;transition:background .15s;border:none;background:none;font-family:'Inter',sans-serif;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,.1)}
+.nav-link.active{font-weight:600;color:#fff}
+.nav-disabled{opacity:.4;cursor:default;pointer-events:none}
+.nav-spacer{flex:1}
+.nav-links{display:flex;align-items:center;margin-left:6px;flex-wrap:nowrap;overflow:hidden}
+
+/* PAGE */
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px 56px}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:12px;color:#8aaccc;padding:16px 0 0;display:flex;align-items:center;gap:6px}
+.breadcrumb a{color:#8aaccc}
+.breadcrumb a:hover{color:#1a6ab5}
+
+/* NARRATIVE HEADER */
+.narrative-header{background:#fff;border:1px solid #dde8f2;border-radius:12px;padding:32px 36px;margin:16px 0 0;box-shadow:0 2px 12px rgba(10,37,64,.05)}
+.nh-eyebrow{display:inline-block;background:#e8f4ff;color:#1a6ab5;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.nh-title{font-size:26px;font-weight:800;color:#0a2540;line-height:1.2;margin-bottom:12px}
+.nh-desc{font-size:14px;color:#4a6a8a;line-height:1.75;max-width:820px}
+
+/* INSIGHT PANEL */
+.insight-panel{background:linear-gradient(135deg,#f4f8ff 0%,#fff 100%);border:1px solid #dbe8f6;border-radius:12px;padding:22px 26px;margin:16px 0}
+.insight-label{display:inline-block;background:#e8f4ff;color:#1a6ab5;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+.insight-panel h2{font-size:17px;font-weight:700;color:#0a2540;margin-bottom:14px}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.insight-card{background:#fff;border:1px solid #dde8f2;border-radius:10px;padding:16px}
+.insight-card strong{display:block;color:#0a2540;font-size:13.5px;margin-bottom:5px}
+.insight-card p{color:#5a7090;font-size:12.5px;line-height:1.6}
+
+/* FILTERS ACCORDION */
+.filter-accordion{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;margin:16px 0}
+.filter-acc-btn{width:100%;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1a3a5c;text-align:left}
+.filter-acc-btn:hover{background:#f8fafc}
+.filter-acc-ico{font-size:18px;transition:transform .25s;color:#6a8aaa}
+.filter-acc-ico.open{transform:rotate(180deg)}
+.filter-body{display:none;padding:16px 20px 18px;border-top:1px solid #eef3f8;background:#fafcff}
+.filter-body.open{display:block}
+.filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.filter-grid-2{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px;align-items:end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fl{font-size:10.5px;font-weight:600;color:#7a90a8;text-transform:uppercase;letter-spacing:.04em}
+.fs{font-size:12px;padding:8px 10px;border:1px solid #ccd8e4;border-radius:5px;color:#1a3a5c;background:#fff;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236a8aaa' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.btn-search{background:#1a3a5c;color:#fff;border:none;border-radius:5px;padding:9px 22px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-clear{background:#fff;color:#6a8aaa;border:1px solid #ccd8e4;border-radius:5px;padding:9px 16px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
+.kpi-c{background:#fff;border:1px solid #dde8f2;border-radius:10px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.kpi-eye{font-size:11px;color:#7a90a8;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.kpi-val{font-size:22px;font-weight:800;color:#0a2540;line-height:1;margin-bottom:2px}
+.kpi-sub{font-size:10.5px;color:#9ab0c8;margin-bottom:6px}
+.kpi-interp{font-size:11.5px;color:#4a6a8a;line-height:1.55;padding-top:8px;border-top:1px solid #eef3f8;margin-top:8px}
+.kpi-trend{font-size:11px;font-weight:600;margin-top:5px;display:flex;align-items:center;gap:3px}
+.up{color:#059669}.dn{color:#dc2626}.flat{color:#d97706}
+
+/* SECTION TITLE */
+.sec-block{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.sec-hd{padding:16px 20px;border-bottom:1px solid #eef3f8}
+.sec-hd h2{font-size:15px;font-weight:700;color:#0a2540;margin-bottom:4px}
+.sec-hd p{font-size:12px;color:#6a8aaa;line-height:1.6}
+.sec-bd{padding:16px 20px}
+.sec-title{font-size:14px;font-weight:700;color:#0a2540;margin-bottom:12px}
+
+/* MAP LAYOUT */
+.map-layout{display:grid;grid-template-columns:1fr 300px;gap:14px}
+.map-card{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.map-tabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #eef3f8}
+.map-tab{font-size:11.5px;font-weight:600;padding:6px 13px;border-radius:20px;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .15s}
+.map-tab.t-blue{background:#1a3a5c;color:#fff}
+.map-tab.t-purple{background:#7c3aed;color:#fff}
+.map-tab.t-green{background:#059669;color:#fff}
+.map-tab.inactive{background:#f0f4f8;color:#6a8aaa}
+
+/* Side cards */
+.side-stack{display:flex;flex-direction:column;gap:12px}
+.side-card{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.side-card-title{font-size:12.5px;font-weight:700;color:#0a2540;padding:12px 14px;border-bottom:1px solid #eef3f8}
+.rank-row{display:flex;align-items:center;gap:8px;padding:6px 14px}
+.rank-pos{font-size:11px;font-weight:700;color:#9ab0c8;width:14px;text-align:right;flex-shrink:0}
+.rank-name{font-size:11.5px;color:#3a5070;flex:1;line-height:1.3}
+.rank-bar-wrap{width:70px;height:5px;background:#eef3f8;border-radius:3px;flex-shrink:0}
+.rank-bar-fill{height:100%;border-radius:3px}
+.rank-val{font-size:11px;font-weight:600;color:#0a2540;width:56px;text-align:right;flex-shrink:0}
+
+
+
+/* ═══════════════════════════════
+   MAPA INTERACTIVO - TOOLTIP Y FOCO
+════════════════════════════════ */
+.peru-map { width: 100%; max-height: 380px; }
+.map-region,
+.map-city-marker {
+  cursor: pointer;
+  transition: opacity .16s ease, filter .16s ease, stroke-width .16s ease, transform .16s ease;
+  outline: none;
+}
+.map-region:hover,
+.map-region:focus-visible,
+.map-city-marker:hover,
+.map-city-marker:focus-visible {
+  opacity: .92;
+  filter: drop-shadow(0 6px 12px rgba(10,37,64,.22));
+  stroke-width: 2.6;
+}
+.map-city-marker:hover,
+.map-city-marker:focus-visible { transform: scale(1.1); }
+.map-helper-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #dbe8f6;
+  border-left: 4px solid #1a6ab5;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 8px 0 12px;
+  font-size: 12.2px;
+  color: #3a5a78;
+  line-height: 1.55;
+  box-shadow: 0 2px 10px rgba(10,37,64,.05);
+}
+.map-helper-panel strong { color:#0a2540; display:block; margin-bottom:2px; }
+.map-helper-panel .map-helper-ico { color:#1a6ab5; font-weight:800; flex-shrink:0; }
+
+/* DASHBOARD SECTION */
+.dashboard-section{background:#fff;border:1px solid #dde8f2;border-radius:14px;padding:26px;margin:20px 0;box-shadow:0 4px 18px rgba(10,37,64,.06)}
+.dashboard-intro h2{font-size:20px;font-weight:800;color:#0a2540;margin-bottom:8px}
+.dashboard-intro p{font-size:14px;color:#5a7090;line-height:1.72;max-width:900px}
+.dashboard-frame{margin:20px 0;border-radius:12px;overflow:hidden;border:1px solid #d8e4f0;background:#f8fafc;min-height:480px;position:relative;display:flex;align-items:center;justify-content:center}
+.dashboard-frame iframe{width:100%;height:480px;border:0}
+.dashboard-placeholder{text-align:center;padding:40px 20px;color:#7a96b0}
+.dashboard-placeholder .ph-ico{font-size:40px;margin-bottom:12px;opacity:.5}
+.dashboard-placeholder h3{font-size:15px;font-weight:600;margin-bottom:8px;color:#4a6a8a}
+.dashboard-placeholder p{font-size:13px;color:#8aaccc;line-height:1.65;max-width:400px;margin:0 auto}
+.dashboard-placeholder code{display:inline-block;background:#e8f4ff;color:#1a4a7c;font-size:11px;padding:3px 8px;border-radius:4px;margin-top:6px}
+.dashboard-interpretation{background:#eef6ff;border-left:4px solid #1a6ab5;border-radius:8px;padding:16px 20px}
+.dashboard-interpretation h3{font-size:14px;font-weight:800;color:#0a2540;margin-bottom:6px}
+.dashboard-interpretation p{font-size:13px;color:#3a5a78;line-height:1.7}
+
+/* HORIZONTAL BARS */
+.hbar{display:flex;flex-direction:column;gap:9px}
+.hbar-row{display:flex;align-items:center;gap:10px}
+.hbar-lbl{font-size:11px;color:#4a6480;width:210px;flex-shrink:0;text-align:right;line-height:1.35}
+.hbar-track{flex:1;height:9px;background:#f0f4f8;border-radius:5px}
+.hbar-fill{height:100%;border-radius:5px}
+.hbar-val{font-size:11px;font-weight:600;color:#0a2540;width:56px}
+
+/* TREEMAP */
+.treemap{display:grid;grid-template-columns:2.4fr 1.6fr;grid-template-rows:auto auto;gap:5px;padding:4px}
+.tm-cell{border-radius:6px;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;transition:opacity .2s;min-height:85px}
+.tm-cell:hover{opacity:.88}
+.tm-name{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.9);line-height:1.35;margin-bottom:4px}
+.tm-val{font-size:19px;font-weight:800;color:#fff}
+
+/* 2-col layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+
+/* METHODOLOGY */
+.methodology-box{background:#f0f6ff;border:1px solid #ccd8f0;border-radius:12px;padding:24px 28px;margin-top:32px}
+.methodology-box h2{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.methodology-box p{font-size:13px;color:#3a5a78;line-height:1.72;margin-bottom:8px}
+.source-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.source-chip{background:#fff;border:1px solid #b8d0f0;color:#1a4a7c;font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:999px}
+
+/* FOOTER */
+.footer{background:#1a3a5c;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.6);gap:16px;flex-wrap:wrap;margin-top:8px}
+.footer a{color:rgba(255,255,255,.75)}
+.footer-btn{background:#1a6ab5;color:#fff!important;padding:5px 14px;border-radius:4px;font-weight:600}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .insight-grid,.kpi-row,.map-layout,.two-col{grid-template-columns:1fr 1fr}
+  .filter-grid{grid-template-columns:1fr 1fr}
+  .filter-grid-2{grid-template-columns:1fr 1fr}
+  .map-layout{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .insight-grid,.kpi-row,.map-layout,.two-col{grid-template-columns:1fr}
+  .filter-grid,.filter-grid-2{grid-template-columns:1fr}
+  .wrap{padding:0 14px 40px}
+  .nh-title{font-size:20px}
+  .nav-link:not(.nav-link.active){display:none}
+}
+
+
+/* ═══════════════════════════════
+   TOOLTIP NARRATIVO - OBSERVATORIO OECE
+   Convierte gráficos, KPIs, rankings y mapas en elementos explicativos.
+════════════════════════════════ */
+.chart-tooltip {
+  position: fixed;
+  z-index: 99999;
+  max-width: 300px;
+  background: #07045c;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 12px;
+  line-height: 1.45;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -108%);
+  transition: opacity .12s ease, transform .12s ease;
+}
+.chart-tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -118%);
+}
+.chart-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0 7px;
+  border-style: solid;
+  border-color: #07045c transparent transparent transparent;
+}
+.chart-tooltip__title {
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.chart-tooltip__value {
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+.chart-tooltip__desc {
+  color: rgba(255, 255, 255, .84);
+  font-size: 11.5px;
+}
+.chart-tooltip__meta {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, .72);
+}
+[data-tooltip-chart],
+.rank-row,
+.hbar-row,
+.kpi-c,
+.kpi5-item,
+.hero-kpi-item,
+.insight-card,
+.funnel-step,
+.sem-card,
+.actor-tab,
+.map-tab {
+  position: relative;
+}
+[data-tooltip-chart]:focus-visible,
+.rank-row:focus-visible,
+.hbar-row:focus-visible,
+.kpi-c:focus-visible,
+.kpi5-item:focus-visible,
+.hero-kpi-item:focus-visible,
+.insight-card:focus-visible,
+.funnel-step:focus-visible,
+.sem-card:focus-visible,
+.actor-tab:focus-visible,
+.map-tab:focus-visible {
+  outline: 3px solid rgba(26,106,181,.35);
+  outline-offset: 3px;
+}
+.tooltip-help-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #5a7090;
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-radius: 999px;
+  padding: 6px 10px;
+  margin: 10px 0 0;
+}
+.tooltip-help-note::before { content: "ⓘ"; color: #1a6ab5; font-weight: 700; }
+.chart-explanation-panel {
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-left: 4px solid #1a6ab5;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 12px 0 18px;
+  font-size: 12.8px;
+  color: #3a5a78;
+  line-height: 1.65;
+}
+.chart-explanation-panel strong { color:#0a2540; }
+.dashboard-loading-slow::after {
+  content: "El dashboard está tardando más de lo esperado en cargar. Verifique su conexión o actualice la página.";
+  display: block;
+  background: #fffbea;
+  border-top: 1px solid #f5d97a;
+  color: #5f4b16;
+  font-size: 12px;
+  padding: 10px 14px;
+}
+.dashboard-loaded::after { content: ""; display: none; }
+@media (max-width: 640px) {
+  .chart-tooltip { max-width: 260px; font-size: 11.5px; }
+}
+
+</style>
+</head>
+<body data-observatorio-page="panorama">
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Menú principal">
+  <div class="nav-logo">OECE <span>Observatorio</span></div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Inicio</a>
+    <a class="nav-link active" href="panorama.html" aria-current="page">Panorama General</a>
+    <a class="nav-link" href="competencia.html">Competencia y Participación</a>
+    <a class="nav-link" href="eficiencia.html">Eficiencia del Sistema</a>
+    <a class="nav-link" href="desempeno.html">Desempeño de Actores</a>
+    <a class="nav-link nav-disabled" href="#" aria-disabled="true" tabindex="-1">Riesgos y Concentración</a>
+  </div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="wrap">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="index.html">Inicio</a>
+    <span aria-hidden="true">›</span>
+    <span>Panorama General</span>
+  </nav>
+
+  <!-- NARRATIVE HEADER -->
+  <div class="narrative-header">
+    <div class="nh-eyebrow">Módulo 1 de 5</div>
+    <h1 class="nh-title">¿Cómo se mueve el mercado de compras públicas?</h1>
+    <p class="nh-desc">Este módulo presenta una mirada general del mercado público: cuánto se convoca, cuánto se adjudica, cuánto se contrata, qué entidades participan y cómo se distribuye la contratación en el territorio. Es el punto de partida para comprender el comportamiento del sistema.</p>
+  </div>
+
+  <!-- LECTURA RÁPIDA (insight panel) -->
+  <div class="insight-panel" role="region" aria-labelledby="lr-title">
+    <div class="insight-label">Lectura rápida del panorama</div>
+    <h2 id="lr-title">Lo que debes observar en este módulo</h2>
+    <div class="insight-grid" role="list">
+      <div class="insight-card" role="listitem">
+        <strong>📊 Monto adjudicado</strong>
+        <p>Permite observar el volumen económico que logró avanzar dentro del proceso de contratación. Un valor alto respecto al convocado indica mayor efectividad del sistema.</p>
+      </div>
+      <div class="insight-card" role="listitem">
+        <strong>👥 Promedio de postores</strong>
+        <p>Ayuda a entender el nivel de competencia del mercado. Cuanto mayor sea el promedio, más proveedores participan en cada proceso y mayor es la posibilidad de obtener mejores condiciones.</p>
+      </div>
+      <div class="insight-card" role="listitem">
+        <strong>🗺️ Distribución regional</strong>
+        <p>Permite identificar dónde se concentra la actividad contractual del Estado peruano. Una distribución más equilibrada puede indicar mayor descentralización del gasto público.</p>
+      </div>
+    </div>
+    <div class="tooltip-help-note">Pasa el cursor o usa Tab sobre rankings, barras e indicadores para ver su interpretación.</div>
+</div>
+
+  <!-- FILTERS (accordion) -->
+  <div class="filter-accordion" role="region" aria-label="Filtros de exploración">
+    <button class="filter-acc-btn" id="filter-btn" onclick="toggleFilter()" aria-expanded="false" aria-controls="filter-body">
+      <span>🔍 Explorar con filtros avanzados</span>
+      <span class="filter-acc-ico" id="filter-ico" aria-hidden="true">▾</span>
+    </button>
+    <div class="filter-body" id="filter-body" role="group" aria-label="Filtros avanzados">
+      <div class="filter-grid">
+        <div class="fg"><div class="fl">Año</div><select class="fs" aria-label="Filtrar por año"><option value="">Todos</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select></div>
+        <div class="fg"><div class="fl">Nivel de gobierno</div><select class="fs" aria-label="Filtrar por nivel de gobierno"><option value="">Todos</option><option>Nacional</option><option>Regional</option><option>Local</option></select></div>
+        <div class="fg"><div class="fl">Región</div><select class="fs" aria-label="Filtrar por región"><option value="">Todos</option><option>Lima</option><option>Cusco</option><option>Arequipa</option><option>La Libertad</option></select></div>
+        <div class="fg"><div class="fl">Objeto contractual</div><select class="fs" aria-label="Filtrar por objeto contractual"><option value="">Todos</option><option>Bienes</option><option>Servicios</option><option>Obras</option><option>Consultoría</option></select></div>
+        <div class="fg"><div class="fl">Sector</div><select class="fs" aria-label="Filtrar por sector"><option value="">Todos</option><option>Salud</option><option>Educación</option><option>Transportes</option><option>Defensa</option></select></div>
+        <div class="fg"><div class="fl">Tipo de proceso</div><select class="fs" aria-label="Filtrar por tipo de proceso"><option value="">Todos</option><option>Licitación pública</option><option>Adjudicación simplificada</option><option>Comparación de precios</option></select></div>
+      </div>
+      <div class="filter-grid-2">
+        <div class="fg"><div class="fl">Rubro o grupo</div><select class="fs" aria-label="Filtrar por rubro"><option value="">Todos</option></select></div>
+        <div class="fg"><div class="fl">Entidad</div><select class="fs" aria-label="Filtrar por entidad"><option value="">Todos</option></select></div>
+        <div class="fg"><div class="fl">Modalidad</div><select class="fs" aria-label="Filtrar por modalidad"><option value="">Todos</option></select></div>
+        <div style="display:flex;gap:8px;align-items:flex-end">
+          <button class="btn-clear" onclick="clearFilters()" aria-label="Limpiar todos los filtros">↺ Limpiar</button>
+          <button class="btn-search" aria-label="Aplicar filtros y buscar">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="4" stroke="#fff" stroke-width="1.3"/><path d="M8.5 8.5l2.5 2.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs CON INTERPRETACIÓN -->
+  <div class="kpi-row" role="region" aria-label="Indicadores clave del panorama">
+    <div class="kpi-c" data-title="Monto convocado" data-value="S/ 94,359 mill." data-indicator="Magnitud del mercado" data-description="Representa el valor de los procesos convocados en el periodo analizado.">
+      <div class="kpi-eye">📣 Monto convocado</div>
+      <div class="kpi-val">S/ 94,359 mill.</div>
+      <div class="kpi-sub">62,729 ítems convocados</div>
+      <div class="kpi-trend up" aria-label="Variación positiva">▲ +4.2% vs. año anterior</div>
+      <div class="kpi-interp">Valor total convocado al mercado. Refleja la demanda del Estado peruano en el período seleccionado.</div>
+    </div>
+    <div class="kpi-c" data-title="Monto adjudicado" data-value="S/ 90,440 mill." data-indicator="Procesos adjudicados" data-description="Muestra el monto que logró avanzar hasta adjudicación, útil para observar la dinámica del mercado público.">
+      <div class="kpi-eye">⚖️ Monto adjudicado</div>
+      <div class="kpi-val">S/ 90,440 mill.</div>
+      <div class="kpi-sub">62,729 ítems adjudicados</div>
+      <div class="kpi-trend flat" aria-label="Variación negativa leve">▼ -1.1% vs. año anterior</div>
+      <div class="kpi-interp">Representa el valor de los procesos que llegaron a adjudicación. Permite observar el avance dentro del ciclo de contratación.</div>
+    </div>
+    <div class="kpi-c" data-title="Monto contratado" data-value="S/ 88,985 mill." data-indicator="Contratación pública" data-description="Resume el valor contratado registrado para el periodo seleccionado.">
+      <div class="kpi-eye">📄 Monto contratado</div>
+      <div class="kpi-val">S/ 88,985 mill.</div>
+      <div class="kpi-sub">62,729 ítems contratados</div>
+      <div class="kpi-trend up" aria-label="Variación positiva">▲ +2.8% vs. año anterior</div>
+      <div class="kpi-interp">Valor que finalizó en contrato. Es el indicador más directo del gasto público efectivo en el período.</div>
+    </div>
+    <div class="kpi-c">
+      <div class="kpi-eye">👥 Promedio de postores</div>
+      <div class="kpi-val" style="color:#7c3aed">3.2</div>
+      <div class="kpi-sub">Postores por proceso</div>
+      <div class="kpi-trend dn" aria-label="Por debajo del óptimo">▼ Por debajo del óptimo recomendado (5+)</div>
+      <div class="kpi-interp">Un promedio de 3.2 postores indica baja competencia en el mercado. Lo ideal es contar con 5 o más ofertas por proceso.</div>
+    </div>
+  </div>
+
+  <!-- MAP + RANKINGS -->
+  <div class="sec-hd" style="padding:16px 0 10px">
+    <h2 style="font-size:17px;font-weight:700;color:#0a2540">Distribución geográfica de los montos</h2>
+    <p style="font-size:12.5px;color:#6a8aaa;margin-top:4px">Explora cómo se distribuye el gasto público en el territorio nacional. Lima concentra la mayor parte del monto contratado, aunque existen diferencias significativas entre regiones.</p>
+  </div>
+  <div class="map-layout">
+    <div class="map-card">
+      <div class="map-tabs" role="group" aria-label="Seleccionar tipo de monto">
+        <button class="map-tab t-blue" id="tab-conv" onclick="setMapTab('conv')" aria-pressed="true">● Monto convocado</button>
+        <button class="map-tab inactive" id="tab-adj" onclick="setMapTab('adj')" aria-pressed="false">● Monto adjudicado</button>
+        <button class="map-tab inactive" id="tab-cont" onclick="setMapTab('cont')" aria-pressed="false">● Monto contratado</button>
+      </div>
+      <!-- Mapa + tooltip -->
+      <div style="padding:8px 14px 14px;position:relative">
+
+        <div class="map-helper-panel" id="map-helper-panel" role="note" aria-live="polite">
+          <span class="map-helper-ico" aria-hidden="true">ⓘ</span>
+          <div>
+            <strong>Mapa interactivo</strong>
+            Pasa el cursor o usa Tab sobre una región para conocer qué representa el monto, su lectura ciudadana, periodo y fuente. Cambia entre convocado, adjudicado y contratado para actualizar la interpretación.
+          </div>
+        </div>
+        <!-- SVG MAPA PERÚ -->
+        <svg class="peru-map" viewBox="0 0 320 480" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa interactivo del Perú mostrando distribución geográfica de montos" role="img">
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Tumbes" data-title="Tumbes" data-indicator="Monto convocado" data-value="S/ 820 mill." data-conv="S/ 820 mill." data-adj="S/ 790 mill." data-cont="S/ 760 mill." data-color-conv="#67e8f9" data-color-adj="#a78bfa" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Participación territorial del extremo norte en los montos de contratación pública durante el periodo seleccionado." aria-label="Tumbes: S/ 820 mill. del monto convocado" d="M60 30 L80 25 L100 30 L115 45 L118 60 L108 72 L90 78 L72 75 L58 65 L50 50Z" fill="#67e8f9" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Piura" data-title="Piura" data-indicator="Monto convocado" data-value="S/ 2,120 mill." data-conv="S/ 2,120 mill." data-adj="S/ 2,018 mill." data-cont="S/ 1,945 mill." data-color-conv="#38bdf8" data-color-adj="#8b5cf6" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Permite observar el volumen de procesos asociados a la región y compararlo con otras zonas del país." aria-label="Piura: S/ 2,120 mill. del monto convocado" d="M72 75 L90 78 L108 72 L120 88 L125 105 L115 118 L98 125 L80 120 L65 112 L58 95 L60 80Z" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Lambayeque" data-title="Lambayeque" data-indicator="Monto convocado" data-value="S/ 1,460 mill." data-conv="S/ 1,460 mill." data-adj="S/ 1,390 mill." data-cont="S/ 1,320 mill." data-color-conv="#22d3ee" data-color-adj="#a78bfa" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Muestra la magnitud relativa del monto seleccionado en la región durante el periodo analizado." aria-label="Lambayeque: S/ 1,460 mill. del monto convocado" d="M108 72 L130 68 L148 75 L155 92 L150 110 L138 120 L122 118 L115 105 L118 88Z" fill="#22d3ee" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="La Libertad" data-title="La Libertad" data-indicator="Monto convocado" data-value="S/ 2,340 mill." data-conv="S/ 2,340 mill." data-adj="S/ 2,210 mill." data-cont="S/ 2,080 mill." data-color-conv="#7dd3fc" data-color-adj="#8b5cf6" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Ayuda a identificar la participación regional dentro del mercado de compras públicas." aria-label="La Libertad: S/ 2,340 mill. del monto convocado" d="M148 75 L168 70 L185 80 L188 100 L180 118 L165 128 L150 125 L140 112 L148 95Z" fill="#7dd3fc" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Loreto" data-title="Loreto" data-indicator="Monto convocado" data-value="S/ 4,217 mill." data-conv="S/ 4,217 mill." data-adj="S/ 3,984 mill." data-cont="S/ 3,750 mill." data-color-conv="#06b6d4" data-color-adj="#6d28d9" data-color-cont="#84cc16" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Representa el volumen de compras públicas asociado a la región. Un mayor monto puede responder a mayor actividad contractual o proyectos de mayor escala." aria-label="Loreto: S/ 4,217 mill. del monto convocado" d="M168 70 L210 60 L240 68 L255 90 L252 120 L240 145 L220 162 L198 165 L180 155 L165 140 L162 120 L168 100Z" fill="#06b6d4" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="San Martín" data-title="San Martín" data-indicator="Monto convocado" data-value="S/ 1,780 mill." data-conv="S/ 1,780 mill." data-adj="S/ 1,690 mill." data-cont="S/ 1,610 mill." data-color-conv="#60a5fa" data-color-adj="#7c3aed" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Lectura territorial para comparar la actividad contractual regional con el resto del país." aria-label="San Martín: S/ 1,780 mill. del monto convocado" d="M148 110 L165 105 L180 118 L185 138 L175 152 L158 158 L142 150 L135 135 L140 120Z" fill="#60a5fa" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Cajamarca" data-title="Cajamarca" data-indicator="Monto convocado" data-value="S/ 1,920 mill." data-conv="S/ 1,920 mill." data-adj="S/ 1,820 mill." data-cont="S/ 1,735 mill." data-color-conv="#38bdf8" data-color-adj="#8b5cf6" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Mide el monto seleccionado para la región y permite comparar su peso relativo." aria-label="Cajamarca: S/ 1,920 mill. del monto convocado" d="M80 120 L98 125 L115 118 L122 135 L118 152 L105 162 L88 160 L74 148 L70 132Z" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Amazonas" data-title="Amazonas" data-indicator="Monto convocado" data-value="S/ 1,120 mill." data-conv="S/ 1,120 mill." data-adj="S/ 1,060 mill." data-cont="S/ 1,000 mill." data-color-conv="#7dd3fc" data-color-adj="#a78bfa" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Ayuda a ubicar diferencias territoriales en los montos de contratación pública." aria-label="Amazonas: S/ 1,120 mill. del monto convocado" d="M105 162 L122 158 L138 165 L145 182 L140 200 L125 210 L108 208 L95 195 L92 178Z" fill="#7dd3fc" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Huánuco" data-title="Huánuco" data-indicator="Monto convocado" data-value="S/ 1,430 mill." data-conv="S/ 1,430 mill." data-adj="S/ 1,360 mill." data-cont="S/ 1,280 mill." data-color-conv="#93c5fd" data-color-adj="#a78bfa" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Permite observar la magnitud regional del monto seleccionado según los filtros aplicados." aria-label="Huánuco: S/ 1,430 mill. del monto convocado" d="M125 210 L142 205 L158 215 L165 232 L160 252 L145 262 L128 258 L115 245 L112 228Z" fill="#93c5fd" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Ucayali" data-title="Ucayali" data-indicator="Monto convocado" data-value="S/ 2,914 mill." data-conv="S/ 2,914 mill." data-adj="S/ 2,760 mill." data-cont="S/ 2,620 mill." data-color-conv="#0ea5e9" data-color-adj="#7c3aed" data-color-cont="#84cc16" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Muestra el monto regional del indicador seleccionado y facilita comparar su posición frente a otras regiones." aria-label="Ucayali: S/ 2,914 mill. del monto convocado" d="M158 158 L178 155 L198 165 L205 188 L200 215 L188 232 L170 238 L155 228 L148 210 L152 185Z" fill="#0ea5e9" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Pasco" data-title="Pasco" data-indicator="Monto convocado" data-value="S/ 980 mill." data-conv="S/ 980 mill." data-adj="S/ 930 mill." data-cont="S/ 890 mill." data-color-conv="#67e8f9" data-color-adj="#c4b5fd" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Lectura regional que ayuda a identificar el nivel de actividad contractual en el periodo." aria-label="Pasco: S/ 980 mill. del monto convocado" d="M108 208 L125 210 L128 228 L120 245 L105 250 L90 242 L85 225 L92 212Z" fill="#67e8f9" stroke="#fff" stroke-width="1.5"/>
+          <!-- LIMA destacada -->
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Lima" data-title="Lima" data-indicator="Monto convocado" data-value="S/ 4,217 mill." data-conv="S/ 4,217 mill." data-adj="S/ 4,050 mill." data-cont="S/ 3,920 mill." data-color-conv="#0369a1" data-color-adj="#4c1d95" data-color-cont="#16a34a" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Lima concentra una parte relevante del monto seleccionado. Revise los filtros para interpretar si corresponde a entidad, objeto contractual o periodo específico." aria-label="Lima: S/ 4,217 mill. del monto convocado" d="M74 148 L88 160 L95 178 L92 195 L85 210 L68 215 L52 205 L45 188 L48 168 L62 155Z" fill="#0369a1" stroke="#fff" stroke-width="2"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Ica" data-title="Ica" data-indicator="Monto convocado" data-value="S/ 1,210 mill." data-conv="S/ 1,210 mill." data-adj="S/ 1,160 mill." data-cont="S/ 1,100 mill." data-color-conv="#38bdf8" data-color-adj="#a78bfa" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Muestra el volumen regional del monto seleccionado para apoyar la comparación territorial." aria-label="Ica: S/ 1,210 mill. del monto convocado" d="M68 215 L85 210 L92 225 L90 245 L78 258 L62 262 L48 252 L42 235 L48 218Z" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Ayacucho" data-title="Ayacucho" data-indicator="Monto convocado" data-value="S/ 2,347 mill." data-conv="S/ 2,347 mill." data-adj="S/ 2,210 mill." data-cont="S/ 2,080 mill." data-color-conv="#60a5fa" data-color-adj="#8b5cf6" data-color-cont="#84cc16" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Permite observar la presencia relativa de la región en el monto seleccionado." aria-label="Ayacucho: S/ 2,347 mill. del monto convocado" d="M105 250 L120 245 L135 252 L140 270 L132 288 L116 295 L100 290 L88 275 L88 258Z" fill="#60a5fa" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Huancavelica" data-title="Huancavelica" data-indicator="Monto convocado" data-value="S/ 2,401 mill." data-conv="S/ 2,401 mill." data-adj="S/ 2,260 mill." data-cont="S/ 2,140 mill." data-color-conv="#7c3aed" data-color-adj="#5b21b6" data-color-cont="#84cc16" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Ayuda a identificar si la región presenta mayor actividad relativa en el indicador seleccionado." aria-label="Huancavelica: S/ 2,401 mill. del monto convocado" d="M128 258 L145 262 L152 278 L148 295 L134 302 L118 298 L112 282Z" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Apurímac" data-title="Apurímac" data-indicator="Monto convocado" data-value="S/ 1,550 mill." data-conv="S/ 1,550 mill." data-adj="S/ 1,470 mill." data-cont="S/ 1,390 mill." data-color-conv="#7c3aed" data-color-adj="#6d28d9" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Lectura regional para comparar montos convocados, adjudicados o contratados." aria-label="Apurímac: S/ 1,550 mill. del monto convocado" d="M145 262 L165 258 L185 265 L195 282 L192 308 L178 322 L160 326 L142 318 L132 302 L136 282Z" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Cusco" data-title="Cusco" data-indicator="Monto convocado" data-value="S/ 2,620 mill." data-conv="S/ 2,620 mill." data-adj="S/ 2,480 mill." data-cont="S/ 2,310 mill." data-color-conv="#a78bfa" data-color-adj="#7c3aed" data-color-cont="#22c55e" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Permite analizar el peso del monto seleccionado en una región con alta actividad pública." aria-label="Cusco: S/ 2,620 mill. del monto convocado" d="M160 326 L178 322 L195 330 L200 352 L192 372 L175 380 L156 374 L145 358 L148 338Z" fill="#a78bfa" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Arequipa" data-title="Arequipa" data-indicator="Monto convocado" data-value="S/ 2,210 mill." data-conv="S/ 2,210 mill." data-adj="S/ 2,050 mill." data-cont="S/ 1,940 mill." data-color-conv="#22d3ee" data-color-adj="#8b5cf6" data-color-cont="#86efac" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Muestra el comportamiento regional del indicador y su relación con el resto de regiones." aria-label="Arequipa: S/ 2,210 mill. del monto convocado" d="M78 258 L90 258 L100 272 L112 282 L118 298 L110 318 L95 325 L78 318 L65 302 L62 280 L68 262Z" fill="#22d3ee" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Moquegua" data-title="Moquegua" data-indicator="Monto convocado" data-value="S/ 1,030 mill." data-conv="S/ 1,030 mill." data-adj="S/ 980 mill." data-cont="S/ 940 mill." data-color-conv="#38bdf8" data-color-adj="#a78bfa" data-color-cont="#bbf7d0" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Permite observar el volumen del monto seleccionado en la región." aria-label="Moquegua: S/ 1,030 mill. del monto convocado" d="M95 325 L110 318 L125 328 L130 345 L118 360 L100 362 L85 352 L82 336Z" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+          <path class="map-region" tabindex="0" data-tooltip-chart data-region="Madre de Dios" data-title="Madre de Dios" data-indicator="Monto convocado" data-value="S/ 2,567 mill." data-conv="S/ 2,567 mill." data-adj="S/ 2,420 mill." data-cont="S/ 2,290 mill." data-color-conv="#86efac" data-color-adj="#8b5cf6" data-color-cont="#22c55e" data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" data-description="Muestra un monto relevante dentro del ranking regional del periodo seleccionado." aria-label="Madre de Dios: S/ 2,567 mill. del monto convocado" d="M185 232 L210 228 L235 235 L248 255 L245 282 L230 298 L210 302 L192 290 L185 268 L188 248Z" fill="#86efac" stroke="#fff" stroke-width="1.5"/>
+          <!-- Dots ciudades -->
+          <circle class="map-city-marker" tabindex="0" data-tooltip-chart data-title="Lima Metropolitana" data-value="Nodo de alta actividad" data-indicator="Referencia territorial" data-description="Marcador referencial para orientar la lectura del mapa. Use el tooltip de la región para interpretar el monto según la vista seleccionada." data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" cx="62" cy="182" r="7" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+          <circle class="map-city-marker" tabindex="0" data-tooltip-chart data-title="Nodo sur andino" data-value="Referencia visual" data-indicator="Orientación territorial" data-description="Marcador de referencia para facilitar la navegación visual dentro del mapa." data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" cx="165" cy="295" r="5" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+          <circle class="map-city-marker" tabindex="0" data-tooltip-chart data-title="Nodo amazónico" data-value="Referencia visual" data-indicator="Orientación territorial" data-description="Marcador de referencia para facilitar la navegación visual dentro del mapa." data-period="Periodo seleccionado" data-source="DWH / Cubos analíticos DGDIC" cx="215" cy="268" r="5" fill="#059669" stroke="#fff" stroke-width="1.5"/>
+        </svg>
+        <!-- Leyenda -->
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#5a7090"><div style="width:12px;height:12px;border-radius:3px;background:#0369a1" aria-hidden="true"></div>Monto convocado</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#5a7090"><div style="width:12px;height:12px;border-radius:3px;background:#7c3aed" aria-hidden="true"></div>Monto adjudicado</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#5a7090"><div style="width:12px;height:12px;border-radius:3px;background:#059669" aria-hidden="true"></div>Monto contratado</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rankings -->
+    <div class="side-stack">
+      <div class="side-card">
+        <div class="side-card-title">Ranking de regiones</div>
+        <div>
+          <div class="rank-row" data-title="Lima" data-value="S/ 4,217 mill." data-indicator="Monto convocado" data-description="Representa el volumen de procesos convocados en la región durante el periodo seleccionado."><span class="rank-pos">1</span><span class="rank-name">Lima</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:100%;background:#0369a1"></div></div><span class="rank-val">4,217 mill.</span></div>
+          <div class="rank-row" data-title="Cusco" data-value="S/ 1,247 mill." data-indicator="Monto convocado" data-description="Permite comparar el volumen regional frente a otras regiones del ranking."><span class="rank-pos">2</span><span class="rank-name">Cusco</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:70%;background:#60a5fa"></div></div><span class="rank-val">1,247 mill.</span></div>
+          <div class="rank-row"><span class="rank-pos">3</span><span class="rank-name">Madre de Dios</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:58%;background:#7dd3fc"></div></div><span class="rank-val">1,047 mill.</span></div>
+          <div class="rank-row"><span class="rank-pos">4</span><span class="rank-name">Huancavelica</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:44%;background:#bae6fd"></div></div><span class="rank-val">895 mill.</span></div>
+          <div class="rank-row"><span class="rank-pos">5</span><span class="rank-name">Junín</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:34%;background:#e0f2fe"></div></div><span class="rank-val">720 mill.</span></div>
+        </div>
+      </div>
+      <div class="side-card">
+        <div class="side-card-title">Por tipo de entidad</div>
+        <div>
+          <div class="rank-row"><span class="rank-name">Gobierno Local</span><div class="rank-bar-wrap" style="width:90px"><div class="rank-bar-fill" style="width:100%;background:#0369a1"></div></div><span class="rank-val">4,217 mill.</span></div>
+          <div class="rank-row"><span class="rank-name">Gobierno Regional</span><div class="rank-bar-wrap" style="width:90px"><div class="rank-bar-fill" style="width:68%;background:#38bdf8"></div></div><span class="rank-val">2,870 mill.</span></div>
+          <div class="rank-row"><span class="rank-name">Salud</span><div class="rank-bar-wrap" style="width:90px"><div class="rank-bar-fill" style="width:46%;background:#7dd3fc"></div></div><span class="rank-val">1,947 mill.</span></div>
+          <div class="rank-row"><span class="rank-name">Transportes</span><div class="rank-bar-wrap" style="width:90px"><div class="rank-bar-fill" style="width:32%;background:#bae6fd"></div></div><span class="rank-val">1,355 mill.</span></div>
+          <div class="rank-row"><span class="rank-name">Educación</span><div class="rank-bar-wrap" style="width:90px"><div class="rank-bar-fill" style="width:20%;background:#e0f2fe"></div></div><span class="rank-val">846 mill.</span></div>
+        </div>
+      </div>
+      <div class="side-card">
+        <div class="side-card-title">Ranking por sector</div>
+        <div>
+          <div class="rank-row"><span class="rank-pos">1</span><span class="rank-name">Gobierno Local</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:100%;background:#0369a1"></div></div><span class="rank-val">4,217</span></div>
+          <div class="rank-row"><span class="rank-pos">2</span><span class="rank-name">Gobierno Regional</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:72%;background:#60a5fa"></div></div><span class="rank-val">3,041</span></div>
+          <div class="rank-row"><span class="rank-pos">3</span><span class="rank-name">Salud</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:50%;background:#93c5fd"></div></div><span class="rank-val">2,110</span></div>
+          <div class="rank-row"><span class="rank-pos">4</span><span class="rank-name">Transportes</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:34%;background:#bfdbfe"></div></div><span class="rank-val">1,435</span></div>
+          <div class="rank-row"><span class="rank-pos">5</span><span class="rank-name">Educación</span><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:20%;background:#e0f2fe"></div></div><span class="rank-val">845</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD EMBEBIDO -->
+  <section class="dashboard-section" role="region" aria-labelledby="dash-panorama-title">
+
+    <div class="dashboard-intro">
+      <h2 id="dash-panorama-title">Explora el panorama general del mercado</h2>
+      <p>
+        Este tablero permite analizar el volumen del mercado de compras públicas,
+        los montos convocados, adjudicados y contratados, así como su distribución
+        por territorio, entidad, objeto contractual y tipo de procedimiento.
+      </p>
+    </div>
+  
+    <div class="data-status-bar" role="note" aria-label="Estado de actualización de la información">
+      <div>
+        <strong>Información actualizada al</strong>
+        III trimestre 2025
+      </div>
+      <div>
+        <strong>Última actualización del módulo</strong>
+        12/05/2026 - 15:30 h
+      </div>
+      <div>
+        <strong>Fuente de información</strong>
+        DWH institucional, cubos analíticos, ROCOS y CONOSCE
+      </div>
+    </div>
+  
+    <div class="dashboard-disclaimer" role="note">
+      <strong>Nota sobre el tablero:</strong>
+      La información presentada corresponde al comportamiento agregado del mercado
+      de compras públicas, construido a partir del ecosistema analítico institucional
+      administrado por la DGDIC. Los valores pueden variar según el periodo de
+      actualización y los filtros aplicados.
+    </div>
+  
+    <div class="dashboard-frame" aria-label="Dashboard panorama general" data-dashboard-src="URL_DASHBOARD_PANORAMA" data-dashboard-title="Dashboard Panorama General del Mercado de Compras Públicas" data-dashboard-type="tableau-powerbi"></div>
+  
+    <p class="dashboard-updated">
+      Dashboard cargado el <span data-dashboard-load-date></span>
+    </p>
+  
+    <div class="dashboard-interpretation" role="note">
+      <h3>¿Cómo interpretar este tablero?</h3>
+      <p>
+        Observe primero los montos generales para entender la magnitud del mercado.
+        Luego revise la distribución regional y compare el comportamiento por tipo
+        de procedimiento, objeto contractual o nivel de gobierno.
+      </p>
+    </div>
+  
+  </section>
+
+  <!-- TENDENCIAS -->
+  <div class="sec-block">
+    <div class="sec-hd">
+      <h2>Tendencias de los montos por año (En miles de millones de S/)</h2>
+      <p>El monto convocado muestra una evolución variable a lo largo del periodo. El año actual se mantiene por debajo del registrado en el año anterior, lo que puede deberse a cambios en la ejecución presupuestal o en la composición de procedimientos utilizados.</p>
+    </div>
+    <div class="sec-bd">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5a7090"><span style="width:16px;height:3px;background:#0369a1;border-radius:2px;display:inline-block" aria-hidden="true"></span>Monto convocado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5a7090"><span style="width:16px;height:3px;background:#e24b4a;border-radius:2px;display:inline-block;border-top:2px dashed #e24b4a" aria-hidden="true"></span>Monto adjudicado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5a7090"><span style="width:16px;height:3px;background:#1d9e75;border-radius:2px;display:inline-block" aria-hidden="true"></span>Monto contratado</span>
+        <select aria-label="Seleccionar período" style="margin-left:auto;font-size:11px;border:1px solid #dde8f2;border-radius:4px;padding:4px 8px;color:#3a5070"><option>Año</option><option>2025</option><option>2024</option></select>
+      </div>
+      <svg width="100%" height="150" viewBox="0 0 900 150" preserveAspectRatio="none" aria-label="Gráfico de tendencias de montos por mes">
+        <defs><linearGradient id="pg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0369a1" stop-opacity=".12"/><stop offset="100%" stop-color="#0369a1" stop-opacity="0"/></linearGradient></defs>
+        <line x1="0" y1="30" x2="900" y2="30" stroke="#f0f4f8" stroke-width="1"/>
+        <line x1="0" y1="65" x2="900" y2="65" stroke="#f0f4f8" stroke-width="1"/>
+        <line x1="0" y1="100" x2="900" y2="100" stroke="#f0f4f8" stroke-width="1"/>
+        <polygon points="30,145 100,140 170,128 240,82 310,128 380,58 450,76 520,50 590,66 660,53 730,58 800,46 870,42 870,148 30,148" fill="url(#pg1)"/>
+        <polyline points="30,145 100,140 170,128 240,82 310,128 380,58 450,76 520,50 590,66 660,53 730,58 800,46 870,42" fill="none" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="30,148 100,146 170,138 240,98 310,140 380,70 450,88 520,62 590,78 660,64 730,68 800,56 870,52" fill="none" stroke="#e24b4a" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 3"/>
+        <circle cx="380" cy="58" r="6" fill="#0369a1"/>
+        <rect x="295" y="36" width="90" height="18" rx="4" fill="#0369a1"/>
+        <text x="340" y="49" text-anchor="middle" font-size="9" fill="#fff" font-family="Inter">4.01 — Junio</text>
+        <text x="30" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Ene</text><text x="100" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Feb</text><text x="170" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Mar</text><text x="240" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Abr</text><text x="310" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">May</text><text x="380" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Jun</text><text x="450" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Jul</text><text x="520" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Ago</text><text x="590" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Sep</text><text x="660" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Oct</text><text x="730" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Nov</text><text x="800" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">Dic</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- PROCEDIMIENTOS COMPETITIVOS + TREEMAP -->
+  <div class="two-col">
+    <div class="sec-block" style="margin:0">
+      <div class="sec-hd">
+        <h2>Procedimientos de selección competitivos</h2>
+        <p>La licitación pública concentra el mayor volumen económico. La adjudicación simplificada lidera en cantidad de procesos, reflejando la predominancia de esquemas de contratación más ágiles.</p>
+      </div>
+      <div class="sec-bd">
+        <div class="hbar" role="list" aria-label="Ranking de procedimientos competitivos">
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Licitación Pública</span><div class="hbar-track"><div class="hbar-fill" style="width:100%;background:#0ea5e9"></div></div><span class="hbar-val">219,861</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Licitación Pública electrónica</span><div class="hbar-track"><div class="hbar-fill" style="width:76%;background:#38bdf8"></div></div><span class="hbar-val">162,473</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Concurso Público electrónico</span><div class="hbar-track"><div class="hbar-fill" style="width:57%;background:#7dd3fc"></div></div><span class="hbar-val">121,547</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Subasta Inversa Electrónica</span><div class="hbar-track"><div class="hbar-fill" style="width:43%;background:#bae6fd"></div></div><span class="hbar-val">91,557</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Concurso Público para Consultoría</span><div class="hbar-track"><div class="hbar-fill" style="width:29%;background:#e0f2fe"></div></div><span class="hbar-val">61,847</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-block" style="margin:0">
+      <div class="sec-hd">
+        <h2>Contratación directa por causal</h2>
+        <p>Distribución del monto de contrataciones directas según la causal utilizada. El tamaño de cada celda refleja el monto relativo de la causal respecto al total.</p>
+      </div>
+      <div class="treemap" role="img" aria-label="Treemap de contratación directa por causal">
+        <div class="tm-cell" style="background:#0ea5e9;grid-row:span 2;min-height:190px"><div class="tm-name">Actualización o continuación de trabajo de consultoría</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#f97316"><div class="tm-name">Capacitación con procedimiento de admisión</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#e24b4a"><div class="tm-name">Situación de emergencia</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#10b981"><div class="tm-name">Con fines de investigación científica o tecnológica</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#6366f1"><div class="tm-name">Carácter secreto</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#0e7490"><div class="tm-name">Arrendamiento de bienes inmuebles</div><div class="tm-val">235.25</div></div>
+        <div class="tm-cell" style="background:#d97706"><div class="tm-name">Asesoría legal para defensa de funcionarios</div><div class="tm-val">235.25</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METODOLOGÍA -->
+  <div class="methodology-box" role="region" aria-labelledby="metodo-pano">
+    <h2 id="metodo-pano">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="#1a6ab5" stroke-width="1.3"/><path d="M8 7v4M8 5.5v.3" stroke="#1a6ab5" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Fuente y metodología
+    </h2>
+    <p>Los indicadores presentados en este módulo han sido validados por la DGDIC y se construyen a partir del ecosistema analítico institucional. No existe integración directa con los sistemas operativos de registro (SEACE, RNP); los datos son procesados y validados antes de su publicación en el Observatorio.</p>
+    <p>La información se presenta con fines de transparencia, análisis y comprensión del sistema de compras públicas peruano.</p>
+    <div class="source-chips" role="list">
+      <span class="source-chip" role="listitem">DWH Institucional</span>
+      <span class="source-chip" role="listitem">Cubos analíticos</span>
+      <span class="source-chip" role="listitem">ROCOS</span>
+      <span class="source-chip" role="listitem">CONOSCE</span>
+      <span class="source-chip" role="listitem">Servicios analíticos en la nube</span>
+      <span class="source-chip" role="listitem">Datos validados DGDIC</span>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <span>Central de consultas: 01-614626 · Opción 7</span>
+    <a href="#">Formulario de contacto</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="footer-btn" href="#">Soporte</a>
+    <span>© OECE – DGDIC · 2025</span>
+  </div>
+</footer>
+
+<script>
+function toggleFilter(){
+  var body=document.getElementById('filter-body');
+  var ico=document.getElementById('filter-ico');
+  var btn=document.getElementById('filter-btn');
+  var open=body.classList.contains('open');
+  body.classList.toggle('open');
+  ico.classList.toggle('open');
+  btn.setAttribute('aria-expanded',!open);
+}
+function clearFilters(){
+  document.querySelectorAll('.filter-body select').forEach(function(s){s.selectedIndex=0});
+}
+function setMapTab(type){
+  var tabs={'conv':'tab-conv','adj':'tab-adj','cont':'tab-cont'};
+  var classes={'conv':'t-blue','adj':'t-purple','cont':'t-green'};
+  var labels={'conv':'Monto convocado','adj':'Monto adjudicado','cont':'Monto contratado'};
+  Object.keys(tabs).forEach(function(k){
+    var el=document.getElementById(tabs[k]);
+    if(!el) return;
+    el.className='map-tab inactive';
+    el.setAttribute('aria-pressed','false');
+  });
+  var active=document.getElementById(tabs[type]);
+  if(active){
+    active.className='map-tab '+classes[type];
+    active.setAttribute('aria-pressed','true');
+  }
+
+  document.querySelectorAll('.map-region').forEach(function(region){
+    var value = region.getAttribute('data-' + type) || region.getAttribute('data-value') || '';
+    var color = region.getAttribute('data-color-' + type) || region.getAttribute('fill') || '#38bdf8';
+    region.setAttribute('data-indicator', labels[type]);
+    region.setAttribute('data-value', value);
+    region.setAttribute('fill', color);
+    region.setAttribute('aria-label', (region.getAttribute('data-title') || 'Región') + ': ' + value + ' del ' + labels[type].toLowerCase());
+  });
+
+  var panel = document.getElementById('map-helper-panel');
+  if(panel){
+    panel.querySelector('div').innerHTML = '<strong>Mapa interactivo · ' + labels[type] + '</strong> Pasa el cursor o usa Tab sobre una región para conocer el valor, la lectura ciudadana, periodo y fuente. El color del mapa se actualizó según la vista seleccionada.';
+  }
+}
+</script>
+<script>
+
+(function () {
+  "use strict";
+
+  /* =========================================================
+     MENÚ MÓVIL
+  ========================================================= */
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuLabel = document.querySelector(".site-header__menu-label");
+  const dropdownBtn = document.getElementById("btn-servicios");
+  const dropdownPanel = document.getElementById("menu-servicios");
+  const MQ_DESKTOP = window.matchMedia("(min-width: 960px)");
+
+  function setMobileNavOpen(open) {
+    if (!menuBtn || !mobileNav) return;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    mobileNav.hidden = !open;
+    document.body.classList.toggle("is-nav-open", open);
+    if (menuLabel) menuLabel.textContent = open ? "Cerrar menú" : "Abrir menú";
+  }
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", function () {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      setMobileNavOpen(!open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setMobileNavOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") {
+        setMobileNavOpen(false);
+        menuBtn.focus();
+      }
+    });
+    function onViewportChange() { if (MQ_DESKTOP.matches) setMobileNavOpen(false); }
+    if (typeof MQ_DESKTOP.addEventListener === "function") MQ_DESKTOP.addEventListener("change", onViewportChange);
+    else MQ_DESKTOP.addListener(onViewportChange);
+  }
+
+  /* =========================================================
+     DROPDOWN SERVICIOS ANALÍTICOS
+  ========================================================= */
+  if (dropdownBtn && dropdownPanel) {
+    const dropdownRoot = dropdownBtn.closest(".nav-dropdown");
+    if (dropdownRoot) {
+      function setDropdownOpen(open) {
+        dropdownBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        dropdownPanel.hidden = !open;
+      }
+      setDropdownOpen(false);
+      dropdownRoot.addEventListener("mouseenter", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("mouseleave", function () { setDropdownOpen(false); });
+      dropdownRoot.addEventListener("focusin", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("focusout", function (e) {
+        if (!dropdownRoot.contains(e.relatedTarget)) setDropdownOpen(false);
+      });
+      dropdownBtn.addEventListener("click", function () {
+        const open = dropdownBtn.getAttribute("aria-expanded") === "true";
+        setDropdownOpen(!open);
+      });
+      dropdownBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setDropdownOpen(true);
+          const firstLink = dropdownPanel.querySelector("a");
+          if (firstLink) firstLink.focus();
+        }
+      });
+      dropdownPanel.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!dropdownRoot.contains(e.target)) setDropdownOpen(false);
+      });
+    }
+  }
+
+  /* =========================================================
+     FECHA Y HORA DE CARGA DEL DASHBOARD
+  ========================================================= */
+  function setDashboardLoadDates() {
+    const dashboardLoadDates = document.querySelectorAll("[data-dashboard-load-date]");
+    if (!dashboardLoadDates.length) return;
+    const now = new Date();
+    const formattedDate = now.toLocaleString("es-PE", {
+      day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    dashboardLoadDates.forEach(function (element) { element.textContent = formattedDate; });
+  }
+
+  /* =========================================================
+     DASHBOARDS EMBEBIDOS TABLEAU / POWER BI
+     Permite cargar iframe desde data-dashboard-src cuando exista.
+  ========================================================= */
+  function initEmbeddedDashboards() {
+    const dashboardFrames = document.querySelectorAll("[data-dashboard-src]");
+    dashboardFrames.forEach(function (container) {
+      const dashboardUrl = container.getAttribute("data-dashboard-src");
+      const dashboardTitle = container.getAttribute("data-dashboard-title") || "Dashboard del Observatorio";
+      const dashboardType = container.getAttribute("data-dashboard-type") || "dashboard";
+      if (!dashboardUrl || dashboardUrl.trim() === "" || dashboardUrl.includes("URL_DASHBOARD")) {
+        container.innerHTML = `
+          <div class="dashboard-error-state" role="status">
+            <h3>Dashboard en proceso de actualización</h3>
+            <p>Este tablero estará disponible próximamente. Mientras tanto, puedes revisar los indicadores principales, la narrativa explicativa y la metodología del módulo.</p>
+          </div>`;
+        return;
+      }
+      container.innerHTML = `
+        <iframe
+          src="${escapeAttr(dashboardUrl)}"
+          title="${escapeAttr(dashboardTitle)}"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+          data-dashboard-type="${escapeAttr(dashboardType)}">
+        </iframe>`;
+    });
+  }
+
+  function initDashboardFallbackTimer() {
+    document.querySelectorAll(".dashboard-frame iframe").forEach(function (iframe) {
+      const container = iframe.closest(".dashboard-frame");
+      if (!container) return;
+      let loaded = false;
+      iframe.addEventListener("load", function () {
+        loaded = true;
+        container.classList.add("dashboard-loaded");
+      });
+      setTimeout(function () {
+        if (!loaded) container.classList.add("dashboard-loading-slow");
+      }, 8000);
+    });
+  }
+
+  /* =========================================================
+     TOOLTIP NARRATIVO PARA GRÁFICOS, RANKINGS Y KPIs
+  ========================================================= */
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+  function escapeAttr(value) { return escapeHTML(value).replace(/`/g, "&#96;"); }
+  function cleanText(value) { return String(value || "").replace(/\s+/g, " ").trim(); }
+
+  function textOf(root, selector) {
+    const el = root.querySelector(selector);
+    return el ? cleanText(el.textContent) : "";
+  }
+
+  function nearestTitle(el) {
+    const scope = el.closest(".chart-card, .sec-block, .side-card, .dashboard-section, .insight-panel, .semaforo-box, .funnel-box, section, .narrative-header");
+    if (!scope) return "Indicador del Observatorio";
+    const heading = scope.querySelector("h2, h3, .side-card-title, .funnel-title, .sem-title");
+    return heading ? cleanText(heading.textContent) : "Indicador del Observatorio";
+  }
+
+  function moduleName() {
+    const h1 = document.querySelector("h1, .nh-title, .hero-title");
+    return h1 ? cleanText(h1.textContent) : "Observatorio de Contrataciones Públicas";
+  }
+
+  function buildTooltipData(el) {
+    let title = el.dataset.title || el.dataset.region || el.dataset.name || "";
+    let value = el.dataset.value || "";
+    let indicator = el.dataset.indicator || "";
+    let description = el.dataset.description || "";
+    let period = el.dataset.period || "Periodo seleccionado";
+    let source = el.dataset.source || "DWH / Cubos analíticos DGDIC";
+
+    if (!title) {
+      title = textOf(el, ".rank-name") || textOf(el, ".hbar-lbl") || textOf(el, ".kpi-eye") || textOf(el, ".k5-q") || textOf(el, ".hero-kpi-label") || textOf(el, ".ic-val") || textOf(el, ".actor-tab-label") || textOf(el, ".sem-label") || textOf(el, ".funnel-lbl") || cleanText(el.textContent).slice(0, 90);
+    }
+    if (!value) {
+      value = textOf(el, ".rank-val") || textOf(el, ".hbar-val") || textOf(el, ".kpi-val") || textOf(el, ".k5-val") || textOf(el, ".hero-kpi-val") || textOf(el, ".ic-sub") || textOf(el, ".funnel-val") || textOf(el, ".funnel-pct") || "";
+    }
+    if (!indicator) indicator = nearestTitle(el);
+
+    if (!description) {
+      if (el.classList.contains("rank-row")) {
+        description = "Este ranking permite comparar posiciones relativas según el indicador seleccionado. Úsalo como una señal analítica, no como una calificación definitiva.";
+      } else if (el.classList.contains("hbar-row")) {
+        description = "La barra muestra la magnitud relativa del valor frente a las demás categorías visibles en el gráfico.";
+      } else if (el.classList.contains("kpi-c") || el.classList.contains("kpi5-item") || el.classList.contains("hero-kpi-item") || el.classList.contains("insight-card")) {
+        description = "Este indicador resume una lectura clave del módulo y debe interpretarse junto con el periodo, filtros aplicados y metodología DGDIC.";
+      } else if (el.classList.contains("funnel-step")) {
+        description = "Esta etapa muestra cuántos actores avanzan dentro del flujo analítico. Las diferencias entre etapas ayudan a identificar oportunidades de mejora.";
+      } else if (el.classList.contains("sem-card")) {
+        description = "Este estado ayuda a interpretar el nivel de atención requerido según el comportamiento del indicador.";
+      } else if (el.classList.contains("map-region")) {
+        description = "Esta región del mapa permite interpretar territorialmente el indicador seleccionado. Compare el valor con otras regiones y revise filtros antes de sacar conclusiones.";
+      } else if (el.classList.contains("map-city-marker")) {
+        description = "Marcador visual de referencia territorial. Use las regiones coloreadas para consultar valores del indicador seleccionado.";
+      } else if (el.classList.contains("map-tab")) {
+        description = "Selecciona esta vista para cambiar la lectura del mapa según el tipo de monto que deseas analizar.";
+      } else {
+        description = "Este elemento brinda contexto para comprender mejor la información presentada en el Observatorio.";
+      }
+    }
+
+    return { title, value, indicator, description, period, source };
+  }
+
+  function initNarrativeTooltips() {
+    const selector = [
+      "[data-tooltip-chart]",
+      ".rank-row",
+      ".hbar-row",
+      ".kpi-c",
+      ".kpi5-item",
+      ".hero-kpi-item",
+      ".insight-card",
+      ".funnel-step",
+      ".sem-card",
+      ".actor-tab",
+      ".map-tab",
+      ".map-region",
+      ".map-city-marker"
+    ].join(",");
+
+    const elements = Array.from(document.querySelectorAll(selector))
+      .filter(function (el) { return !el.closest(".chart-tooltip") && el.offsetParent !== null; });
+
+    if (!elements.length) return;
+
+    let tooltip = document.querySelector(".chart-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "chart-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.id = "chart-tooltip-global";
+      document.body.appendChild(tooltip);
+    }
+
+    function showTooltip(event, el) {
+      const data = buildTooltipData(el);
+      tooltip.innerHTML = `
+        <div class="chart-tooltip__title">${escapeHTML(data.title)}</div>
+        ${data.value ? `<div class="chart-tooltip__value">${escapeHTML(data.value)} · ${escapeHTML(data.indicator)}</div>` : `<div class="chart-tooltip__value">${escapeHTML(data.indicator)}</div>`}
+        <div class="chart-tooltip__desc">${escapeHTML(data.description)}</div>
+        <div class="chart-tooltip__meta">Periodo: ${escapeHTML(data.period)}<br>Fuente: ${escapeHTML(data.source)}</div>`;
+      positionTooltip(event, el);
+      tooltip.classList.add("is-visible");
+      el.setAttribute("aria-describedby", "chart-tooltip-global");
+    }
+
+    function positionTooltip(event, el) {
+      let x = event && event.clientX;
+      let y = event && event.clientY;
+      if (!x || !y) {
+        const rect = el.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + 8;
+      }
+      const margin = 16;
+      x = Math.max(margin, Math.min(window.innerWidth - margin, x));
+      y = Math.max(70, Math.min(window.innerHeight - margin, y));
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    }
+
+    function hideTooltip(el) {
+      tooltip.classList.remove("is-visible");
+      if (el) el.removeAttribute("aria-describedby");
+    }
+
+    elements.forEach(function (el) {
+      if (el.dataset.tooltipReady === "true") return;
+      el.dataset.tooltipReady = "true";
+      if (!el.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(el.tagName)) {
+        el.setAttribute("tabindex", "0");
+      }
+      el.setAttribute("data-tooltip-chart", "");
+      el.addEventListener("mouseenter", function (event) { showTooltip(event, el); });
+      el.addEventListener("mousemove", function (event) { positionTooltip(event, el); });
+      el.addEventListener("mouseleave", function () { hideTooltip(el); });
+      el.addEventListener("focus", function (event) { showTooltip(event, el); });
+      el.addEventListener("blur", function () { hideTooltip(el); });
+      el.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideTooltip(el);
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setDashboardLoadDates();
+    initEmbeddedDashboards();
+    initDashboardFallbackTimer();
+    if (typeof setMapTab === "function") setMapTab("conv");
+    initNarrativeTooltips();
+  });
+})();
+
+</script>
+</body>
+</html>
+

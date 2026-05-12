@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desempeño de Actores – Observatorio OECE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════
+   RESET & BASE
+═══════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:#1a2a3a;background:#f5f7fb;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+a:focus,button:focus,select:focus,input:focus{outline:3px solid rgba(26,106,181,.4);outline-offset:2px}
+
+/* ═══════════════════════════════
+   NAV
+═══════════════════════════════ */
+.nav{background:#1a3a5c;height:48px;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:999;gap:0}
+.nav-logo{color:#fff;font-weight:800;font-size:15px;flex-shrink:0;display:flex;align-items:center}
+.nav-logo span{color:rgba(255,255,255,.45);font-weight:400;font-size:13px;border-left:1px solid rgba(255,255,255,.25);padding-left:10px;margin-left:10px}
+.nav-links{display:flex;align-items:center;margin-left:6px}
+.nav-link{color:rgba(255,255,255,.82);font-size:13px;padding:0 11px;height:48px;display:flex;align-items:center;cursor:pointer;transition:background .15s;border:none;background:none;font-family:'Inter',sans-serif;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,.1)}
+.nav-link.active{font-weight:600;color:#fff}
+.nav-disabled{opacity:.4;cursor:default;pointer-events:none}
+.nav-spacer{flex:1}
+
+/* ═══════════════════════════════
+   LAYOUT
+═══════════════════════════════ */
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px 60px}
+.breadcrumb{font-size:12px;color:#8aaccc;padding:16px 0 0;display:flex;align-items:center;gap:6px}
+.breadcrumb a{color:#8aaccc}
+.breadcrumb a:hover{color:#1a6ab5}
+
+/* ═══════════════════════════════
+   NARRATIVE HEADER
+═══════════════════════════════ */
+.narrative-header{background:#fff;border:1px solid #dde8f2;border-radius:12px;padding:32px 36px;margin:16px 0 0;box-shadow:0 2px 12px rgba(10,37,64,.05)}
+.nh-eyebrow{display:inline-block;background:#e8f4ff;color:#1a6ab5;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.nh-title{font-size:26px;font-weight:800;color:#0a2540;line-height:1.2;margin-bottom:12px}
+.nh-desc{font-size:14px;color:#4a6a8a;line-height:1.75;max-width:820px}
+
+/* ═══════════════════════════════
+   EDUCATIONAL BLOCK
+═══════════════════════════════ */
+.edu-block{background:linear-gradient(135deg,#f5f3ff 0%,#fff 100%);border:1px solid #c4b5fd;border-radius:12px;padding:24px 28px;margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.edu-ico{font-size:36px;flex-shrink:0;line-height:1}
+.edu-title{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:8px}
+.edu-text{font-size:13.5px;color:#3a5a78;line-height:1.75}
+
+/* ═══════════════════════════════
+   ACTOR TABS
+═══════════════════════════════ */
+.actor-tabs{display:flex;gap:0;background:#fff;border:1px solid #dde8f2;border-radius:12px;overflow:hidden;margin:20px 0;box-shadow:0 2px 8px rgba(10,37,64,.04)}
+.actor-tab{flex:1;padding:0;border:none;background:none;font-family:'Inter',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;padding:20px 24px;border-right:1px solid #eef3f8;transition:all .15s;position:relative}
+.actor-tab:last-child{border-right:none}
+.actor-tab.active{background:linear-gradient(135deg,#0a2540,#1a3a5c)}
+.actor-tab-ico{font-size:26px;margin-bottom:8px;transition:transform .15s}
+.actor-tab:hover .actor-tab-ico{transform:scale(1.1)}
+.actor-tab-label{font-size:13px;font-weight:700;color:#3a5a78;margin-bottom:3px;transition:color .15s}
+.actor-tab.active .actor-tab-label{color:#fff}
+.actor-tab-desc{font-size:11.5px;color:#9ab0c8;line-height:1.5;transition:color .15s}
+.actor-tab.active .actor-tab-desc{color:rgba(255,255,255,.65)}
+.actor-tab-indicator{position:absolute;bottom:0;left:24px;right:24px;height:3px;border-radius:3px 3px 0 0;background:transparent;transition:background .15s}
+.actor-tab.active .actor-tab-indicator{background:#0ea5e9}
+.actor-tab-count{position:absolute;top:16px;right:16px;background:#e8f4ff;color:#1a6ab5;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;transition:all .15s}
+.actor-tab.active .actor-tab-count{background:rgba(255,255,255,.2);color:#fff}
+
+/* ═══════════════════════════════
+   PANEL CONTENT (show/hide)
+═══════════════════════════════ */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ═══════════════════════════════
+   FILTERS
+═══════════════════════════════ */
+.filter-accordion{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;margin:0 0 16px}
+.filter-acc-btn{width:100%;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1a3a5c;text-align:left}
+.filter-acc-btn:hover{background:#f8fafc}
+.filter-acc-ico{font-size:18px;transition:transform .25s;color:#6a8aaa}
+.filter-acc-ico.open{transform:rotate(180deg)}
+.filter-body{display:none;padding:14px 20px 16px;border-top:1px solid #eef3f8;background:#fafcff}
+.filter-body.open{display:block}
+.filter-g{display:grid;gap:10px;align-items:end}
+.filter-g-ent{grid-template-columns:repeat(5,1fr) auto}
+.filter-g-prov{grid-template-columns:repeat(4,1fr) auto}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fl{font-size:10.5px;font-weight:600;color:#7a90a8;text-transform:uppercase;letter-spacing:.04em}
+.fs{font-size:12px;padding:8px 10px;border:1px solid #ccd8e4;border-radius:5px;color:#1a3a5c;background:#fff;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236a8aaa' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.btn-search{background:#1a3a5c;color:#fff;border:none;border-radius:5px;padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-clear{background:#fff;color:#6a8aaa;border:1px solid #ccd8e4;border-radius:5px;padding:9px 14px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+.fi-row{display:flex;gap:8px;align-items:flex-end}
+
+/* ═══════════════════════════════
+   KPI ROW
+═══════════════════════════════ */
+.kpi-row{display:grid;gap:12px;margin:0 0 14px}
+.kpi-row-5{grid-template-columns:repeat(5,1fr)}
+.kpi-row-4{grid-template-columns:repeat(4,1fr)}
+.kpi-c{background:#fff;border:1px solid #dde8f2;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.k-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.k-q{font-size:11px;color:#7a90a8;margin-bottom:5px;line-height:1.4;min-height:30px}
+.k-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:3px}
+.k-sub{font-size:10.5px;color:#9ab0c8;margin-bottom:6px}
+.k-trend{font-size:11px;font-weight:600;margin-top:5px;display:flex;align-items:center;gap:3px}
+.k-interp{font-size:11.5px;color:#6a8aaa;line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid #eef3f8}
+.up{color:#059669}.dn{color:#dc2626}.flat{color:#d97706}
+
+/* ═══════════════════════════════
+   SECTION HEADER
+═══════════════════════════════ */
+.sec-hdr{margin:24px 0 12px}
+.sec-hdr h2{font-size:17px;font-weight:700;color:#0a2540;margin-bottom:4px}
+.sec-hdr p{font-size:12.5px;color:#6a8aaa;line-height:1.6}
+
+/* ═══════════════════════════════
+   GRID LAYOUTS
+═══════════════════════════════ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.col-2-1{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
+.col-1-2{display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-bottom:14px}
+
+/* ═══════════════════════════════
+   CHART / SECTION CARDS
+═══════════════════════════════ */
+.chart-card{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.chd{padding:14px 18px;border-bottom:1px solid #eef3f8}
+.chd h3{font-size:13.5px;font-weight:700;color:#0a2540;margin-bottom:3px}
+.chd p{font-size:11.5px;color:#6a8aaa;line-height:1.6}
+.chb{padding:14px 18px}
+
+/* ═══════════════════════════════
+   RANKING
+═══════════════════════════════ */
+.rank-list{display:flex;flex-direction:column;gap:0}
+.rank-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #f5f7fb;cursor:pointer;transition:background .12s;border-radius:6px;margin-bottom:2px}
+.rank-row:hover{background:#f8fafc}
+.rank-row.rank-top{background:#e8f4ff;border-bottom:none}
+.rank-pos{font-size:11px;font-weight:700;color:#9ab0c8;width:16px;text-align:right;flex-shrink:0}
+.rank-pos.gold{color:#d97706;font-size:13px}
+.rank-pos.silver{color:#6b7280;font-size:12px}
+.rank-pos.bronze{color:#b45309;font-size:12px}
+.rank-avatar{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-weight:700}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-size:12px;font-weight:600;color:#0a2540;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-sub{font-size:10.5px;color:#8aaccc;margin-top:1px}
+.rank-bar-wrap{width:64px;height:6px;background:#eef3f8;border-radius:3px;flex-shrink:0}
+.rank-bar{height:100%;border-radius:3px}
+.rank-val{font-size:11.5px;font-weight:700;color:#0a2540;width:46px;text-align:right;flex-shrink:0}
+.rank-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;flex-shrink:0;white-space:nowrap}
+
+/* ═══════════════════════════════
+   FICHA ANALÍTICA (perfil dinámico)
+═══════════════════════════════ */
+.ficha-select-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #eef3f8;background:#f8fafc;flex-wrap:wrap}
+.ficha-label{font-size:12px;color:#6a8aaa;font-weight:500;white-space:nowrap}
+.ficha-search{font-size:12px;padding:7px 12px;border:1px solid #ccd8e4;border-radius:6px;color:#1a3a5c;background:#fff;flex:1;min-width:180px;max-width:360px}
+.ficha-card{padding:18px}
+.ficha-header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ficha-avatar{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ficha-name{font-size:14px;font-weight:700;color:#0a2540;line-height:1.3}
+.ficha-meta{font-size:11.5px;color:#8aaccc;margin-top:2px}
+.ficha-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ficha-kpi{background:#f5f7fb;border-radius:7px;padding:10px 12px}
+.fk-lbl{font-size:10px;color:#8aaccc;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.fk-val{font-size:17px;font-weight:800;color:#0a2540;line-height:1}
+.fk-sub{font-size:10px;color:#9ab0c8;margin-top:2px}
+.ficha-score-row{display:flex;align-items:center;gap:14px;padding:12px;background:#f0f6ff;border-radius:8px;border-left:4px solid #1a6ab5}
+.ficha-score-label{font-size:12px;color:#3a5a78;flex:1;line-height:1.5}
+.ficha-score-badge{font-size:22px;font-weight:800;padding:6px 14px;border-radius:8px}
+.ficha-mini-bars{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.fmb-row{display:flex;align-items:center;gap:8px}
+.fmb-lbl{font-size:11px;color:#5a7090;width:140px;flex-shrink:0;line-height:1.3}
+.fmb-track{flex:1;height:8px;background:#eef3f8;border-radius:4px}
+.fmb-fill{height:100%;border-radius:4px}
+.fmb-val{font-size:11px;font-weight:700;color:#0a2540;width:40px;text-align:right;flex-shrink:0}
+
+/* ═══════════════════════════════
+   HORIZONTAL BARS
+═══════════════════════════════ */
+.hbar{display:flex;flex-direction:column;gap:9px}
+.hbar-row{display:flex;align-items:center;gap:10px}
+.hbar-lbl{font-size:11px;color:#4a6480;width:190px;flex-shrink:0;text-align:right;line-height:1.3}
+.hbar-track{flex:1;height:9px;background:#f0f4f8;border-radius:5px}
+.hbar-fill{height:100%;border-radius:5px}
+.hbar-val{font-size:11px;font-weight:600;color:#0a2540;width:44px}
+
+/* ═══════════════════════════════
+   INSIGHT CALLOUT
+═══════════════════════════════ */
+.insight-callout{background:#eef6ff;border-left:4px solid #1a6ab5;border-radius:8px;padding:14px 18px;font-size:12.5px;color:#3a5a78;line-height:1.7;margin-top:12px}
+.insight-callout strong{color:#0a2540}
+
+/* ═══════════════════════════════
+   ALERT BADGE ROW
+═══════════════════════════════ */
+.alert-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.alert-chip{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600}
+.alert-chip.red{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.alert-chip.amber{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+.alert-chip.green{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.alert-chip.violet{background:#f5f3ff;color:#5b21b6;border:1px solid #c4b5fd}
+
+/* ═══════════════════════════════
+   DONUT
+═══════════════════════════════ */
+.donut-wrap{display:flex;align-items:center;gap:18px}
+
+/* ═══════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════ */
+.prog-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.prog-label{font-size:12px;color:#4a6480;width:155px;flex-shrink:0;line-height:1.35}
+.prog-outer{flex:1;height:12px;border-radius:6px;background:#f0f4f8;overflow:hidden}
+.prog-inner{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;transition:width .5s}
+.prog-pct{font-size:9px;font-weight:700;color:#fff}
+.prog-val-right{font-size:11.5px;font-weight:700;width:34px;text-align:right;flex-shrink:0}
+
+/* ═══════════════════════════════
+   LEGEND
+═══════════════════════════════ */
+.legend-row{display:flex;gap:14px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5a7090}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ═══════════════════════════════
+   DASHBOARD SECTION
+═══════════════════════════════ */
+.dashboard-section{background:#fff;border:1px solid #dde8f2;border-radius:14px;padding:26px;margin:20px 0;box-shadow:0 4px 18px rgba(10,37,64,.06)}
+.dashboard-intro h2{font-size:20px;font-weight:800;color:#0a2540;margin-bottom:8px}
+.dashboard-intro p{font-size:14px;color:#5a7090;line-height:1.72;max-width:900px}
+.dashboard-frame{margin:20px 0;border-radius:12px;overflow:hidden;border:1px solid #d8e4f0;background:#f8fafc;min-height:480px;display:flex;align-items:center;justify-content:center}
+.dashboard-frame iframe{width:100%;height:480px;border:0}
+.dashboard-placeholder{text-align:center;padding:40px 20px;color:#7a96b0}
+.dashboard-placeholder .ph-ico{font-size:40px;margin-bottom:12px;opacity:.5}
+.dashboard-placeholder h3{font-size:15px;font-weight:600;margin-bottom:8px;color:#4a6a8a}
+.dashboard-placeholder p{font-size:13px;color:#8aaccc;line-height:1.65;max-width:400px;margin:0 auto}
+.dashboard-placeholder code{display:inline-block;background:#e8f4ff;color:#1a4a7c;font-size:11px;padding:3px 8px;border-radius:4px;margin-top:8px}
+.dashboard-interpretation{background:#eef6ff;border-left:4px solid #1a6ab5;border-radius:8px;padding:16px 20px}
+.dashboard-interpretation h3{font-size:14px;font-weight:800;color:#0a2540;margin-bottom:6px}
+.dashboard-interpretation p{font-size:13px;color:#3a5a78;line-height:1.7}
+
+/* ═══════════════════════════════
+   SCATTER (provider)
+═══════════════════════════════ */
+.scatter-box{position:relative;background:#f8fafc;border-radius:8px;height:160px;overflow:hidden;border:1px solid #e8eef6}
+.s-dot{position:absolute;border-radius:50%;cursor:pointer}
+.s-dot:hover{transform:scale(1.3);z-index:2}
+
+/* ═══════════════════════════════
+   METHODOLOGY
+═══════════════════════════════ */
+.methodology-box{background:#f0f6ff;border:1px solid #ccd8f0;border-radius:12px;padding:24px 28px;margin-top:28px}
+.methodology-box h2{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.methodology-box p{font-size:13px;color:#3a5a78;line-height:1.72;margin-bottom:8px}
+.source-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.source-chip{background:#fff;border:1px solid #b8d0f0;color:#1a4a7c;font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:999px}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+.footer{background:#1a3a5c;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.6);gap:16px;flex-wrap:wrap;margin-top:8px}
+.footer a{color:rgba(255,255,255,.75)}
+.footer-btn{background:#1a6ab5;color:#fff!important;padding:5px 14px;border-radius:4px;font-weight:600}
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media(max-width:1100px){
+  .kpi-row-5{grid-template-columns:repeat(3,1fr)}
+  .filter-g-ent{grid-template-columns:repeat(3,1fr)}
+  .filter-g-prov{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:960px){
+  .kpi-row-5,.kpi-row-4{grid-template-columns:repeat(2,1fr)}
+  .two-col,.three-col,.col-2-1,.col-1-2{grid-template-columns:1fr}
+  .actor-tabs{flex-direction:column}
+  .actor-tab{border-right:none;border-bottom:1px solid #eef3f8}
+  .ficha-kpis{grid-template-columns:repeat(2,1fr)}
+  .filter-g-ent,.filter-g-prov{grid-template-columns:repeat(2,1fr)}
+  .edu-block{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .wrap{padding:0 14px 40px}
+  .kpi-row-5,.kpi-row-4{grid-template-columns:1fr}
+  .ficha-kpis{grid-template-columns:1fr}
+  .filter-g-ent,.filter-g-prov{grid-template-columns:1fr}
+  .nh-title{font-size:20px}
+}
+
+
+/* ═══════════════════════════════
+   TOOLTIP NARRATIVO - OBSERVATORIO OECE
+   Convierte gráficos, KPIs, rankings y mapas en elementos explicativos.
+════════════════════════════════ */
+.chart-tooltip {
+  position: fixed;
+  z-index: 99999;
+  max-width: 300px;
+  background: #07045c;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 12px;
+  line-height: 1.45;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -108%);
+  transition: opacity .12s ease, transform .12s ease;
+}
+.chart-tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -118%);
+}
+.chart-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0 7px;
+  border-style: solid;
+  border-color: #07045c transparent transparent transparent;
+}
+.chart-tooltip__title {
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.chart-tooltip__value {
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+.chart-tooltip__desc {
+  color: rgba(255, 255, 255, .84);
+  font-size: 11.5px;
+}
+.chart-tooltip__meta {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, .72);
+}
+[data-tooltip-chart],
+.rank-row,
+.hbar-row,
+.kpi-c,
+.kpi5-item,
+.hero-kpi-item,
+.insight-card,
+.funnel-step,
+.sem-card,
+.actor-tab,
+.map-tab {
+  position: relative;
+}
+[data-tooltip-chart]:focus-visible,
+.rank-row:focus-visible,
+.hbar-row:focus-visible,
+.kpi-c:focus-visible,
+.kpi5-item:focus-visible,
+.hero-kpi-item:focus-visible,
+.insight-card:focus-visible,
+.funnel-step:focus-visible,
+.sem-card:focus-visible,
+.actor-tab:focus-visible,
+.map-tab:focus-visible {
+  outline: 3px solid rgba(26,106,181,.35);
+  outline-offset: 3px;
+}
+.tooltip-help-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #5a7090;
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-radius: 999px;
+  padding: 6px 10px;
+  margin: 10px 0 0;
+}
+.tooltip-help-note::before { content: "ⓘ"; color: #1a6ab5; font-weight: 700; }
+.chart-explanation-panel {
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-left: 4px solid #1a6ab5;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 12px 0 18px;
+  font-size: 12.8px;
+  color: #3a5a78;
+  line-height: 1.65;
+}
+.chart-explanation-panel strong { color:#0a2540; }
+.dashboard-loading-slow::after {
+  content: "El dashboard está tardando más de lo esperado en cargar. Verifique su conexión o actualice la página.";
+  display: block;
+  background: #fffbea;
+  border-top: 1px solid #f5d97a;
+  color: #5f4b16;
+  font-size: 12px;
+  padding: 10px 14px;
+}
+.dashboard-loaded::after { content: ""; display: none; }
+@media (max-width: 640px) {
+  .chart-tooltip { max-width: 260px; font-size: 11.5px; }
+}
+
+</style>
+</head>
+<body data-observatorio-page="desempeno">
+
+<!-- ═══════════════════════════════
+     NAV
+═══════════════════════════════ -->
+<nav class="nav" role="navigation" aria-label="Menú principal">
+  <div class="nav-logo">OECE <span>Observatorio</span></div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Inicio</a>
+    <a class="nav-link" href="panorama.html">Panorama General</a>
+    <a class="nav-link" href="competencia.html">Competencia y Participación</a>
+    <a class="nav-link" href="eficiencia.html">Eficiencia del Sistema</a>
+    <a class="nav-link active" href="desempeno.html" aria-current="page">Desempeño de Actores</a>
+    <a class="nav-link nav-disabled" tabindex="-1" aria-disabled="true">Riesgos y Concentración</a>
+  </div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="wrap">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="index.html">Inicio</a> <span aria-hidden="true">›</span>
+    <span>Desempeño de Actores</span>
+  </nav>
+
+  <!-- NARRATIVE HEADER -->
+  <div class="narrative-header">
+    <div class="nh-eyebrow">Módulo 4 de 5</div>
+    <h1 class="nh-title">¿Cómo participan entidades y proveedores en el sistema de compras públicas?</h1>
+    <p class="nh-desc">Este módulo permite conocer el desempeño individual de las entidades públicas y los proveedores que participan en el mercado. Analiza la actividad, competitividad, eficiencia y concentración de cada actor para identificar buenas prácticas, alertas y oportunidades de mejora.</p>
+    <div class="tooltip-help-note">Pasa el cursor o usa Tab sobre rankings, barras e indicadores para ver su interpretación.</div>
+</div>
+
+  <!-- EDUCATIONAL BLOCK -->
+  <div class="edu-block" role="note" aria-label="¿Por qué importa conocer el desempeño de los actores?">
+    <div class="edu-ico" aria-hidden="true">👥</div>
+    <div>
+      <div class="edu-title">¿Por qué importa conocer el desempeño de los actores?</div>
+      <div class="edu-text">Las entidades públicas son responsables de llevar adelante los procesos de contratación con transparencia y eficiencia. Los proveedores son quienes compiten para ofrecer bienes, servicios u obras al Estado. Comprender cómo se comportan ambos actores permite identificar quiénes gestionan mejor sus procesos, quiénes concentran más contratos, y dónde pueden existir señales que requieran atención. Esta información es clave para la toma de decisiones informada y la mejora continua del sistema.</div>
+    </div>
+  </div>
+
+  <!-- ACTOR TABS -->
+  <div class="actor-tabs" role="tablist" aria-label="Seleccionar actor: Entidades o Proveedores">
+    <button class="actor-tab active" id="tab-ent" role="tab" aria-selected="true" aria-controls="panel-ent" onclick="switchTab('ent')">
+      <div class="actor-tab-indicator"></div>
+      <div class="actor-tab-ico" aria-hidden="true">🏛️</div>
+      <div class="actor-tab-label">Entidades Públicas</div>
+      <div class="actor-tab-desc">Desempeño, adjudicaciones, eficiencia y contratos por entidad</div>
+      <div class="actor-tab-count">4,000+ entidades</div>
+    </button>
+    <button class="actor-tab" id="tab-prov" role="tab" aria-selected="false" aria-controls="panel-prov" onclick="switchTab('prov')">
+      <div class="actor-tab-indicator"></div>
+      <div class="actor-tab-ico" aria-hidden="true">🤝</div>
+      <div class="actor-tab-label">Proveedores</div>
+      <div class="actor-tab-desc">Tasa de éxito, participación, diversificación y concentración</div>
+      <div class="actor-tab-count">218,000+ proveedores</div>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANEL: ENTIDADES
+  ══════════════════════════════════════════════════════ -->
+  <div class="panel active" id="panel-ent" role="tabpanel" aria-labelledby="tab-ent">
+
+    <!-- FILTERS -->
+    <div class="filter-accordion">
+      <button class="filter-acc-btn" id="fbtn-ent" onclick="toggleFilter('ent')" aria-expanded="false" aria-controls="fbody-ent">
+        <span>🔍 Explorar entidades con filtros avanzados</span>
+        <span class="filter-acc-ico" id="fico-ent" aria-hidden="true">▾</span>
+      </button>
+      <div class="filter-body" id="fbody-ent">
+        <div class="filter-g filter-g-ent">
+          <div class="fg"><div class="fl">Año</div><select class="fs" aria-label="Año"><option value="">Todos</option><option>2025</option><option>2024</option><option>2023</option></select></div>
+          <div class="fg"><div class="fl">Nivel de gobierno</div><select class="fs" aria-label="Nivel de gobierno"><option value="">Todos</option><option>Nacional</option><option>Regional</option><option>Local</option></select></div>
+          <div class="fg"><div class="fl">Sector</div><select class="fs" aria-label="Sector"><option value="">Todos</option><option>Salud</option><option>Educación</option><option>Transportes</option><option>Economía</option></select></div>
+          <div class="fg"><div class="fl">Región</div><select class="fs" aria-label="Región"><option value="">Todos</option><option>Lima</option><option>Cusco</option><option>Arequipa</option></select></div>
+          <div class="fg"><div class="fl">Tipo de entidad</div><select class="fs" aria-label="Tipo de entidad"><option value="">Todos</option><option>Ministerio</option><option>Gobierno Regional</option><option>Municipalidad</option><option>Empresa del Estado</option></select></div>
+          <div class="fi-row">
+            <button class="btn-clear" onclick="clearFilters('ent')">↺</button>
+            <button class="btn-search">Buscar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs ENTIDADES (5) -->
+    <div class="kpi-row kpi-row-5" role="region" aria-label="Indicadores de desempeño de entidades">
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#dbeafe;color:#1e40af">📋 Actividad</span>
+        <div class="k-q">¿Cuántos procesos convocaron las entidades?</div>
+        <div class="k-val" style="color:#1d4ed8">5.68 mill.</div>
+        <div class="k-sub">procesos registrados</div>
+        <div class="k-trend up">▲ +3.2% vs. año anterior</div>
+        <div class="k-interp">Total de procesos de contratación convocados por las entidades en el período seleccionado.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#d1fae5;color:#065f46">⚖️ Competitividad</span>
+        <div class="k-q">¿Qué tan competitivos son los procesos de las entidades?</div>
+        <div class="k-val" style="color:#059669">3.2</div>
+        <div class="k-sub">postores promedio por proceso</div>
+        <div class="k-trend dn">▼ Por debajo del óptimo (5+)</div>
+        <div class="k-interp">Promedio de postores por proceso de contratación. Indica el nivel de pluralidad en cada proceso convocado.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#fef3c7;color:#92400e">⏱️ Duración</span>
+        <div class="k-q">¿Cuánto demoran los procesos de las entidades?</div>
+        <div class="k-val" style="color:#b45309">45 días</div>
+        <div class="k-sub">duración promedio del proceso</div>
+        <div class="k-trend flat">→ Similar al año anterior</div>
+        <div class="k-interp">Días promedio desde la convocatoria hasta la adjudicación en los procesos de la entidad.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#f0fdf4;color:#166534">📄 Contratos menores</span>
+        <div class="k-q">¿Qué proporción son contratos por órdenes ≤8 UIT?</div>
+        <div class="k-val" style="color:#10b981">28.4%</div>
+        <div class="k-sub">del total de procesos</div>
+        <div class="k-trend up">▲ +1.8% vs. año anterior</div>
+        <div class="k-interp">Porcentaje de contrataciones por montos menores o iguales a 8 UIT respecto al total de procesos.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#fee2e2;color:#991b1b">🔴 Procesos desiertos</span>
+        <div class="k-q">¿Qué porcentaje de procesos queda sin adjudicar?</div>
+        <div class="k-val" style="color:#dc2626">11.6%</div>
+        <div class="k-sub">procesos declarados desiertos</div>
+        <div class="k-trend dn">▲ +0.9% vs. año anterior</div>
+        <div class="k-interp">Procesos que no lograron adjudicar por falta de postores válidos o por situaciones durante el proceso.</div>
+      </div>
+    </div>
+
+    <!-- RANKING + FICHA -->
+    <div class="sec-hdr">
+      <h2>Ranking de entidades y ficha de desempeño</h2>
+      <p>Explora el ranking de entidades por tasa de adjudicación y selecciona una para ver su perfil analítico completo.</p>
+    </div>
+    <div class="col-1-2">
+      <!-- Ranking entidades -->
+      <div class="chart-card">
+        <div class="chd">
+          <h3>Ranking por tasa de adjudicación exitosa</h3>
+          <p>Entidades con mayor porcentaje de procesos que culminaron en contrato.</p>
+        </div>
+        <div class="chb" style="padding:10px 14px">
+          <div class="rank-list" role="list" aria-label="Ranking de entidades por tasa de adjudicación">
+            <div class="rank-row rank-top" role="listitem" onclick="showFicha('ent','mtc')" style="cursor:pointer" data-title="Entidad con mayor actividad" data-indicator="Ranking de entidades" data-description="Este ranking permite identificar entidades con mayor participación en el mercado público, sin constituir una calificación institucional.">
+              <span class="rank-pos gold" aria-label="1er lugar">🥇</span>
+              <div class="rank-avatar" style="background:#dbeafe;color:#1e40af">TC</div>
+              <div class="rank-info"><div class="rank-name">Min. Transportes y Comunicaciones</div><div class="rank-sub">Gobierno Nacional · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:97%;background:#10b981"></div></div>
+              <span class="rank-val" style="color:#059669">97%</span>
+              <span class="rank-badge" style="background:#d1fae5;color:#065f46">Alta</span>
+            </div>
+            <div class="rank-row" role="listitem" onclick="showFicha('ent','mef')" style="cursor:pointer">
+              <span class="rank-pos silver">2</span>
+              <div class="rank-avatar" style="background:#ede9fe;color:#6d28d9">EF</div>
+              <div class="rank-info"><div class="rank-name">Min. Economía y Finanzas</div><div class="rank-sub">Gobierno Nacional · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:94%;background:#34d399"></div></div>
+              <span class="rank-val">94%</span>
+              <span class="rank-badge" style="background:#d1fae5;color:#065f46">Alta</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos bronze">3</span>
+              <div class="rank-avatar" style="background:#fef3c7;color:#d97706">GC</div>
+              <div class="rank-info"><div class="rank-name">Gobierno Regional Cusco</div><div class="rank-sub">Gobierno Regional · Cusco</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:91%;background:#6ee7b7"></div></div>
+              <span class="rank-val">91%</span>
+              <span class="rank-badge" style="background:#d1fae5;color:#065f46">Alta</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">4</span>
+              <div class="rank-avatar" style="background:#e0f2fe;color:#0369a1">ML</div>
+              <div class="rank-info"><div class="rank-name">Municipalidad de Lima</div><div class="rank-sub">Gobierno Local · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:88%;background:#a7f3d0"></div></div>
+              <span class="rank-val">88%</span>
+              <span class="rank-badge" style="background:#fef3c7;color:#92400e">Media</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">5</span>
+              <div class="rank-avatar" style="background:#fce7f3;color:#be185d">ES</div>
+              <div class="rank-info"><div class="rank-name">ESSALUD</div><div class="rank-sub">Organismo Autónomo · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:84%;background:#bbf7d0"></div></div>
+              <span class="rank-val">84%</span>
+              <span class="rank-badge" style="background:#fef3c7;color:#92400e">Media</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">6</span>
+              <div class="rank-avatar" style="background:#f0fdf4;color:#166534">GM</div>
+              <div class="rank-info"><div class="rank-name">Gobierno Regional Madre de Dios</div><div class="rank-sub">Gobierno Regional · Madre de Dios</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:80%;background:#d1fae5"></div></div>
+              <span class="rank-val">80%</span>
+              <span class="rank-badge" style="background:#fef3c7;color:#92400e">Media</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">7</span>
+              <div class="rank-avatar" style="background:#fef2f2;color:#dc2626">HP</div>
+              <div class="rank-info"><div class="rank-name">Hosp. Nacional Dos de Mayo</div><div class="rank-sub">Sector Salud · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:62%;background:#fca5a5"></div></div>
+              <span class="rank-val">62%</span>
+              <span class="rank-badge" style="background:#fee2e2;color:#991b1b">Baja</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">8</span>
+              <div class="rank-avatar" style="background:#f5f3ff;color:#7c3aed">PJ</div>
+              <div class="rank-info"><div class="rank-name">Poder Judicial</div><div class="rank-sub">Organismo Autónomo · Nacional</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:55%;background:#e9d5ff"></div></div>
+              <span class="rank-val">55%</span>
+              <span class="rank-badge" style="background:#fee2e2;color:#991b1b">Baja</span>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:10px">
+            <button style="font-size:12px;color:#1a6ab5;background:none;border:none;cursor:pointer;font-weight:600">Ver ranking completo →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FICHA ANALÍTICA ENTIDAD -->
+      <div class="chart-card" id="ficha-ent-card">
+        <div class="ficha-select-bar">
+          <span class="ficha-label">Ficha de desempeño:</span>
+          <input class="ficha-search" id="ficha-ent-search" placeholder="Buscar entidad…" aria-label="Buscar entidad para ver su ficha de desempeño" oninput="filterFichaSearch('ent', this.value)">
+        </div>
+        <div class="ficha-card" id="ficha-ent-content">
+          <div class="ficha-header">
+            <div class="ficha-avatar" style="background:#dbeafe;color:#1e40af">🏛️</div>
+            <div>
+              <div class="ficha-name">Min. Transportes y Comunicaciones</div>
+              <div class="ficha-meta">Gobierno Nacional · Sector Transportes · Lima</div>
+            </div>
+          </div>
+          <!-- Alertas rápidas -->
+          <div class="alert-row" aria-label="Alertas de desempeño de la entidad">
+            <div class="alert-chip green">✅ Alta adjudicación</div>
+            <div class="alert-chip amber">⚠️ Contratos menores: 32%</div>
+            <div class="alert-chip green">✅ Baja tasa de desiertos</div>
+            <div class="alert-chip violet">📄 285 contratos publicados</div>
+          </div>
+          <!-- KPIs ficha -->
+          <div class="ficha-kpis" role="list" aria-label="Indicadores de la entidad seleccionada">
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Adjudicaciones</div>
+              <div class="fk-val" style="color:#0a2540">1,247</div>
+              <div class="fk-sub">en el período</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Monto adjudicado</div>
+              <div class="fk-val" style="color:#1d4ed8">S/ 4.2B</div>
+              <div class="fk-sub">soles</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Tasa de adjudicación</div>
+              <div class="fk-val" style="color:#059669">97%</div>
+              <div class="fk-sub">de procesos</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Promedio postores</div>
+              <div class="fk-val" style="color:#7c3aed">4.8</div>
+              <div class="fk-sub">por proceso</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Duración promedio</div>
+              <div class="fk-val" style="color:#b45309">38 días</div>
+              <div class="fk-sub">por proceso</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Procesos desiertos</div>
+              <div class="fk-val" style="color:#dc2626">3.1%</div>
+              <div class="fk-sub">del total</div>
+            </div>
+          </div>
+          <!-- Score ciudadano -->
+          <div class="ficha-score-row" role="status" aria-label="Nivel de eficiencia de la entidad: Alto">
+            <div class="ficha-score-label">
+              <strong>Nivel de eficiencia institucional</strong><br>
+              Basado en tasa de adjudicación, duración promedio y competitividad de sus procesos.
+            </div>
+            <div class="ficha-score-badge" style="background:#d1fae5;color:#059669">Alto</div>
+          </div>
+          <!-- Mini bars -->
+          <div class="ficha-mini-bars" aria-label="Indicadores de composición de contratos">
+            <div class="fmb-row"><span class="fmb-lbl">Procesos competitivos</span><div class="fmb-track"><div class="fmb-fill" style="width:68%;background:#0ea5e9"></div></div><span class="fmb-val">68%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Contratos menores ≤8 UIT</span><div class="fmb-track"><div class="fmb-fill" style="width:32%;background:#f59e0b"></div></div><span class="fmb-val">32%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Contratos publicados</span><div class="fmb-track"><div class="fmb-fill" style="width:91%;background:#10b981"></div></div><span class="fmb-val">91%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Procesos con nulidad</span><div class="fmb-track"><div class="fmb-fill" style="width:1.4%;background:#ef4444"></div></div><span class="fmb-val">1.4%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTRATOS MENORES + PUBLICADOS -->
+    <div class="two-col">
+      <div class="chart-card">
+        <div class="chd">
+          <h3>¿Qué entidades concentran más contratos menores?</h3>
+          <p>Porcentaje de contratos por órdenes ≤8 UIT respecto al total de procesos de la entidad. Un porcentaje alto puede merecer seguimiento analítico.</p>
+        </div>
+        <div class="chb">
+          <div class="hbar" role="list" aria-label="Concentración de contratos menores por entidad">
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Mun. Dist. San Juan de Lurigancho</span><div class="hbar-track"><div class="hbar-fill" style="width:100%;background:#ef4444"></div></div><span class="hbar-val">68%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Gobierno Regional Loreto</span><div class="hbar-track"><div class="hbar-fill" style="width:80%;background:#f97316"></div></div><span class="hbar-val">55%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Mun. Provincial del Callao</span><div class="hbar-track"><div class="hbar-fill" style="width:64%;background:#f59e0b"></div></div><span class="hbar-val">43%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Hospital Regional Iquitos</span><div class="hbar-track"><div class="hbar-fill" style="width:52%;background:#fcd34d"></div></div><span class="hbar-val">36%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Mun. Dist. Villa El Salvador</span><div class="hbar-track"><div class="hbar-fill" style="width:42%;background:#fde68a"></div></div><span class="hbar-val">29%</span></div>
+          </div>
+          <div class="insight-callout"><strong>¿Qué significa?</strong> Las entidades con alta concentración de órdenes ≤8 UIT realizan la mayor parte de sus compras por montos pequeños sin proceso competitivo formal. Esto puede reflejar la naturaleza de sus operaciones o una estrategia de fraccionamiento que merece análisis.</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chd">
+          <h3>¿Cuántos contratos publican las entidades en el sistema?</h3>
+          <p>Porcentaje de contratos efectivamente publicados en el sistema institucional. Un alto porcentaje indica mayor transparencia en la gestión contractual.</p>
+        </div>
+        <div class="chb">
+          <!-- Donut -->
+          <div class="donut-wrap">
+            <svg width="130" height="130" viewBox="0 0 130 130" aria-label="Gráfico donut: 78% contratos publicados, 22% no publicados" role="img">
+              <circle cx="65" cy="65" r="48" fill="none" stroke="#f0f4f8" stroke-width="20"/>
+              <circle cx="65" cy="65" r="48" fill="none" stroke="#0ea5e9" stroke-width="20" stroke-dasharray="235 67" stroke-dashoffset="0" transform="rotate(-90 65 65)"/>
+              <circle cx="65" cy="65" r="48" fill="none" stroke="#e0f2fe" stroke-width="20" stroke-dasharray="67 235" stroke-dashoffset="-235" transform="rotate(-90 65 65)"/>
+              <text x="65" y="60" text-anchor="middle" font-size="20" font-weight="800" fill="#0a2540" font-family="Inter">78%</text>
+              <text x="65" y="74" text-anchor="middle" font-size="9" fill="#9ab0c8" font-family="Inter">publicados</text>
+            </svg>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:#0ea5e9;flex-shrink:0" aria-hidden="true"></div><span style="font-size:12px;color:#3a5070">Contratos publicados: <strong>78%</strong></span></div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:#e0f2fe;flex-shrink:0" aria-hidden="true"></div><span style="font-size:12px;color:#3a5070">No publicados: <strong>22%</strong></span></div>
+              <div class="insight-callout" style="margin-top:4px;font-size:12px">Publicar el contrato es un indicador de transparencia. El 22% que no publica puede ser objeto de seguimiento.</div>
+            </div>
+          </div>
+          <!-- Prog bars por sector -->
+          <div style="margin-top:14px">
+            <div style="font-size:12px;font-weight:600;color:#0a2540;margin-bottom:10px">Porcentaje de publicación por sector</div>
+            <div class="prog-row" role="group" aria-label="Transportes: 94%"><div class="prog-label">Transportes</div><div class="prog-outer"><div class="prog-inner" style="width:94%;background:#10b981"><span class="prog-pct">94%</span></div></div><div class="prog-val-right" style="color:#059669">94%</div></div>
+            <div class="prog-row" role="group" aria-label="Economía: 91%"><div class="prog-label">Economía</div><div class="prog-outer"><div class="prog-inner" style="width:91%;background:#10b981"><span class="prog-pct">91%</span></div></div><div class="prog-val-right" style="color:#059669">91%</div></div>
+            <div class="prog-row" role="group" aria-label="Salud: 74%"><div class="prog-label">Salud</div><div class="prog-outer"><div class="prog-inner" style="width:74%;background:#0ea5e9"><span class="prog-pct">74%</span></div></div><div class="prog-val-right">74%</div></div>
+            <div class="prog-row" role="group" aria-label="Educación: 68%"><div class="prog-label">Educación</div><div class="prog-outer"><div class="prog-inner" style="width:68%;background:#38bdf8"><span class="prog-pct">68%</span></div></div><div class="prog-val-right">68%</div></div>
+            <div class="prog-row" role="group" aria-label="Defensa: 52%"><div class="prog-label">Defensa</div><div class="prog-outer"><div class="prog-inner" style="width:52%;background:#f59e0b"><span class="prog-pct">52%</span></div></div><div class="prog-val-right" style="color:#d97706">52%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD ENTIDADES -->
+    <div class="dashboard-section" role="region" aria-labelledby="dash-ent-title">
+      <div class="dashboard-intro">
+        <h2 id="dash-ent-title">Explora el desempeño de entidades públicas</h2>
+        <p>Este tablero permite analizar en detalle el comportamiento de las entidades: adjudicaciones, competitividad, duración de procesos, contratos menores, procesos desiertos y contratos publicados. Filtra por entidad, sector, región o nivel de gobierno.</p>
+      </div>
+      <div class="dashboard-frame" aria-label="Tablero interactivo de desempeño de entidades">
+        <!-- ════════════════════════════════════════════════════════
+             INSTRUCCIÓN TÉCNICA:
+             Reemplazar este bloque con el iframe real:
+             <iframe
+               src="URL_DASHBOARD_DESEMPENO_ENTIDADES_POWER_BI_O_TABLEAU"
+               title="Dashboard Desempeño de Entidades Públicas"
+               loading="lazy"
+               allowfullscreen
+               style="width:100%;height:480px;border:0">
+             </iframe>
+        ════════════════════════════════════════════════════════ -->
+        <div class="dashboard-placeholder">
+          <div class="ph-ico" aria-hidden="true">🏛️</div>
+          <h3>Tablero de entidades disponible próximamente</h3>
+          <p>Este espacio recibirá el dashboard de Power BI o Tableau con los indicadores de desempeño por entidad pública.</p>
+          <code>Reemplazar src con el enlace oficial del dashboard de entidades</code>
+        </div>
+      </div>
+      <div class="dashboard-interpretation" role="note">
+        <h3>¿Cómo interpretar este tablero?</h3>
+        <p>Busca primero la entidad de tu interés usando los filtros disponibles. Revisa su tasa de adjudicación y compárala con el promedio del sector. Observa si la proporción de contratos menores es elevada y si sus contratos están publicados. Estas señales permiten conocer el nivel de transparencia y eficiencia de la gestión contractual de cada entidad.</p>
+      </div>
+    </div>
+
+  </div><!-- /panel-ent -->
+
+  <!-- ══════════════════════════════════════════════════════
+       PANEL: PROVEEDORES
+  ══════════════════════════════════════════════════════ -->
+  <div class="panel" id="panel-prov" role="tabpanel" aria-labelledby="tab-prov">
+
+    <!-- FILTERS PROVEEDORES -->
+    <div class="filter-accordion">
+      <button class="filter-acc-btn" id="fbtn-prov" onclick="toggleFilter('prov')" aria-expanded="false" aria-controls="fbody-prov">
+        <span>🔍 Explorar proveedores con filtros avanzados</span>
+        <span class="filter-acc-ico" id="fico-prov" aria-hidden="true">▾</span>
+      </button>
+      <div class="filter-body" id="fbody-prov">
+        <div class="filter-g filter-g-prov">
+          <div class="fg"><div class="fl">Año</div><select class="fs" aria-label="Año"><option value="">Todos</option><option>2025</option><option>2024</option></select></div>
+          <div class="fg"><div class="fl">Tipo de proveedor</div><select class="fs" aria-label="Tipo de proveedor"><option value="">Todos</option><option>Persona Natural</option><option>Persona Jurídica</option><option>Consorcio</option></select></div>
+          <div class="fg"><div class="fl">Objeto contractual</div><select class="fs" aria-label="Objeto"><option value="">Todos</option><option>Bienes</option><option>Servicios</option><option>Obras</option></select></div>
+          <div class="fg"><div class="fl">Región</div><select class="fs" aria-label="Región"><option value="">Todos</option><option>Lima</option><option>Cusco</option><option>Arequipa</option></select></div>
+          <div class="fi-row">
+            <button class="btn-clear" onclick="clearFilters('prov')">↺</button>
+            <button class="btn-search">Buscar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs PROVEEDORES (4) -->
+    <div class="kpi-row kpi-row-4" role="region" aria-label="Indicadores de desempeño de proveedores">
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#d1fae5;color:#065f46">🎯 Éxito</span>
+        <div class="k-q">¿Qué porcentaje de proveedores activos logra adjudicar?</div>
+        <div class="k-val" style="color:#059669">72%</div>
+        <div class="k-sub">de proveedores participantes</div>
+        <div class="k-trend up">▲ +1.4% vs. año anterior</div>
+        <div class="k-interp">De cada 100 proveedores que participaron en procesos, 72 lograron al menos una adjudicación.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#fef3c7;color:#92400e">📍 Participación</span>
+        <div class="k-q">¿Cuántos procesos distintos abarca un proveedor en promedio?</div>
+        <div class="k-val" style="color:#d97706">2.8</div>
+        <div class="k-sub">procesos por proveedor adjudicado</div>
+        <div class="k-trend flat">→ Estable</div>
+        <div class="k-interp">Número promedio de procesos en los que participa un proveedor que logró adjudicar. Indica nivel de actividad en el mercado.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#dbeafe;color:#1e40af">🌐 Diversificación</span>
+        <div class="k-q">¿En cuántos tipos de objeto contractual participan los proveedores?</div>
+        <div class="k-val" style="color:#1d4ed8">1.4</div>
+        <div class="k-sub">rubros promedio por proveedor</div>
+        <div class="k-trend dn">▼ Baja diversificación</div>
+        <div class="k-interp">La mayoría de proveedores se especializa en un solo tipo de contratación. Una mayor diversificación puede indicar mayor capacidad de respuesta.</div>
+      </div>
+      <div class="kpi-c">
+        <span class="k-tag" style="background:#fee2e2;color:#991b1b">⚠️ Concentración</span>
+        <div class="k-q">¿Cuánto del monto lo concentran los 10 principales proveedores?</div>
+        <div class="k-val" style="color:#dc2626">38%</div>
+        <div class="k-sub">del monto adjudicado</div>
+        <div class="k-trend dn">▲ +2.1% vs. año anterior</div>
+        <div class="k-interp">Los 10 proveedores con mayor monto adjudicado concentran el 38% del total. Este indicador muestra la distribución del mercado.</div>
+      </div>
+    </div>
+
+    <!-- RANKING PROVEEDORES + FICHA -->
+    <div class="sec-hdr">
+      <h2>Ranking de proveedores y perfil de participación</h2>
+      <p>Explora quiénes son los proveedores más activos en el mercado público y accede a su ficha de participación.</p>
+    </div>
+    <div class="col-1-2">
+      <!-- Ranking -->
+      <div class="chart-card">
+        <div class="chd">
+          <h3>Top proveedores por monto adjudicado</h3>
+          <p>Ranking de los 8 proveedores con mayor participación económica en el período analizado.</p>
+        </div>
+        <div class="chb" style="padding:10px 14px">
+          <div class="rank-list" role="list" aria-label="Ranking de proveedores por monto adjudicado">
+            <div class="rank-row rank-top" role="listitem" onclick="showFicha('prov','a')" style="cursor:pointer">
+              <span class="rank-pos gold">🥇</span>
+              <div class="rank-avatar" style="background:#dbeafe;color:#1e40af">C1</div>
+              <div class="rank-info"><div class="rank-name">Consorcio Infraestructura Perú SAC</div><div class="rank-sub">Consorcio · Obras · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:100%;background:#3b82f6"></div></div>
+              <span class="rank-val">S/2.8B</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos silver">2</span>
+              <div class="rank-avatar" style="background:#d1fae5;color:#065f46">TS</div>
+              <div class="rank-info"><div class="rank-name">Tech Solutions del Perú EIRL</div><div class="rank-sub">Persona Jurídica · Servicios · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:80%;background:#60a5fa"></div></div>
+              <span class="rank-val">S/2.2B</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos bronze">3</span>
+              <div class="rank-avatar" style="background:#fef3c7;color:#d97706">GC</div>
+              <div class="rank-info"><div class="rank-name">Grupo Constructor Lima SAC</div><div class="rank-sub">Persona Jurídica · Obras · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:58%;background:#93c5fd"></div></div>
+              <span class="rank-val">S/1.6B</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">4</span>
+              <div class="rank-avatar" style="background:#f0fdf4;color:#166534">SI</div>
+              <div class="rank-info"><div class="rank-name">Servicios Integrales Perú SAC</div><div class="rank-sub">Persona Jurídica · Bienes · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:40%;background:#bfdbfe"></div></div>
+              <span class="rank-val">S/1.1B</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">5</span>
+              <div class="rank-avatar" style="background:#fce7f3;color:#be185d">MP</div>
+              <div class="rank-info"><div class="rank-name">Médica Perú Distribuciones SAC</div><div class="rank-sub">Persona Jurídica · Bienes · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:26%;background:#dbeafe"></div></div>
+              <span class="rank-val">S/730M</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">6</span>
+              <div class="rank-avatar" style="background:#f5f3ff;color:#7c3aed">CP</div>
+              <div class="rank-info"><div class="rank-name">Cons. Vial del Pacífico</div><div class="rank-sub">Consorcio · Obras · Lima</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:18%;background:#e0e7ff"></div></div>
+              <span class="rank-val">S/505M</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">7</span>
+              <div class="rank-avatar" style="background:#fef2f2;color:#dc2626">AG</div>
+              <div class="rank-info"><div class="rank-name">Agro Suministros SAC</div><div class="rank-sub">Persona Jurídica · Bienes · Ica</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:12%;background:#fee2e2"></div></div>
+              <span class="rank-val">S/337M</span>
+            </div>
+            <div class="rank-row" role="listitem">
+              <span class="rank-pos">8</span>
+              <div class="rank-avatar" style="background:#f0fdf4;color:#166534">HP</div>
+              <div class="rank-info"><div class="rank-name">Hospital Privado del Norte SAC</div><div class="rank-sub">Persona Jurídica · Servicios · La Libertad</div></div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:8%;background:#d1fae5"></div></div>
+              <span class="rank-val">S/225M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FICHA PROVEEDOR -->
+      <div class="chart-card">
+        <div class="ficha-select-bar">
+          <span class="ficha-label">Ficha de participación:</span>
+          <input class="ficha-search" placeholder="Buscar proveedor…" aria-label="Buscar proveedor para ver su ficha de participación">
+        </div>
+        <div class="ficha-card">
+          <div class="ficha-header">
+            <div class="ficha-avatar" style="background:#dbeafe;color:#1e40af">🤝</div>
+            <div>
+              <div class="ficha-name">Consorcio Infraestructura Perú SAC</div>
+              <div class="ficha-meta">Consorcio · Obras · Lima · RUC: 20xxxxxxx</div>
+            </div>
+          </div>
+          <!-- Alertas -->
+          <div class="alert-row" aria-label="Alertas de participación del proveedor">
+            <div class="alert-chip green">✅ Alta tasa de éxito</div>
+            <div class="alert-chip violet">📦 Especializado en Obras</div>
+            <div class="alert-chip amber">⚠️ Alta concentración (2 entidades)</div>
+          </div>
+          <!-- KPIs -->
+          <div class="ficha-kpis" role="list">
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Procesos participados</div>
+              <div class="fk-val" style="color:#0a2540">218</div>
+              <div class="fk-sub">en el período</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Adjudicaciones</div>
+              <div class="fk-val" style="color:#059669">174</div>
+              <div class="fk-sub">80% tasa de éxito</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Monto adjudicado</div>
+              <div class="fk-val" style="color:#1d4ed8">S/ 2.8B</div>
+              <div class="fk-sub">soles</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Entidades distintas</div>
+              <div class="fk-val" style="color:#7c3aed">12</div>
+              <div class="fk-sub">clientes públicos</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Objeto principal</div>
+              <div class="fk-val" style="color:#0a2540;font-size:14px">Obras</div>
+              <div class="fk-sub">100% concentración</div>
+            </div>
+            <div class="ficha-kpi" role="listitem">
+              <div class="fk-lbl">Sanciones registradas</div>
+              <div class="fk-val" style="color:#059669">0</div>
+              <div class="fk-sub">sin sanciones vigentes</div>
+            </div>
+          </div>
+          <!-- Score -->
+          <div class="ficha-score-row" role="status" aria-label="Nivel de desempeño del proveedor: Alto">
+            <div class="ficha-score-label">
+              <strong>Nivel de desempeño en el mercado</strong><br>
+              Basado en tasa de éxito, diversificación de entidades y ausencia de sanciones.
+            </div>
+            <div class="ficha-score-badge" style="background:#d1fae5;color:#059669">Alto</div>
+          </div>
+          <!-- Mini bars -->
+          <div class="ficha-mini-bars" aria-label="Indicadores de participación del proveedor">
+            <div class="fmb-row"><span class="fmb-lbl">Tasa de adjudicación</span><div class="fmb-track"><div class="fmb-fill" style="width:80%;background:#10b981"></div></div><span class="fmb-val">80%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Concentración en Obras</span><div class="fmb-track"><div class="fmb-fill" style="width:100%;background:#3b82f6"></div></div><span class="fmb-val">100%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Contratos en Lima</span><div class="fmb-track"><div class="fmb-fill" style="width:76%;background:#7dd3fc"></div></div><span class="fmb-val">76%</span></div>
+            <div class="fmb-row"><span class="fmb-lbl">Sanciones vigentes</span><div class="fmb-track"><div class="fmb-fill" style="width:0%;background:#ef4444"></div></div><span class="fmb-val">0%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS PROVEEDORES ROW 2 -->
+    <div class="two-col">
+      <!-- Diversificación -->
+      <div class="chart-card">
+        <div class="chd">
+          <h3>¿En qué rubros se especializan los proveedores?</h3>
+          <p>Distribución de proveedores por objeto contractual principal. La mayoría se especializa en un único tipo de contratación.</p>
+        </div>
+        <div class="chb">
+          <div class="hbar" role="list" aria-label="Distribución de proveedores por objeto contractual">
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Bienes</span><div class="hbar-track"><div class="hbar-fill" style="width:100%;background:#0ea5e9"></div></div><span class="hbar-val">44.2%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Servicios en general</span><div class="hbar-track"><div class="hbar-fill" style="width:78%;background:#38bdf8"></div></div><span class="hbar-val">34.6%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Consultoría de obras</span><div class="hbar-track"><div class="hbar-fill" style="width:32%;background:#7dd3fc"></div></div><span class="hbar-val">14.0%</span></div>
+            <div class="hbar-row" role="listitem"><span class="hbar-lbl">Obras</span><div class="hbar-track"><div class="hbar-fill" style="width:16%;background:#bae6fd"></div></div><span class="hbar-val">7.2%</span></div>
+          </div>
+          <div class="insight-callout" style="margin-top:12px"><strong>Lectura:</strong> Los proveedores de bienes y servicios concentran el 79% del total. Los proveedores de obras, aunque menos en número, gestionan montos proporcionales más altos por proceso.</div>
+        </div>
+      </div>
+      <!-- Concentración scatter -->
+      <div class="chart-card">
+        <div class="chd">
+          <h3>Relación entre participación y concentración de monto</h3>
+          <p>Cada punto es un proveedor. La posición horizontal indica cuántos procesos ganó; la vertical, qué porcentaje del monto total concentra. Los puntos rojos merecer análisis de concentración.</p>
+        </div>
+        <div class="chb">
+          <div class="scatter-box" aria-label="Scatter: participación vs concentración de monto por proveedor" role="img">
+            <svg style="position:absolute;inset:0" width="100%" height="100%" viewBox="0 0 280 155" preserveAspectRatio="none">
+              <line x1="0" y1="38" x2="280" y2="38" stroke="#f0f4f8" stroke-width="1"/>
+              <line x1="0" y1="76" x2="280" y2="76" stroke="#f0f4f8" stroke-width="1"/>
+              <line x1="0" y1="114" x2="280" y2="114" stroke="#f0f4f8" stroke-width="1"/>
+              <!-- Zona de alerta -->
+              <rect x="190" y="0" width="90" height="60" fill="rgba(239,68,68,.06)" rx="4"/>
+              <text x="235" y="12" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="600">⚠ Alta concentración</text>
+            </svg>
+            <!-- dots -->
+            <div class="s-dot" style="width:8px;height:8px;background:#10b981;top:110px;left:24px;opacity:.8" title="Baja participación, bajo monto"></div>
+            <div class="s-dot" style="width:8px;height:8px;background:#10b981;top:105px;left:40px;opacity:.8"></div>
+            <div class="s-dot" style="width:9px;height:9px;background:#10b981;top:96px;left:60px;opacity:.8"></div>
+            <div class="s-dot" style="width:10px;height:10px;background:#38bdf8;top:88px;left:84px;opacity:.8"></div>
+            <div class="s-dot" style="width:10px;height:10px;background:#38bdf8;top:82px;left:104px;opacity:.8"></div>
+            <div class="s-dot" style="width:10px;height:10px;background:#7dd3fc;top:70px;left:128px;opacity:.8"></div>
+            <div class="s-dot" style="width:11px;height:11px;background:#f59e0b;top:58px;left:150px;opacity:.85"></div>
+            <div class="s-dot" style="width:11px;height:11px;background:#f59e0b;top:52px;left:168px;opacity:.85"></div>
+            <div class="s-dot" style="width:14px;height:14px;background:#ef4444;top:36px;left:200px;opacity:.9" title="Alta concentración"></div>
+            <div class="s-dot" style="width:16px;height:16px;background:#dc2626;top:18px;left:228px;opacity:.9"></div>
+            <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:9px;color:#9ab0c8">→ Cantidad de procesos adjudicados</div>
+            <div style="position:absolute;top:50%;left:4px;transform:translateY(-50%) rotate(-90deg);font-size:9px;color:#9ab0c8;white-space:nowrap">↑ % del monto total</div>
+          </div>
+          <div class="legend-row" style="margin-top:10px">
+            <div class="leg-item"><div class="leg-dot" style="background:#10b981;border-radius:50%"></div>Sin alerta</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#f59e0b;border-radius:50%"></div>Seguimiento</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#ef4444;border-radius:50%"></div>Alta concentración</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SANCIONES -->
+    <div class="chart-card" style="margin-bottom:16px">
+      <div class="chd">
+        <h3>¿Cuántos proveedores tienen sanciones registradas?</h3>
+        <p>Proveedores con inhabilitaciones, suspensiones o multas registradas en el período. Un proveedor sancionado no puede contratar con el Estado durante la vigencia de su sanción.</p>
+      </div>
+      <div class="chb">
+        <div class="two-col" style="gap:20px;align-items:start;margin:0">
+          <div>
+            <div class="prog-row" role="group" aria-label="Proveedores sin sanción: 96.4%"><div class="prog-label">Sin sanción activa</div><div class="prog-outer"><div class="prog-inner" style="width:96.4%;background:#10b981"><span class="prog-pct">96.4%</span></div></div><div class="prog-val-right" style="color:#059669">96.4%</div></div>
+            <div class="prog-row" role="group" aria-label="Inhabilitados: 2.1%"><div class="prog-label">Inhabilitados</div><div class="prog-outer"><div class="prog-inner" style="width:21%;background:#ef4444"><span class="prog-pct" style="font-size:8px">2.1%</span></div></div><div class="prog-val-right" style="color:#dc2626">2.1%</div></div>
+            <div class="prog-row" role="group" aria-label="Con multa vigente: 1.1%"><div class="prog-label">Con multa vigente</div><div class="prog-outer"><div class="prog-inner" style="width:11%;background:#f59e0b"><span class="prog-pct" style="font-size:8px">1.1%</span></div></div><div class="prog-val-right" style="color:#d97706">1.1%</div></div>
+            <div class="prog-row" role="group" aria-label="Suspendidos temporalmente: 0.4%"><div class="prog-label">Suspendidos</div><div class="prog-outer"><div class="prog-inner" style="width:4%;background:#a78bfa"><span class="prog-pct" style="font-size:7px">0.4%</span></div></div><div class="prog-val-right" style="color:#7c3aed">0.4%</div></div>
+          </div>
+          <div>
+            <div class="insight-callout">
+              <strong>¿Qué significan las sanciones?</strong> Un proveedor inhabilitado no puede participar en ningún proceso de contratación pública durante la vigencia de la sanción. El Observatorio identifica estos casos para contribuir a la integridad del mercado.<br><br>
+              El 3.6% de proveedores con alguna sanción activa representa una señal que los órganos de control y las entidades deben considerar al evaluar la elegibilidad de los postores.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD PROVEEDORES -->
+    <div class="dashboard-section" role="region" aria-labelledby="dash-prov-title">
+      <div class="dashboard-intro">
+        <h2 id="dash-prov-title">Explora el desempeño de proveedores</h2>
+        <p>Este tablero permite analizar la participación, tasa de éxito, diversificación y concentración de los proveedores en el mercado público. Identifica patrones de comportamiento, señales de concentración y la evolución histórica de los principales actores del mercado.</p>
+      </div>
+      <div class="dashboard-frame" aria-label="Tablero interactivo de desempeño de proveedores">
+        <!-- ════════════════════════════════════════════════════════
+             INSTRUCCIÓN TÉCNICA:
+             Reemplazar este bloque con el iframe real:
+             <iframe
+               src="URL_DASHBOARD_DESEMPENO_PROVEEDORES_POWER_BI_O_TABLEAU"
+               title="Dashboard Desempeño de Proveedores en Contrataciones Públicas"
+               loading="lazy"
+               allowfullscreen
+               style="width:100%;height:480px;border:0">
+             </iframe>
+        ════════════════════════════════════════════════════════ -->
+        <div class="dashboard-placeholder">
+          <div class="ph-ico" aria-hidden="true">🤝</div>
+          <h3>Tablero de proveedores disponible próximamente</h3>
+          <p>Este espacio recibirá el dashboard de Power BI o Tableau con los indicadores de desempeño, participación y concentración por proveedor.</p>
+          <code>Reemplazar src con el enlace oficial del dashboard de proveedores</code>
+        </div>
+      </div>
+      <div class="dashboard-interpretation" role="note">
+        <h3>¿Qué debes observar en este tablero?</h3>
+        <p>Identifica a los proveedores con mayor monto adjudicado y revisa si están concentrados en pocas entidades o procesos. Analiza su tasa de éxito y si tienen sanciones registradas. Compara la diversificación de objetos contractuales entre los principales actores para detectar posibles señales de concentración en el mercado.</p>
+      </div>
+    </div>
+
+  </div><!-- /panel-prov -->
+
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <span>Central de consultas: 01-614626 · Opción 7</span>
+    <a href="#">Formulario de contacto</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="footer-btn" href="#">Soporte</a>
+    <span>© OECE – DGDIC · 2025</span>
+  </div>
+</footer>
+
+<script>
+/* ── Tab switching ── */
+function switchTab(tab){
+  ['ent','prov'].forEach(function(t){
+    document.getElementById('panel-'+t).classList.remove('active');
+    var btn=document.getElementById('tab-'+t);
+    btn.classList.remove('active');
+    btn.setAttribute('aria-selected','false');
+  });
+  document.getElementById('panel-'+tab).classList.add('active');
+  var active=document.getElementById('tab-'+tab);
+  active.classList.add('active');
+  active.setAttribute('aria-selected','true');
+}
+
+/* ── Filters ── */
+function toggleFilter(id){
+  var body=document.getElementById('fbody-'+id);
+  var ico=document.getElementById('fico-'+id);
+  var btn=document.getElementById('fbtn-'+id);
+  var open=body.classList.contains('open');
+  body.classList.toggle('open');
+  ico.classList.toggle('open');
+  btn.setAttribute('aria-expanded',!open);
+}
+function clearFilters(id){
+  document.querySelectorAll('#fbody-'+id+' select').forEach(function(s){s.selectedIndex=0});
+}
+
+/* ── Ficha analítica: cambia el contenido de la ficha al hacer clic en ranking ── */
+var fichas={
+  ent:{
+    mtc:{name:'Min. Transportes y Comunicaciones',meta:'Gobierno Nacional · Sector Transportes · Lima',
+      alerts:['✅ Alta adjudicación','⚠️ Contratos menores: 32%','✅ Baja tasa desiertos','📄 285 contratos publ.'],
+      kpis:[['Adjudicaciones','1,247','en el período'],['Monto adjudicado','S/ 4.2B','soles'],['Tasa adjudicación','97%','de procesos'],['Promedio postores','4.8','por proceso'],['Duración promedio','38 días','por proceso'],['Proc. desiertos','3.1%','del total']],
+      score:'Alto',scoreStyle:'background:#d1fae5;color:#059669',
+      bars:[['Procesos competitivos',68,'#0ea5e9'],['Contratos menores ≤8 UIT',32,'#f59e0b'],['Contratos publicados',91,'#10b981'],['Procesos con nulidad',1,'#ef4444']]},
+    mef:{name:'Min. Economía y Finanzas',meta:'Gobierno Nacional · Sector Economía · Lima',
+      alerts:['✅ Alta adjudicación','✅ Baja concentración','✅ Contratos publicados: 95%'],
+      kpis:[['Adjudicaciones','892','en el período'],['Monto adjudicado','S/ 1.8B','soles'],['Tasa adjudicación','94%','de procesos'],['Promedio postores','5.2','por proceso'],['Duración promedio','32 días','por proceso'],['Proc. desiertos','1.8%','del total']],
+      score:'Alto',scoreStyle:'background:#d1fae5;color:#059669',
+      bars:[['Procesos competitivos',78,'#0ea5e9'],['Contratos menores ≤8 UIT',22,'#f59e0b'],['Contratos publicados',95,'#10b981'],['Procesos con nulidad',0.8,'#ef4444']]}
+  },
+  prov:{
+    a:{name:'Consorcio Infraestructura Perú SAC',meta:'Consorcio · Obras · Lima · RUC: 20xxxxxxx',
+      alerts:['✅ Alta tasa de éxito','📦 Especializado en Obras','⚠️ Alta concentración (2 entidades)'],
+      kpis:[['Procesos participados','218','en el período'],['Adjudicaciones','174','80% tasa éxito'],['Monto adjudicado','S/ 2.8B','soles'],['Entidades distintas','12','clientes públicos'],['Objeto principal','Obras','100% concentración'],['Sanciones','0','sin sanciones']],
+      score:'Alto',scoreStyle:'background:#d1fae5;color:#059669',
+      bars:[['Tasa adjudicación',80,'#10b981'],['Concentración en Obras',100,'#3b82f6'],['Contratos en Lima',76,'#7dd3fc'],['Sanciones vigentes',0,'#ef4444']]}
+  }
+};
+
+function showFicha(tipo, key){
+  var data=fichas[tipo] && fichas[tipo][key];
+  if(!data) return;
+  var c=document.getElementById('ficha-ent-content');
+  if(tipo==='prov') c=document.querySelector('#panel-prov .ficha-card');
+  if(!c) return;
+
+  var alertHtml=data.alerts.map(function(a){
+    var cls=a.startsWith('✅')?'green':a.startsWith('⚠️')?'amber':a.startsWith('📦')||a.startsWith('📄')?'violet':'red';
+    return '<div class="alert-chip '+cls+'">'+a+'</div>';
+  }).join('');
+
+  var kpiHtml=data.kpis.map(function(k){
+    return '<div class="ficha-kpi" role="listitem"><div class="fk-lbl">'+k[0]+'</div><div class="fk-val" style="color:#0a2540">'+k[1]+'</div><div class="fk-sub">'+k[2]+'</div></div>';
+  }).join('');
+
+  var barsHtml=data.bars.map(function(b){
+    return '<div class="fmb-row"><span class="fmb-lbl">'+b[0]+'</span><div class="fmb-track"><div class="fmb-fill" style="width:'+Math.min(b[1],100)+'%;background:'+b[2]+'"></div></div><span class="fmb-val">'+b[1]+'%</span></div>';
+  }).join('');
+
+  c.innerHTML=
+    '<div class="ficha-header"><div class="ficha-avatar" style="background:#dbeafe;color:#1e40af">'+(tipo==='ent'?'🏛️':'🤝')+'</div><div><div class="ficha-name">'+data.name+'</div><div class="ficha-meta">'+data.meta+'</div></div></div>'+
+    '<div class="alert-row">'+alertHtml+'</div>'+
+    '<div class="ficha-kpis" role="list">'+kpiHtml+'</div>'+
+    '<div class="ficha-score-row"><div class="ficha-score-label"><strong>Nivel de desempeño</strong><br>Indicador basado en los indicadores del período seleccionado.</div><div class="ficha-score-badge" style="'+data.scoreStyle+'">'+data.score+'</div></div>'+
+    '<div class="ficha-mini-bars">'+barsHtml+'</div>';
+}
+</script>
+<script>
+
+(function () {
+  "use strict";
+
+  /* =========================================================
+     MENÚ MÓVIL
+  ========================================================= */
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuLabel = document.querySelector(".site-header__menu-label");
+  const dropdownBtn = document.getElementById("btn-servicios");
+  const dropdownPanel = document.getElementById("menu-servicios");
+  const MQ_DESKTOP = window.matchMedia("(min-width: 960px)");
+
+  function setMobileNavOpen(open) {
+    if (!menuBtn || !mobileNav) return;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    mobileNav.hidden = !open;
+    document.body.classList.toggle("is-nav-open", open);
+    if (menuLabel) menuLabel.textContent = open ? "Cerrar menú" : "Abrir menú";
+  }
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", function () {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      setMobileNavOpen(!open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setMobileNavOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") {
+        setMobileNavOpen(false);
+        menuBtn.focus();
+      }
+    });
+    function onViewportChange() { if (MQ_DESKTOP.matches) setMobileNavOpen(false); }
+    if (typeof MQ_DESKTOP.addEventListener === "function") MQ_DESKTOP.addEventListener("change", onViewportChange);
+    else MQ_DESKTOP.addListener(onViewportChange);
+  }
+
+  /* =========================================================
+     DROPDOWN SERVICIOS ANALÍTICOS
+  ========================================================= */
+  if (dropdownBtn && dropdownPanel) {
+    const dropdownRoot = dropdownBtn.closest(".nav-dropdown");
+    if (dropdownRoot) {
+      function setDropdownOpen(open) {
+        dropdownBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        dropdownPanel.hidden = !open;
+      }
+      setDropdownOpen(false);
+      dropdownRoot.addEventListener("mouseenter", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("mouseleave", function () { setDropdownOpen(false); });
+      dropdownRoot.addEventListener("focusin", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("focusout", function (e) {
+        if (!dropdownRoot.contains(e.relatedTarget)) setDropdownOpen(false);
+      });
+      dropdownBtn.addEventListener("click", function () {
+        const open = dropdownBtn.getAttribute("aria-expanded") === "true";
+        setDropdownOpen(!open);
+      });
+      dropdownBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setDropdownOpen(true);
+          const firstLink = dropdownPanel.querySelector("a");
+          if (firstLink) firstLink.focus();
+        }
+      });
+      dropdownPanel.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!dropdownRoot.contains(e.target)) setDropdownOpen(false);
+      });
+    }
+  }
+
+  /* =========================================================
+     FECHA Y HORA DE CARGA DEL DASHBOARD
+  ========================================================= */
+  function setDashboardLoadDates() {
+    const dashboardLoadDates = document.querySelectorAll("[data-dashboard-load-date]");
+    if (!dashboardLoadDates.length) return;
+    const now = new Date();
+    const formattedDate = now.toLocaleString("es-PE", {
+      day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    dashboardLoadDates.forEach(function (element) { element.textContent = formattedDate; });
+  }
+
+  /* =========================================================
+     DASHBOARDS EMBEBIDOS TABLEAU / POWER BI
+     Permite cargar iframe desde data-dashboard-src cuando exista.
+  ========================================================= */
+  function initEmbeddedDashboards() {
+    const dashboardFrames = document.querySelectorAll("[data-dashboard-src]");
+    dashboardFrames.forEach(function (container) {
+      const dashboardUrl = container.getAttribute("data-dashboard-src");
+      const dashboardTitle = container.getAttribute("data-dashboard-title") || "Dashboard del Observatorio";
+      const dashboardType = container.getAttribute("data-dashboard-type") || "dashboard";
+      if (!dashboardUrl || dashboardUrl.trim() === "" || dashboardUrl.includes("URL_DASHBOARD")) {
+        container.innerHTML = `
+          <div class="dashboard-error-state" role="status">
+            <h3>Dashboard en proceso de actualización</h3>
+            <p>Este tablero estará disponible próximamente. Mientras tanto, puedes revisar los indicadores principales, la narrativa explicativa y la metodología del módulo.</p>
+          </div>`;
+        return;
+      }
+      container.innerHTML = `
+        <iframe
+          src="${escapeAttr(dashboardUrl)}"
+          title="${escapeAttr(dashboardTitle)}"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+          data-dashboard-type="${escapeAttr(dashboardType)}">
+        </iframe>`;
+    });
+  }
+
+  function initDashboardFallbackTimer() {
+    document.querySelectorAll(".dashboard-frame iframe").forEach(function (iframe) {
+      const container = iframe.closest(".dashboard-frame");
+      if (!container) return;
+      let loaded = false;
+      iframe.addEventListener("load", function () {
+        loaded = true;
+        container.classList.add("dashboard-loaded");
+      });
+      setTimeout(function () {
+        if (!loaded) container.classList.add("dashboard-loading-slow");
+      }, 8000);
+    });
+  }
+
+  /* =========================================================
+     TOOLTIP NARRATIVO PARA GRÁFICOS, RANKINGS Y KPIs
+  ========================================================= */
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+  function escapeAttr(value) { return escapeHTML(value).replace(/`/g, "&#96;"); }
+  function cleanText(value) { return String(value || "").replace(/\s+/g, " ").trim(); }
+
+  function textOf(root, selector) {
+    const el = root.querySelector(selector);
+    return el ? cleanText(el.textContent) : "";
+  }
+
+  function nearestTitle(el) {
+    const scope = el.closest(".chart-card, .sec-block, .side-card, .dashboard-section, .insight-panel, .semaforo-box, .funnel-box, section, .narrative-header");
+    if (!scope) return "Indicador del Observatorio";
+    const heading = scope.querySelector("h2, h3, .side-card-title, .funnel-title, .sem-title");
+    return heading ? cleanText(heading.textContent) : "Indicador del Observatorio";
+  }
+
+  function moduleName() {
+    const h1 = document.querySelector("h1, .nh-title, .hero-title");
+    return h1 ? cleanText(h1.textContent) : "Observatorio de Contrataciones Públicas";
+  }
+
+  function buildTooltipData(el) {
+    let title = el.dataset.title || el.dataset.region || el.dataset.name || "";
+    let value = el.dataset.value || "";
+    let indicator = el.dataset.indicator || "";
+    let description = el.dataset.description || "";
+    let period = el.dataset.period || "Periodo seleccionado";
+    let source = el.dataset.source || "DWH / Cubos analíticos DGDIC";
+
+    if (!title) {
+      title = textOf(el, ".rank-name") || textOf(el, ".hbar-lbl") || textOf(el, ".kpi-eye") || textOf(el, ".k5-q") || textOf(el, ".hero-kpi-label") || textOf(el, ".ic-val") || textOf(el, ".actor-tab-label") || textOf(el, ".sem-label") || textOf(el, ".funnel-lbl") || cleanText(el.textContent).slice(0, 90);
+    }
+    if (!value) {
+      value = textOf(el, ".rank-val") || textOf(el, ".hbar-val") || textOf(el, ".kpi-val") || textOf(el, ".k5-val") || textOf(el, ".hero-kpi-val") || textOf(el, ".ic-sub") || textOf(el, ".funnel-val") || textOf(el, ".funnel-pct") || "";
+    }
+    if (!indicator) indicator = nearestTitle(el);
+
+    if (!description) {
+      if (el.classList.contains("rank-row")) {
+        description = "Este ranking permite comparar posiciones relativas según el indicador seleccionado. Úsalo como una señal analítica, no como una calificación definitiva.";
+      } else if (el.classList.contains("hbar-row")) {
+        description = "La barra muestra la magnitud relativa del valor frente a las demás categorías visibles en el gráfico.";
+      } else if (el.classList.contains("kpi-c") || el.classList.contains("kpi5-item") || el.classList.contains("hero-kpi-item") || el.classList.contains("insight-card")) {
+        description = "Este indicador resume una lectura clave del módulo y debe interpretarse junto con el periodo, filtros aplicados y metodología DGDIC.";
+      } else if (el.classList.contains("funnel-step")) {
+        description = "Esta etapa muestra cuántos actores avanzan dentro del flujo analítico. Las diferencias entre etapas ayudan a identificar oportunidades de mejora.";
+      } else if (el.classList.contains("sem-card")) {
+        description = "Este estado ayuda a interpretar el nivel de atención requerido según el comportamiento del indicador.";
+      } else if (el.classList.contains("map-tab")) {
+        description = "Selecciona esta vista para cambiar la lectura del mapa según el tipo de monto que deseas analizar.";
+      } else {
+        description = "Este elemento brinda contexto para comprender mejor la información presentada en el Observatorio.";
+      }
+    }
+
+    return { title, value, indicator, description, period, source };
+  }
+
+  function initNarrativeTooltips() {
+    const selector = [
+      "[data-tooltip-chart]",
+      ".rank-row",
+      ".hbar-row",
+      ".kpi-c",
+      ".kpi5-item",
+      ".hero-kpi-item",
+      ".insight-card",
+      ".funnel-step",
+      ".sem-card",
+      ".actor-tab",
+      ".map-tab"
+    ].join(",");
+
+    const elements = Array.from(document.querySelectorAll(selector))
+      .filter(function (el) { return !el.closest(".chart-tooltip") && el.offsetParent !== null; });
+
+    if (!elements.length) return;
+
+    let tooltip = document.querySelector(".chart-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "chart-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.id = "chart-tooltip-global";
+      document.body.appendChild(tooltip);
+    }
+
+    function showTooltip(event, el) {
+      const data = buildTooltipData(el);
+      tooltip.innerHTML = `
+        <div class="chart-tooltip__title">${escapeHTML(data.title)}</div>
+        ${data.value ? `<div class="chart-tooltip__value">${escapeHTML(data.value)} · ${escapeHTML(data.indicator)}</div>` : `<div class="chart-tooltip__value">${escapeHTML(data.indicator)}</div>`}
+        <div class="chart-tooltip__desc">${escapeHTML(data.description)}</div>
+        <div class="chart-tooltip__meta">Periodo: ${escapeHTML(data.period)}<br>Fuente: ${escapeHTML(data.source)}</div>`;
+      positionTooltip(event, el);
+      tooltip.classList.add("is-visible");
+      el.setAttribute("aria-describedby", "chart-tooltip-global");
+    }
+
+    function positionTooltip(event, el) {
+      let x = event && event.clientX;
+      let y = event && event.clientY;
+      if (!x || !y) {
+        const rect = el.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + 8;
+      }
+      const margin = 16;
+      x = Math.max(margin, Math.min(window.innerWidth - margin, x));
+      y = Math.max(70, Math.min(window.innerHeight - margin, y));
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    }
+
+    function hideTooltip(el) {
+      tooltip.classList.remove("is-visible");
+      if (el) el.removeAttribute("aria-describedby");
+    }
+
+    elements.forEach(function (el) {
+      if (el.dataset.tooltipReady === "true") return;
+      el.dataset.tooltipReady = "true";
+      if (!el.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(el.tagName)) {
+        el.setAttribute("tabindex", "0");
+      }
+      el.setAttribute("data-tooltip-chart", "");
+      el.addEventListener("mouseenter", function (event) { showTooltip(event, el); });
+      el.addEventListener("mousemove", function (event) { positionTooltip(event, el); });
+      el.addEventListener("mouseleave", function () { hideTooltip(el); });
+      el.addEventListener("focus", function (event) { showTooltip(event, el); });
+      el.addEventListener("blur", function () { hideTooltip(el); });
+      el.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideTooltip(el);
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setDashboardLoadDates();
+    initEmbeddedDashboards();
+    initDashboardFallbackTimer();
+    initNarrativeTooltips();
+  });
+})();
+
+</script>
+</body>
+</html>

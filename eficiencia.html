@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eficiencia del Sistema – Observatorio OECE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:#1a2a3a;background:#f5f7fb;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+a:focus,button:focus,select:focus{outline:3px solid rgba(26,106,181,.4);outline-offset:2px}
+
+/* NAV */
+.nav{background:#1a3a5c;height:48px;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:999}
+.nav-logo{color:#fff;font-weight:800;font-size:15px;flex-shrink:0;display:flex;align-items:center}
+.nav-logo span{color:rgba(255,255,255,.45);font-weight:400;font-size:13px;border-left:1px solid rgba(255,255,255,.25);padding-left:10px;margin-left:10px}
+.nav-link{color:rgba(255,255,255,.82);font-size:13px;padding:0 11px;height:48px;display:flex;align-items:center;cursor:pointer;transition:background .15s;border:none;background:none;font-family:'Inter',sans-serif;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,.1)}
+.nav-link.active{font-weight:600;color:#fff}
+.nav-disabled{opacity:.4;cursor:default;pointer-events:none}
+.nav-spacer{flex:1}
+.nav-links{display:flex;align-items:center;margin-left:6px}
+
+/* LAYOUT */
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px 56px}
+.breadcrumb{font-size:12px;color:#8aaccc;padding:16px 0 0;display:flex;align-items:center;gap:6px}
+.breadcrumb a{color:#8aaccc}
+.breadcrumb a:hover{color:#1a6ab5}
+
+/* NARRATIVE HEADER */
+.narrative-header{background:#fff;border:1px solid #dde8f2;border-radius:12px;padding:32px 36px;margin:16px 0 0;box-shadow:0 2px 12px rgba(10,37,64,.05)}
+.nh-eyebrow{display:inline-block;background:#e8f4ff;color:#1a6ab5;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.nh-title{font-size:26px;font-weight:800;color:#0a2540;line-height:1.2;margin-bottom:12px}
+.nh-desc{font-size:14px;color:#4a6a8a;line-height:1.75;max-width:820px}
+
+/* EDUCATIONAL BLOCK */
+.edu-block{background:linear-gradient(135deg,#f0fdf4 0%,#fff 100%);border:1px solid #bbf7d0;border-radius:12px;padding:24px 28px;margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.edu-ico{font-size:36px;flex-shrink:0;line-height:1}
+.edu-title{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:8px}
+.edu-text{font-size:13.5px;color:#3a5a78;line-height:1.75}
+
+/* FILTERS */
+.filter-accordion{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;margin:16px 0}
+.filter-acc-btn{width:100%;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1a3a5c;text-align:left}
+.filter-acc-btn:hover{background:#f8fafc}
+.filter-acc-ico{font-size:18px;transition:transform .25s;color:#6a8aaa}
+.filter-acc-ico.open{transform:rotate(180deg)}
+.filter-body{display:none;padding:16px 20px 18px;border-top:1px solid #eef3f8;background:#fafcff}
+.filter-body.open{display:block}
+.filter-grid{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;align-items:end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fl{font-size:10.5px;font-weight:600;color:#7a90a8;text-transform:uppercase;letter-spacing:.04em}
+.fs{font-size:12px;padding:8px 10px;border:1px solid #ccd8e4;border-radius:5px;color:#1a3a5c;background:#fff;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236a8aaa' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.btn-search{background:#1a3a5c;color:#fff;border:none;border-radius:5px;padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-clear{background:#fff;color:#6a8aaa;border:1px solid #ccd8e4;border-radius:5px;padding:9px 14px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* 5 KPIs */
+.kpi5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:16px 0}
+.kpi5-item{background:#fff;border:1px solid #dde8f2;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.k5-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.k5-q{font-size:11px;color:#7a90a8;margin-bottom:5px;line-height:1.35;min-height:28px}
+.k5-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:4px}
+.k5-interp{font-size:11px;color:#6a8aaa;line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid #eef3f8}
+
+/* SEMÁFORO */
+.semaforo-box{background:#fff;border:1px solid #dde8f2;border-radius:12px;padding:22px 26px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.sem-title{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.sem-sub{font-size:12.5px;color:#5a7090;margin-bottom:20px;line-height:1.6}
+.sem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sem-card{border-radius:10px;padding:18px;position:relative;overflow:hidden}
+.sem-card.verde{background:#f0fdf4;border:2px solid #86efac}
+.sem-card.amber{background:#fffbeb;border:2px solid #fcd34d}
+.sem-card.rojo{background:#fef2f2;border:2px solid #fca5a5}
+.sem-indicator{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sem-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0}
+.sem-dot.verde{background:#22c55e}
+.sem-dot.amber{background:#f59e0b}
+.sem-dot.rojo{background:#ef4444}
+.sem-label{font-size:13px;font-weight:700}
+.sem-card.verde .sem-label{color:#166534}
+.sem-card.amber .sem-label{color:#92400e}
+.sem-card.rojo .sem-label{color:#991b1b}
+.sem-desc{font-size:12.5px;line-height:1.65}
+.sem-card.verde .sem-desc{color:#166534;opacity:.85}
+.sem-card.amber .sem-desc{color:#92400e;opacity:.85}
+.sem-card.rojo .sem-desc{color:#991b1b;opacity:.85}
+.sem-examples{margin-top:10px;font-size:11.5px;opacity:.8}
+
+/* CHART CARDS */
+.chart-card{background:#fff;border:1px solid #dde8f2;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.chd{padding:14px 18px;border-bottom:1px solid #eef3f8}
+.chd h3{font-size:13.5px;font-weight:700;color:#0a2540;margin-bottom:3px}
+.chd p{font-size:11.5px;color:#6a8aaa;line-height:1.6}
+.chb{padding:14px 18px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.hbar{display:flex;flex-direction:column;gap:9px}
+.hbar-row{display:flex;align-items:center;gap:10px}
+.hbar-lbl{font-size:11px;color:#4a6480;width:170px;flex-shrink:0;text-align:right;line-height:1.3}
+.hbar-track{flex:1;height:9px;background:#f0f4f8;border-radius:5px}
+.hbar-fill{height:100%;border-radius:5px}
+.hbar-val{font-size:11px;font-weight:600;color:#0a2540;width:32px}
+
+/* PROGRESS BARS */
+.prog-row{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.prog-label{font-size:12px;color:#4a6480;width:140px;flex-shrink:0}
+.prog-outer{flex:1;height:14px;border-radius:7px;background:#f0f4f8;overflow:hidden}
+.prog-inner{height:100%;border-radius:7px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.prog-pct{font-size:10px;font-weight:700;color:#fff}
+.prog-val{font-size:12px;font-weight:700;width:36px;text-align:right}
+
+/* RANKING */
+.rank-r{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:8px 12px;border-radius:7px;background:#f8fafc}
+.rank-r.top1{background:#e0f2fe}
+.rank-pos{font-size:11px;font-weight:700;color:#9ab0c8;width:14px;text-align:right;flex-shrink:0}
+.rank-nm{font-size:11.5px;color:#3a5070;flex:1}
+.rank-bw{width:80px;height:6px;background:#e8eef6;border-radius:3px;flex-shrink:0}
+.rank-bf{height:100%;border-radius:3px}
+.rank-vl{font-size:11px;font-weight:700;color:#0a2540;width:28px;text-align:right;flex-shrink:0}
+
+/* SCATTER */
+.scatter-box{position:relative;background:#f8fafc;border-radius:8px;height:160px;overflow:hidden;border:1px solid #e8eef6}
+.s-dot{position:absolute;border-radius:50%;cursor:pointer;transition:opacity .15s}
+.s-dot:hover{opacity:1!important;transform:scale(1.2)}
+
+/* LEGEND */
+.legend-row{display:flex;gap:14px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5a7090}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* DASHBOARD */
+.dashboard-section{background:#fff;border:1px solid #dde8f2;border-radius:14px;padding:26px;margin:20px 0;box-shadow:0 4px 18px rgba(10,37,64,.06)}
+.dashboard-intro h2{font-size:20px;font-weight:800;color:#0a2540;margin-bottom:8px}
+.dashboard-intro p{font-size:14px;color:#5a7090;line-height:1.72;max-width:900px}
+.dashboard-frame{margin:20px 0;border-radius:12px;overflow:hidden;border:1px solid #d8e4f0;background:#f8fafc;min-height:480px;display:flex;align-items:center;justify-content:center}
+.dashboard-frame iframe{width:100%;height:480px;border:0}
+.dashboard-placeholder{text-align:center;padding:40px 20px;color:#7a96b0}
+.dashboard-placeholder .ph-ico{font-size:40px;margin-bottom:12px;opacity:.5}
+.dashboard-placeholder h3{font-size:15px;font-weight:600;margin-bottom:8px;color:#4a6a8a}
+.dashboard-placeholder p{font-size:13px;color:#8aaccc;line-height:1.65;max-width:400px;margin:0 auto}
+.dashboard-placeholder code{display:inline-block;background:#e8f4ff;color:#1a4a7c;font-size:11px;padding:3px 8px;border-radius:4px;margin-top:8px}
+.dashboard-interpretation{background:#eef6ff;border-left:4px solid #1a6ab5;border-radius:8px;padding:16px 20px}
+.dashboard-interpretation h3{font-size:14px;font-weight:800;color:#0a2540;margin-bottom:6px}
+.dashboard-interpretation p{font-size:13px;color:#3a5a78;line-height:1.7}
+
+/* METHODOLOGY */
+.methodology-box{background:#f0f6ff;border:1px solid #ccd8f0;border-radius:12px;padding:24px 28px;margin-top:28px}
+.methodology-box h2{font-size:16px;font-weight:700;color:#0a2540;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.methodology-box p{font-size:13px;color:#3a5a78;line-height:1.72;margin-bottom:8px}
+.source-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.source-chip{background:#fff;border:1px solid #b8d0f0;color:#1a4a7c;font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:999px}
+
+/* FOOTER */
+.footer{background:#1a3a5c;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.6);gap:16px;flex-wrap:wrap;margin-top:8px}
+.footer a{color:rgba(255,255,255,.75)}
+.footer-btn{background:#1a6ab5;color:#fff!important;padding:5px 14px;border-radius:4px;font-weight:600}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .kpi5,.sem-grid{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .filter-grid{grid-template-columns:repeat(2,1fr)}
+  .edu-block{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .wrap{padding:0 14px 40px}
+  .kpi5{grid-template-columns:1fr}
+  .sem-grid{grid-template-columns:1fr}
+  .nh-title{font-size:20px}
+}
+
+
+/* ═══════════════════════════════
+   TOOLTIP NARRATIVO - OBSERVATORIO OECE
+   Convierte gráficos, KPIs, rankings y mapas en elementos explicativos.
+════════════════════════════════ */
+.chart-tooltip {
+  position: fixed;
+  z-index: 99999;
+  max-width: 300px;
+  background: #07045c;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 12px;
+  line-height: 1.45;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -108%);
+  transition: opacity .12s ease, transform .12s ease;
+}
+.chart-tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -118%);
+}
+.chart-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  border-width: 7px 7px 0 7px;
+  border-style: solid;
+  border-color: #07045c transparent transparent transparent;
+}
+.chart-tooltip__title {
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.chart-tooltip__value {
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+.chart-tooltip__desc {
+  color: rgba(255, 255, 255, .84);
+  font-size: 11.5px;
+}
+.chart-tooltip__meta {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, .72);
+}
+[data-tooltip-chart],
+.rank-row,
+.hbar-row,
+.kpi-c,
+.kpi5-item,
+.hero-kpi-item,
+.insight-card,
+.funnel-step,
+.sem-card,
+.actor-tab,
+.map-tab {
+  position: relative;
+}
+[data-tooltip-chart]:focus-visible,
+.rank-row:focus-visible,
+.hbar-row:focus-visible,
+.kpi-c:focus-visible,
+.kpi5-item:focus-visible,
+.hero-kpi-item:focus-visible,
+.insight-card:focus-visible,
+.funnel-step:focus-visible,
+.sem-card:focus-visible,
+.actor-tab:focus-visible,
+.map-tab:focus-visible {
+  outline: 3px solid rgba(26,106,181,.35);
+  outline-offset: 3px;
+}
+.tooltip-help-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #5a7090;
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-radius: 999px;
+  padding: 6px 10px;
+  margin: 10px 0 0;
+}
+.tooltip-help-note::before { content: "ⓘ"; color: #1a6ab5; font-weight: 700; }
+.chart-explanation-panel {
+  background: #f8fafc;
+  border: 1px solid #dbe8f6;
+  border-left: 4px solid #1a6ab5;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 12px 0 18px;
+  font-size: 12.8px;
+  color: #3a5a78;
+  line-height: 1.65;
+}
+.chart-explanation-panel strong { color:#0a2540; }
+.dashboard-loading-slow::after {
+  content: "El dashboard está tardando más de lo esperado en cargar. Verifique su conexión o actualice la página.";
+  display: block;
+  background: #fffbea;
+  border-top: 1px solid #f5d97a;
+  color: #5f4b16;
+  font-size: 12px;
+  padding: 10px 14px;
+}
+.dashboard-loaded::after { content: ""; display: none; }
+@media (max-width: 640px) {
+  .chart-tooltip { max-width: 260px; font-size: 11.5px; }
+}
+
+</style>
+</head>
+<body data-observatorio-page="eficiencia">
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Menú principal">
+  <div class="nav-logo">OECE <span>Observatorio</span></div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Inicio</a>
+    <a class="nav-link" href="panorama.html">Panorama General</a>
+    <a class="nav-link" href="competencia.html">Competencia y Participación</a>
+    <a class="nav-link active" href="eficiencia.html" aria-current="page">Eficiencia del Sistema</a>
+    <a class="nav-link" href="desempeno.html">Desempeño de Actores</a>
+    <a class="nav-link nav-disabled" tabindex="-1">Riesgos y Concentración</a>
+  </div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="wrap">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <a href="index.html">Inicio</a> <span>›</span>
+    <a href="#">Servicios</a> <span>›</span>
+    <span>Eficiencia del Sistema</span>
+  </nav>
+
+  <!-- NARRATIVE HEADER -->
+  <div class="narrative-header">
+    <div class="nh-eyebrow">Módulo 3 de 5</div>
+    <h1 class="nh-title">¿Qué tan ágiles son los procesos de contratación?</h1>
+    <p class="nh-desc">La eficiencia permite conocer si los procesos de contratación avanzan dentro de plazos razonables, si logran adjudicarse y si presentan situaciones que pueden afectar la oportunidad de la compra pública. Analizar la eficiencia ayuda a identificar cuellos de botella y oportunidades de mejora en el sistema.</p>
+  </div>
+
+  <!-- BLOQUE EDUCATIVO -->
+  <div class="edu-block" role="note" aria-label="¿Qué significa eficiencia en la contratación pública?">
+    <div class="edu-ico" aria-hidden="true">⏱️</div>
+    <div>
+      <div class="edu-title">¿Qué significa eficiencia en la contratación pública?</div>
+      <div class="edu-text">Un proceso eficiente permite que las entidades adquieran bienes, servicios u obras dentro de plazos razonables, reduciendo retrasos, nulidades y procesos desiertos. Cuando los procesos superan los plazos esperados o se declaran desiertos, el Estado no puede cumplir sus objetivos de inversión y provisión de servicios. Analizar la eficiencia ayuda a identificar dónde se producen los principales retrasos y qué tipo de procesos o entidades requieren mayor atención.</div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-accordion" role="region" aria-label="Filtros de exploración">
+    <button class="filter-acc-btn" id="fbtn" onclick="toggleFilter()" aria-expanded="false" aria-controls="fbody">
+      <span>🔍 Explorar con filtros avanzados</span>
+      <span class="filter-acc-ico" id="fico" aria-hidden="true">▾</span>
+    </button>
+    <div class="filter-body" id="fbody">
+      <div class="filter-grid">
+        <div class="fg"><div class="fl">Año</div><select class="fs" aria-label="Filtrar por año"><option value="">Todos</option><option>2025</option><option>2024</option><option>2023</option></select></div>
+        <div class="fg"><div class="fl">Tipo de proceso</div><select class="fs" aria-label="Filtrar por tipo de proceso"><option value="">Todos</option><option>Licitación pública</option><option>Adjudicación simplificada</option></select></div>
+        <div class="fg"><div class="fl">Nivel de gobierno</div><select class="fs" aria-label="Filtrar por nivel de gobierno"><option value="">Todos</option><option>Nacional</option><option>Regional</option><option>Local</option></select></div>
+        <div class="fg"><div class="fl">Región</div><select class="fs" aria-label="Filtrar por región"><option value="">Todos</option><option>Lima</option><option>Cusco</option></select></div>
+        <div style="display:flex;gap:8px;align-items:flex-end">
+          <button class="btn-clear" onclick="clearFilters()">↺ Limpiar</button>
+          <button class="btn-search">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 KPIs RENOMBRADOS -->
+  <div class="kpi5" role="region" aria-label="Indicadores de eficiencia">
+    <div class="kpi5-item" data-title="Tasa de adjudicación" data-value="88,4%" data-indicator="Eficiencia del sistema" data-description="Indica qué proporción de procesos logra llegar a adjudicación en el periodo analizado.">
+      <span class="k5-tag" style="background:#d1fae5;color:#065f46">🟢 Adjudicación</span>
+      <div class="k5-q">¿Qué porcentaje de procesos logra adjudicarse?</div>
+      <div class="k5-val" style="color:#059669">88,4%</div>
+      <div class="k5-interp">De cada 100 procesos iniciados, 88 logran llegar a una adjudicación exitosa en el período analizado.</div>
+    </div>
+    <div class="kpi5-item">
+      <span class="k5-tag" style="background:#dbeafe;color:#1e40af">🔵 Plazos razonables</span>
+      <div class="k5-q">¿Cuántos procesos avanzan en plazos razonables?</div>
+      <div class="k5-val" style="color:#1d4ed8">14,7%</div>
+      <div class="k5-interp">Solo 1 de cada 7 procesos completó su ciclo dentro de los tiempos considerados óptimos. Hay oportunidad de mejora.</div>
+    </div>
+    <div class="kpi5-item">
+      <span class="k5-tag" style="background:#fef3c7;color:#92400e">🟡 Duración</span>
+      <div class="k5-q">¿Cuánto demora un proceso en promedio?</div>
+      <div class="k5-val" style="color:#b45309">45 días</div>
+      <div class="k5-interp">Un proceso de contratación tarda en promedio 45 días desde la convocatoria hasta la adjudicación.</div>
+    </div>
+    <div class="kpi5-item">
+      <span class="k5-tag" style="background:#fee2e2;color:#991b1b">🔴 Fuera de plazo</span>
+      <div class="k5-q">¿Cuántos procesos superan el plazo esperado?</div>
+      <div class="k5-val" style="color:#dc2626">8,6%</div>
+      <div class="k5-interp">El 8.6% de los procesos supera el plazo normativo esperado. Estos casos requieren seguimiento prioritario.</div>
+    </div>
+    <div class="kpi5-item">
+      <span class="k5-tag" style="background:#ede9fe;color:#6d28d9">🟣 Nulidad</span>
+      <div class="k5-q">¿Cuántos procesos presentan nulidad?</div>
+      <div class="k5-val" style="color:#7c3aed">2,1%</div>
+      <div class="k5-interp">El 2.1% de los procesos fue declarado nulo, lo que implica reiniciar el procedimiento y retrasa la provisión del bien o servicio.</div>
+    </div>
+  </div>
+
+  <!-- SEMÁFORO DE EFICIENCIA -->
+  <div class="semaforo-box" role="region" aria-labelledby="sem-title">
+    <div class="sem-title" id="sem-title">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="4" y="1" width="10" height="16" rx="4" stroke="#0a2540" stroke-width="1.3"/><circle cx="9" cy="5" r="2" fill="#22c55e"/><circle cx="9" cy="9" r="2" fill="#f59e0b"/><circle cx="9" cy="13" r="2" fill="#ef4444"/></svg>
+      Lectura de eficiencia del sistema
+    </div>
+    <div class="sem-sub">Este semáforo resume el estado general del sistema según el comportamiento de los procesos de contratación en el período seleccionado.</div>
+    <div class="sem-grid" role="list">
+      <div class="sem-card verde" role="listitem">
+        <div class="sem-indicator">
+          <div class="sem-dot verde" aria-label="Verde"></div>
+          <div class="sem-label">Dentro del plazo</div>
+        </div>
+        <div class="sem-desc">Procesos que completaron su ciclo dentro de los plazos razonables establecidos para cada tipo de procedimiento.</div>
+        <div class="sem-examples">Ejemplo: procesos que adjudican en menos de 30 días en adjudicación simplificada.</div>
+      </div>
+      <div class="sem-card amber" role="listitem">
+        <div class="sem-indicator">
+          <div class="sem-dot amber" aria-label="Ámbar"></div>
+          <div class="sem-label">Requiere seguimiento</div>
+        </div>
+        <div class="sem-desc">Procesos con demoras o comportamientos que, sin superar el plazo máximo, presentan señales que merecen atención.</div>
+        <div class="sem-examples">Ejemplo: procesos que superan el 80% del plazo normativo sin adjudicar.</div>
+      </div>
+      <div class="sem-card rojo" role="listitem">
+        <div class="sem-indicator">
+          <div class="sem-dot rojo" aria-label="Rojo"></div>
+          <div class="sem-label">Alerta de eficiencia</div>
+        </div>
+        <div class="sem-desc">Procesos fuera de plazo normativo, declarados nulos o con resultado desierto. Requieren revisión prioritaria.</div>
+        <div class="sem-examples">Ejemplo: procesos con declaratoria de desierto más de una vez o nulidades recurrentes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chd">
+        <h3>Evolución de la tasa de adjudicación y convocatoria</h3>
+        <p>Comparación anual de la tasa de adjudicación respecto a las convocatorias. Una brecha creciente puede indicar mayor cantidad de procesos que no logran completarse.</p>
+      </div>
+      <div class="chb">
+        <div class="legend-row" style="margin-bottom:10px">
+          <div class="leg-item"><div class="leg-dot" style="background:#0ea5e9"></div>Tasa de adjudicación</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#f59e0b;border-radius:0"></div>Tasa de convocatoria</div>
+        </div>
+        <svg width="100%" height="140" viewBox="0 0 360 140" preserveAspectRatio="none" aria-label="Gráfico de líneas: evolución de tasas 2021-2026">
+          <defs><linearGradient id="eg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".15"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="30" x2="360" y2="30" stroke="#f0f4f8" stroke-width="1"/>
+          <line x1="0" y1="70" x2="360" y2="70" stroke="#f0f4f8" stroke-width="1"/>
+          <line x1="0" y1="110" x2="360" y2="110" stroke="#f0f4f8" stroke-width="1"/>
+          <polygon points="20,95 70,80 120,110 170,55 220,70 270,40 320,48 355,42 355,128 20,128" fill="url(#eg1)"/>
+          <polyline points="20,95 70,80 120,110 170,55 220,70 270,40 320,48 355,42" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="20,110 70,100 120,118 170,72 220,85 270,56 320,62 355,58" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="5 3"/>
+          <circle cx="270" cy="40" r="5" fill="#0ea5e9"/>
+          <text x="20" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">2021</text>
+          <text x="70" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">2022</text>
+          <text x="120" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">2023</text>
+          <text x="170" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">2024</text>
+          <text x="220" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">T1 25</text>
+          <text x="270" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">T2 25</text>
+          <text x="320" y="138" font-size="9" fill="#aac0d0" text-anchor="middle">T3 25</text>
+        </svg>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chd">
+        <h3>¿Qué sectores logran mayor tasa de adjudicación?</h3>
+        <p>Porcentaje de procesos con adjudicación exitosa por sector. Ayuda a identificar diferencias en la capacidad de gestión entre sectores del Estado.</p>
+      </div>
+      <div class="chb">
+        <div class="hbar" role="list" aria-label="Tasa de adjudicación por sector">
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Transportes y Comunicaciones</span><div class="hbar-track"><div class="hbar-fill" style="width:96%;background:#0ea5e9"></div></div><span class="hbar-val">96%</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Educación</span><div class="hbar-track"><div class="hbar-fill" style="width:92%;background:#38bdf8"></div></div><span class="hbar-val">92%</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Gobierno Local</span><div class="hbar-track"><div class="hbar-fill" style="width:88%;background:#7dd3fc"></div></div><span class="hbar-val">88%</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Gobierno Regional</span><div class="hbar-track"><div class="hbar-fill" style="width:84%;background:#bae6fd"></div></div><span class="hbar-val">84%</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Salud</span><div class="hbar-track"><div class="hbar-fill" style="width:76%;background:#e0f2fe"></div></div><span class="hbar-val">76%</span></div>
+          <div class="hbar-row" role="listitem"><span class="hbar-lbl">Defensa</span><div class="hbar-track"><div class="hbar-fill" style="width:68%;background:#f0f9ff"></div></div><span class="hbar-val">68%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chd">
+        <h3>Duración promedio versus el plazo normativo</h3>
+        <p>Compara la duración real de los procesos con el límite normativo esperado. Los períodos en rojo indican que la duración real superó el plazo establecido por normativa.</p>
+      </div>
+      <div class="chb">
+        <div class="legend-row" style="margin-bottom:10px">
+          <div class="leg-item"><div class="leg-dot" style="background:#0ea5e9"></div>Duración promedio (días)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#10b981"></div>Plazo normativo (referencia)</div>
+        </div>
+        <svg width="100%" height="130" viewBox="0 0 360 130" preserveAspectRatio="none" aria-label="Duración promedio versus umbral normativo, con zona fuera de plazo marcada en rojo">
+          <!-- Umbral -->
+          <line x1="0" y1="50" x2="360" y2="50" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6 3"/>
+          <text x="352" y="47" font-size="9" fill="#10b981" text-anchor="end">Umbral</text>
+          <!-- Zona fuera de plazo -->
+          <rect x="100" y="48" width="44" height="50" fill="rgba(239,68,68,.08)" rx="2"/>
+          <defs><linearGradient id="eg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".15"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="20,80 70,68 100,50 122,98 144,50 170,52 220,62 270,75 320,55 355,65 355,120 20,120" fill="url(#eg2)"/>
+          <polyline points="20,80 70,68 100,50 122,98 144,50 170,52 220,62 270,75 320,55 355,65" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="122" cy="98" r="6" fill="#ef4444"/>
+          <rect x="78" y="30" width="95" height="17" rx="3" fill="#ef4444" opacity=".9"/>
+          <text x="125" y="42" text-anchor="middle" font-size="9" fill="#fff" font-family="Inter">⚠ Fuera del plazo normativo</text>
+          <line x1="122" y1="47" x2="122" y2="92" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="20" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">2021</text>
+          <text x="70" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">2022</text>
+          <text x="122" y="128" font-size="9" fill="#ef4444" text-anchor="middle" font-weight="600">2023</text>
+          <text x="170" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">T1 24</text>
+          <text x="220" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">T2 24</text>
+          <text x="270" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">T3 24</text>
+          <text x="320" y="128" font-size="9" fill="#aac0d0" text-anchor="middle">T4 24</text>
+        </svg>
+        <p style="font-size:12px;color:#3a5070;margin-top:10px;padding:9px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;line-height:1.6"><strong>Alerta 2023:</strong> En ese período la duración promedio superó el umbral normativo. Esto pudo deberse a cambios en la reglamentación o a una mayor complejidad de los procesos convocados ese año.</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <!-- Dentro/fuera -->
+      <div class="chart-card" style="flex:1">
+        <div class="chd"><h3>¿Cuántos procesos cumplen el plazo?</h3><p>Distribución entre procesos que se completaron dentro y fuera del plazo esperado.</p></div>
+        <div class="chb">
+          <div class="prog-row" role="group" aria-label="Procesos dentro del plazo: 74.2%">
+            <div class="prog-label">Dentro del plazo</div>
+            <div class="prog-outer">
+              <div class="prog-inner" style="width:74.2%;background:#10b981"><span class="prog-pct">74.2%</span></div>
+            </div>
+            <div class="prog-val" style="color:#059669">74%</div>
+          </div>
+          <div class="prog-row" role="group" aria-label="Procesos fuera del plazo: 25.8%">
+            <div class="prog-label">Fuera del plazo</div>
+            <div class="prog-outer">
+              <div class="prog-inner" style="width:25.8%;background:#ef4444"><span class="prog-pct">25.8%</span></div>
+            </div>
+            <div class="prog-val" style="color:#dc2626">26%</div>
+          </div>
+          <p style="font-size:11.5px;color:#5a7090;margin-top:8px;line-height:1.6">1 de cada 4 procesos supera el plazo esperado. Esto puede impactar la provisión oportuna de bienes y servicios.</p>
+        </div>
+      </div>
+      <!-- Desiertos / nulidad -->
+      <div class="chart-card" style="flex:1">
+        <div class="chd"><h3>¿Cuántos procesos quedan desiertos o son anulados?</h3><p>Los procesos desiertos y nulos implican reiniciar el procedimiento, generando retrasos adicionales.</p></div>
+        <div class="chb">
+          <div class="prog-row" role="group" aria-label="Procesos desiertos: 16.8%">
+            <div class="prog-label">Procesos desiertos</div>
+            <div class="prog-outer">
+              <div class="prog-inner" style="width:16.8%;background:#f59e0b"><span class="prog-pct">16.8%</span></div>
+            </div>
+            <div class="prog-val" style="color:#d97706">17%</div>
+          </div>
+          <div class="prog-row" role="group" aria-label="Procesos con nulidad: 24.3%">
+            <div class="prog-label">Con nulidad</div>
+            <div class="prog-outer">
+              <div class="prog-inner" style="width:24.3%;background:#a78bfa"><span class="prog-pct">24.3%</span></div>
+            </div>
+            <div class="prog-val" style="color:#7c3aed">24%</div>
+          </div>
+          <p style="font-size:11.5px;color:#5a7090;margin-top:8px;line-height:1.6">Los procesos nulos (24.3%) representan la mayor proporción y pueden señalar problemas en la elaboración de bases o en la evaluación de propuestas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Ranking + Scatter -->
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chd">
+        <h3>¿Qué entidades son más eficientes?</h3>
+        <p>Ranking de las 5 entidades con mayor tasa de adjudicación exitosa. Permite identificar buenas prácticas institucionales que podrían replicarse.</p>
+      </div>
+      <div class="chb">
+        <div class="rank-r top1" role="listitem">
+          <span class="rank-pos">1</span>
+          <span class="rank-nm">Min. Transportes y Comunicaciones</span>
+          <div class="rank-bw"><div class="rank-bf" style="width:97%;background:#10b981"></div></div>
+          <span class="rank-vl" style="color:#059669">97%</span>
+        </div>
+        <div class="rank-r" role="listitem">
+          <span class="rank-pos">2</span>
+          <span class="rank-nm">Min. Economía y Finanzas</span>
+          <div class="rank-bw"><div class="rank-bf" style="width:94%;background:#34d399"></div></div>
+          <span class="rank-vl">94%</span>
+        </div>
+        <div class="rank-r" role="listitem">
+          <span class="rank-pos">3</span>
+          <span class="rank-nm">Gobierno Regional Cusco</span>
+          <div class="rank-bw"><div class="rank-bf" style="width:91%;background:#6ee7b7"></div></div>
+          <span class="rank-vl">91%</span>
+        </div>
+        <div class="rank-r" role="listitem">
+          <span class="rank-pos">4</span>
+          <span class="rank-nm">Municipalidad de Lima</span>
+          <div class="rank-bw"><div class="rank-bf" style="width:88%;background:#a7f3d0"></div></div>
+          <span class="rank-vl">88%</span>
+        </div>
+        <div class="rank-r" role="listitem">
+          <span class="rank-pos">5</span>
+          <span class="rank-nm">ESSALUD</span>
+          <div class="rank-bw"><div class="rank-bf" style="width:84%;background:#d1fae5"></div></div>
+          <span class="rank-vl">84%</span>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chd">
+        <h3>Relación entre duración y tasa de adjudicación</h3>
+        <p>Cada punto representa un tipo de proceso o entidad. Una tendencia descendente confirma que los procesos más largos tienen menor tasa de adjudicación exitosa.</p>
+      </div>
+      <div class="chb">
+        <div class="scatter-box" aria-label="Gráfico de dispersión: duración versus tasa de adjudicación" role="img">
+          <svg style="position:absolute;inset:0" width="100%" height="100%" viewBox="0 0 300 160" preserveAspectRatio="none">
+            <line x1="0" y1="30" x2="300" y2="30" stroke="#f0f4f8" stroke-width="1"/>
+            <line x1="0" y1="80" x2="300" y2="80" stroke="#f0f4f8" stroke-width="1"/>
+            <line x1="0" y1="130" x2="300" y2="130" stroke="#f0f4f8" stroke-width="1"/>
+            <!-- Línea de tendencia negativa -->
+            <line x1="18" y1="20" x2="280" y2="140" stroke="#e0e8f0" stroke-width="1.5" stroke-dasharray="5 3"/>
+          </svg>
+          <!-- Puntos del scatter (x=duración creciente, y=tasa decreciente) -->
+          <div class="s-dot" style="width:14px;height:14px;background:#10b981;top:16px;left:36px;opacity:.9" title="Alta eficiencia"></div>
+          <div class="s-dot" style="width:11px;height:11px;background:#0ea5e9;top:30px;left:65px;opacity:.8"></div>
+          <div class="s-dot" style="width:11px;height:11px;background:#38bdf8;top:46px;left:95px;opacity:.75"></div>
+          <div class="s-dot" style="width:13px;height:13px;background:#f59e0b;top:65px;left:128px;opacity:.85"></div>
+          <div class="s-dot" style="width:11px;height:11px;background:#60a5fa;top:78px;left:155px;opacity:.7"></div>
+          <div class="s-dot" style="width:11px;height:11px;background:#a78bfa;top:92px;left:185px;opacity:.7"></div>
+          <div class="s-dot" style="width:15px;height:15px;background:#ef4444;top:110px;left:215px;opacity:.88"></div>
+          <div class="s-dot" style="width:11px;height:11px;background:#f87171;top:126px;left:248px;opacity:.65"></div>
+          <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:9px;color:#9ab0c8">→ Duración promedio (días)</div>
+          <div style="position:absolute;top:50%;left:5px;transform:translateY(-50%) rotate(-90deg);font-size:9px;color:#9ab0c8;white-space:nowrap">↑ Tasa adjudicación</div>
+        </div>
+        <div class="legend-row" style="margin-top:10px;flex-wrap:wrap;gap:8px">
+          <div class="leg-item"><div class="leg-dot" style="background:#10b981;border-radius:50%"></div>Alta eficiencia</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#f59e0b;border-radius:50%"></div>Eficiencia media</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#ef4444;border-radius:50%"></div>Baja eficiencia</div>
+        </div>
+        <p style="font-size:12px;color:#3a5070;margin-top:10px;padding:9px 12px;background:#f5f7fb;border-radius:6px;border-left:3px solid #7c3aed;line-height:1.6"><strong>Conclusión:</strong> Existe una correlación negativa: los procesos más largos tienden a tener menores tasas de adjudicación. Esto sugiere que reducir tiempos de proceso puede mejorar la efectividad del sistema.</p>
+      </div>
+    </div>
+    <div class="tooltip-help-note">Pasa el cursor o usa Tab sobre rankings, barras e indicadores para ver su interpretación.</div>
+</div>
+
+  <!-- DASHBOARD EMBEBIDO -->
+  <section class="dashboard-section" role="region" aria-labelledby="dash-eficiencia-title">
+
+    <div class="dashboard-intro">
+      <h2 id="dash-eficiencia-title">Explora la eficiencia de los procesos</h2>
+      <p>
+        Este tablero permite analizar la duración, adjudicación, procesos desiertos,
+        nulidades y comportamiento por entidad, región o tipo de procedimiento.
+      </p>
+    </div>
+  
+    <div class="data-status-bar" role="note" aria-label="Estado de actualización de la información">
+      <div>
+        <strong>Información actualizada al</strong>
+        III trimestre 2025
+      </div>
+      <div>
+        <strong>Última actualización del módulo</strong>
+        12/05/2026 - 15:30 h
+      </div>
+      <div>
+        <strong>Fuente de información</strong>
+        DWH institucional, cubos analíticos, ROCOS y CONOSCE
+      </div>
+    </div>
+  
+    <div class="dashboard-disclaimer" role="note">
+      <strong>Nota sobre el tablero:</strong>
+      Los indicadores de eficiencia muestran el comportamiento de los procesos de
+      contratación en términos de duración, adjudicación, desiertos y nulidades.
+      La interpretación debe considerar el tipo de procedimiento y el marco normativo aplicable.
+    </div>
+  
+    <div class="dashboard-frame" aria-label="Dashboard eficiencia del sistema" data-dashboard-src="URL_DASHBOARD_EFICIENCIA" data-dashboard-title="Dashboard Eficiencia del Sistema de Contrataciones Públicas" data-dashboard-type="tableau-powerbi"></div>
+  
+    <p class="dashboard-updated">
+      Dashboard cargado el <span data-dashboard-load-date></span>
+    </p>
+  
+    <div class="dashboard-interpretation" role="note">
+      <h3>¿Cómo interpretar estos resultados?</h3>
+      <p>
+        Observe primero la duración promedio y compárela con el plazo esperado
+        para cada tipo de procedimiento. Luego revise los procesos fuera de plazo,
+        desiertos o nulos para identificar posibles cuellos de botella.
+      </p>
+    </div>
+  
+  </section>
+
+  <!-- METODOLOGÍA -->
+  <div class="methodology-box" role="region" aria-labelledby="metodo-ef">
+    <h2 id="metodo-ef">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="#1a6ab5" stroke-width="1.3"/><path d="M8 7v4M8 5.5v.3" stroke="#1a6ab5" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Fuente y metodología
+    </h2>
+    <p>Los indicadores de eficiencia presentados en este módulo han sido validados por la DGDIC y se construyen a partir del ecosistema analítico institucional. Los plazos normativos de referencia corresponden a los establecidos por la normativa vigente de contrataciones del Estado.</p>
+    <p>La información se presenta con fines de transparencia, análisis y comprensión del sistema de compras públicas. No existe integración directa con los sistemas operativos de registro (SEACE, RNP).</p>
+    <div class="source-chips" role="list">
+      <span class="source-chip" role="listitem">DWH Institucional</span>
+      <span class="source-chip" role="listitem">Cubos analíticos</span>
+      <span class="source-chip" role="listitem">ROCOS</span>
+      <span class="source-chip" role="listitem">CONOSCE</span>
+      <span class="source-chip" role="listitem">Servicios analíticos en la nube</span>
+      <span class="source-chip" role="listitem">Datos validados DGDIC</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <span>Central de consultas: 01-614626 · Opción 7</span>
+    <a href="#">Formulario de contacto</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="footer-btn" href="#">Soporte</a>
+    <span>© OECE – DGDIC · 2025</span>
+  </div>
+</footer>
+
+<script>
+function toggleFilter(){
+  var b=document.getElementById('fbody');
+  var i=document.getElementById('fico');
+  var btn=document.getElementById('fbtn');
+  var o=b.classList.contains('open');
+  b.classList.toggle('open');
+  i.classList.toggle('open');
+  btn.setAttribute('aria-expanded',!o);
+}
+function clearFilters(){
+  document.querySelectorAll('.filter-body select').forEach(function(s){s.selectedIndex=0});
+}
+</script>
+<script>
+
+(function () {
+  "use strict";
+
+  /* =========================================================
+     MENÚ MÓVIL
+  ========================================================= */
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuLabel = document.querySelector(".site-header__menu-label");
+  const dropdownBtn = document.getElementById("btn-servicios");
+  const dropdownPanel = document.getElementById("menu-servicios");
+  const MQ_DESKTOP = window.matchMedia("(min-width: 960px)");
+
+  function setMobileNavOpen(open) {
+    if (!menuBtn || !mobileNav) return;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    mobileNav.hidden = !open;
+    document.body.classList.toggle("is-nav-open", open);
+    if (menuLabel) menuLabel.textContent = open ? "Cerrar menú" : "Abrir menú";
+  }
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", function () {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      setMobileNavOpen(!open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setMobileNavOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") {
+        setMobileNavOpen(false);
+        menuBtn.focus();
+      }
+    });
+    function onViewportChange() { if (MQ_DESKTOP.matches) setMobileNavOpen(false); }
+    if (typeof MQ_DESKTOP.addEventListener === "function") MQ_DESKTOP.addEventListener("change", onViewportChange);
+    else MQ_DESKTOP.addListener(onViewportChange);
+  }
+
+  /* =========================================================
+     DROPDOWN SERVICIOS ANALÍTICOS
+  ========================================================= */
+  if (dropdownBtn && dropdownPanel) {
+    const dropdownRoot = dropdownBtn.closest(".nav-dropdown");
+    if (dropdownRoot) {
+      function setDropdownOpen(open) {
+        dropdownBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        dropdownPanel.hidden = !open;
+      }
+      setDropdownOpen(false);
+      dropdownRoot.addEventListener("mouseenter", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("mouseleave", function () { setDropdownOpen(false); });
+      dropdownRoot.addEventListener("focusin", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("focusout", function (e) {
+        if (!dropdownRoot.contains(e.relatedTarget)) setDropdownOpen(false);
+      });
+      dropdownBtn.addEventListener("click", function () {
+        const open = dropdownBtn.getAttribute("aria-expanded") === "true";
+        setDropdownOpen(!open);
+      });
+      dropdownBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setDropdownOpen(true);
+          const firstLink = dropdownPanel.querySelector("a");
+          if (firstLink) firstLink.focus();
+        }
+      });
+      dropdownPanel.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!dropdownRoot.contains(e.target)) setDropdownOpen(false);
+      });
+    }
+  }
+
+  /* =========================================================
+     FECHA Y HORA DE CARGA DEL DASHBOARD
+  ========================================================= */
+  function setDashboardLoadDates() {
+    const dashboardLoadDates = document.querySelectorAll("[data-dashboard-load-date]");
+    if (!dashboardLoadDates.length) return;
+    const now = new Date();
+    const formattedDate = now.toLocaleString("es-PE", {
+      day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    dashboardLoadDates.forEach(function (element) { element.textContent = formattedDate; });
+  }
+
+  /* =========================================================
+     DASHBOARDS EMBEBIDOS TABLEAU / POWER BI
+     Permite cargar iframe desde data-dashboard-src cuando exista.
+  ========================================================= */
+  function initEmbeddedDashboards() {
+    const dashboardFrames = document.querySelectorAll("[data-dashboard-src]");
+    dashboardFrames.forEach(function (container) {
+      const dashboardUrl = container.getAttribute("data-dashboard-src");
+      const dashboardTitle = container.getAttribute("data-dashboard-title") || "Dashboard del Observatorio";
+      const dashboardType = container.getAttribute("data-dashboard-type") || "dashboard";
+      if (!dashboardUrl || dashboardUrl.trim() === "" || dashboardUrl.includes("URL_DASHBOARD")) {
+        container.innerHTML = `
+          <div class="dashboard-error-state" role="status">
+            <h3>Dashboard en proceso de actualización</h3>
+            <p>Este tablero estará disponible próximamente. Mientras tanto, puedes revisar los indicadores principales, la narrativa explicativa y la metodología del módulo.</p>
+          </div>`;
+        return;
+      }
+      container.innerHTML = `
+        <iframe
+          src="${escapeAttr(dashboardUrl)}"
+          title="${escapeAttr(dashboardTitle)}"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+          data-dashboard-type="${escapeAttr(dashboardType)}">
+        </iframe>`;
+    });
+  }
+
+  function initDashboardFallbackTimer() {
+    document.querySelectorAll(".dashboard-frame iframe").forEach(function (iframe) {
+      const container = iframe.closest(".dashboard-frame");
+      if (!container) return;
+      let loaded = false;
+      iframe.addEventListener("load", function () {
+        loaded = true;
+        container.classList.add("dashboard-loaded");
+      });
+      setTimeout(function () {
+        if (!loaded) container.classList.add("dashboard-loading-slow");
+      }, 8000);
+    });
+  }
+
+  /* =========================================================
+     TOOLTIP NARRATIVO PARA GRÁFICOS, RANKINGS Y KPIs
+  ========================================================= */
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+  function escapeAttr(value) { return escapeHTML(value).replace(/`/g, "&#96;"); }
+  function cleanText(value) { return String(value || "").replace(/\s+/g, " ").trim(); }
+
+  function textOf(root, selector) {
+    const el = root.querySelector(selector);
+    return el ? cleanText(el.textContent) : "";
+  }
+
+  function nearestTitle(el) {
+    const scope = el.closest(".chart-card, .sec-block, .side-card, .dashboard-section, .insight-panel, .semaforo-box, .funnel-box, section, .narrative-header");
+    if (!scope) return "Indicador del Observatorio";
+    const heading = scope.querySelector("h2, h3, .side-card-title, .funnel-title, .sem-title");
+    return heading ? cleanText(heading.textContent) : "Indicador del Observatorio";
+  }
+
+  function moduleName() {
+    const h1 = document.querySelector("h1, .nh-title, .hero-title");
+    return h1 ? cleanText(h1.textContent) : "Observatorio de Contrataciones Públicas";
+  }
+
+  function buildTooltipData(el) {
+    let title = el.dataset.title || el.dataset.region || el.dataset.name || "";
+    let value = el.dataset.value || "";
+    let indicator = el.dataset.indicator || "";
+    let description = el.dataset.description || "";
+    let period = el.dataset.period || "Periodo seleccionado";
+    let source = el.dataset.source || "DWH / Cubos analíticos DGDIC";
+
+    if (!title) {
+      title = textOf(el, ".rank-name") || textOf(el, ".hbar-lbl") || textOf(el, ".kpi-eye") || textOf(el, ".k5-q") || textOf(el, ".hero-kpi-label") || textOf(el, ".ic-val") || textOf(el, ".actor-tab-label") || textOf(el, ".sem-label") || textOf(el, ".funnel-lbl") || cleanText(el.textContent).slice(0, 90);
+    }
+    if (!value) {
+      value = textOf(el, ".rank-val") || textOf(el, ".hbar-val") || textOf(el, ".kpi-val") || textOf(el, ".k5-val") || textOf(el, ".hero-kpi-val") || textOf(el, ".ic-sub") || textOf(el, ".funnel-val") || textOf(el, ".funnel-pct") || "";
+    }
+    if (!indicator) indicator = nearestTitle(el);
+
+    if (!description) {
+      if (el.classList.contains("rank-row")) {
+        description = "Este ranking permite comparar posiciones relativas según el indicador seleccionado. Úsalo como una señal analítica, no como una calificación definitiva.";
+      } else if (el.classList.contains("hbar-row")) {
+        description = "La barra muestra la magnitud relativa del valor frente a las demás categorías visibles en el gráfico.";
+      } else if (el.classList.contains("kpi-c") || el.classList.contains("kpi5-item") || el.classList.contains("hero-kpi-item") || el.classList.contains("insight-card")) {
+        description = "Este indicador resume una lectura clave del módulo y debe interpretarse junto con el periodo, filtros aplicados y metodología DGDIC.";
+      } else if (el.classList.contains("funnel-step")) {
+        description = "Esta etapa muestra cuántos actores avanzan dentro del flujo analítico. Las diferencias entre etapas ayudan a identificar oportunidades de mejora.";
+      } else if (el.classList.contains("sem-card")) {
+        description = "Este estado ayuda a interpretar el nivel de atención requerido según el comportamiento del indicador.";
+      } else if (el.classList.contains("map-tab")) {
+        description = "Selecciona esta vista para cambiar la lectura del mapa según el tipo de monto que deseas analizar.";
+      } else {
+        description = "Este elemento brinda contexto para comprender mejor la información presentada en el Observatorio.";
+      }
+    }
+
+    return { title, value, indicator, description, period, source };
+  }
+
+  function initNarrativeTooltips() {
+    const selector = [
+      "[data-tooltip-chart]",
+      ".rank-row",
+      ".hbar-row",
+      ".kpi-c",
+      ".kpi5-item",
+      ".hero-kpi-item",
+      ".insight-card",
+      ".funnel-step",
+      ".sem-card",
+      ".actor-tab",
+      ".map-tab"
+    ].join(",");
+
+    const elements = Array.from(document.querySelectorAll(selector))
+      .filter(function (el) { return !el.closest(".chart-tooltip") && el.offsetParent !== null; });
+
+    if (!elements.length) return;
+
+    let tooltip = document.querySelector(".chart-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "chart-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.id = "chart-tooltip-global";
+      document.body.appendChild(tooltip);
+    }
+
+    function showTooltip(event, el) {
+      const data = buildTooltipData(el);
+      tooltip.innerHTML = `
+        <div class="chart-tooltip__title">${escapeHTML(data.title)}</div>
+        ${data.value ? `<div class="chart-tooltip__value">${escapeHTML(data.value)} · ${escapeHTML(data.indicator)}</div>` : `<div class="chart-tooltip__value">${escapeHTML(data.indicator)}</div>`}
+        <div class="chart-tooltip__desc">${escapeHTML(data.description)}</div>
+        <div class="chart-tooltip__meta">Periodo: ${escapeHTML(data.period)}<br>Fuente: ${escapeHTML(data.source)}</div>`;
+      positionTooltip(event, el);
+      tooltip.classList.add("is-visible");
+      el.setAttribute("aria-describedby", "chart-tooltip-global");
+    }
+
+    function positionTooltip(event, el) {
+      let x = event && event.clientX;
+      let y = event && event.clientY;
+      if (!x || !y) {
+        const rect = el.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + 8;
+      }
+      const margin = 16;
+      x = Math.max(margin, Math.min(window.innerWidth - margin, x));
+      y = Math.max(70, Math.min(window.innerHeight - margin, y));
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    }
+
+    function hideTooltip(el) {
+      tooltip.classList.remove("is-visible");
+      if (el) el.removeAttribute("aria-describedby");
+    }
+
+    elements.forEach(function (el) {
+      if (el.dataset.tooltipReady === "true") return;
+      el.dataset.tooltipReady = "true";
+      if (!el.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(el.tagName)) {
+        el.setAttribute("tabindex", "0");
+      }
+      el.setAttribute("data-tooltip-chart", "");
+      el.addEventListener("mouseenter", function (event) { showTooltip(event, el); });
+      el.addEventListener("mousemove", function (event) { positionTooltip(event, el); });
+      el.addEventListener("mouseleave", function () { hideTooltip(el); });
+      el.addEventListener("focus", function (event) { showTooltip(event, el); });
+      el.addEventListener("blur", function () { hideTooltip(el); });
+      el.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideTooltip(el);
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setDashboardLoadDates();
+    initEmbeddedDashboards();
+    initDashboardFallbackTimer();
+    initNarrativeTooltips();
+  });
+})();
+
+</script>
+</body>
+</html>

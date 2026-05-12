@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observatorio de Contrataciones Públicas – OECE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/landing.css">
+</head>
+<body data-observatorio-page="index">
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav class="nav" role="navigation" aria-label="Menú principal">
+  <div class="nav-logo">
+    OECE
+    <span>Observatorio</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" href="index.html" aria-current="page">Inicio</a>
+    <a class="nav-link" href="panorama.html">Panorama General</a>
+    <a class="nav-link" href="competencia.html">Competencia y Participación</a>
+    <a class="nav-link" href="eficiencia.html">Eficiencia del Sistema</a>
+    <a class="nav-link" href="desempeno.html">Desempeño de Actores</a>
+   <!-- ═══════════════════════════════════════ <a class="nav-link nav-disabled" href="#" aria-disabled="true" tabindex="-1">Riesgos y Concentración</a>═══════════════════════════════════════ -->
+  </div>
+  <div class="nav-spacer"></div>
+  <a href="#metodologia" class="nav-link" style="font-size:12px;opacity:.75">Metodología</a>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero" aria-label="Sección principal">
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+        Datos validados por la DGDIC · Actualización permanente
+      </div>
+      <h1 class="hero-title">
+        Conoce cómo<br>compra el <em>Estado peruano</em>
+      </h1>
+      <p class="hero-desc">
+        El Observatorio de Contrataciones Públicas transforma indicadores validados por la DGDIC en información clara para comprender el mercado público, la competencia, la eficiencia y el desempeño de los actores.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero-ctas">
+        <button class="cta-primary" onclick="location.href='panorama.html'" aria-label="Explorar panorama general del mercado">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="6.5" stroke="#fff" stroke-width="1.4"/><path d="M5 7.5h5M8 5.5l2 2-2 2" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Explorar panorama general
+        </button>
+        <button class="cta-secondary" onclick="location.href='competencia.html'" aria-label="Ver competencia del mercado">Ver competencia del mercado</button>
+        <button class="cta-secondary" onclick="location.href='eficiencia.html'" aria-label="Entender eficiencia de procesos">Entender eficiencia de procesos</button>
+      </div>
+
+      <!-- KPIs strip visible en hero -->
+      <div class="hero-kpi-strip" role="region" aria-label="Indicadores clave del mercado">
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-label">Monto contratado</div>
+          <div class="hero-kpi-val">S/ 88,985 mill.</div>
+          <div class="hero-kpi-micro">Volumen económico registrado en el mercado de compras públicas</div>
+        </div>
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-label">Entidades participantes</div>
+          <div class="hero-kpi-val">4,000+</div>
+          <div class="hero-kpi-micro">Entidades públicas con procesos de contratación registrados</div>
+        </div>
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-label">Proveedores participantes</div>
+          <div class="hero-kpi-val">8,560+</div>
+          <div class="hero-kpi-micro">Proveedores con participación activa en el mercado público</div>
+        </div>
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-label">Promedio de postores</div>
+          <div class="hero-kpi-val" style="color:#7c3aed">3.2</div>
+          <div class="hero-kpi-micro">Número promedio de ofertas por proceso de contratación</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual circular -->
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-circle-outer">
+        <!-- Mapa Perú luminoso -->
+        <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);width:240px;opacity:.55" viewBox="0 0 200 320" fill="none">
+          <filter id="gl"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <path d="M76 18L96 14L116 20L136 34L148 58L144 82L128 92L108 86L88 88L72 80L62 64L58 44Z" fill="rgba(80,180,255,.35)" stroke="rgba(150,220,255,.85)" stroke-width="1.5" filter="url(#gl)"/>
+          <path d="M108 86L128 92L144 82L156 106L158 128L148 142L132 148L116 136L102 128L90 112L88 88Z" fill="rgba(60,160,240,.45)" stroke="rgba(130,210,255,.85)" stroke-width="1.5" filter="url(#gl)"/>
+          <path d="M46 106L60 96L72 80L88 88L90 112L102 128L96 148L84 158L66 152L50 144L40 128L38 112Z" fill="rgba(60,160,240,.4)" stroke="rgba(130,210,255,.8)" stroke-width="1.5" filter="url(#gl)"/>
+          <path d="M96 148L84 158L66 152L56 168L52 188L58 204L76 208L96 204L112 188L116 168L106 158Z" fill="rgba(30,180,160,.4)" stroke="rgba(80,230,210,.85)" stroke-width="1.5" filter="url(#gl)"/>
+          <path d="M112 188L116 168L106 158L116 136L132 148L148 142L156 162L152 182L142 196L126 204L116 198Z" fill="rgba(50,150,230,.35)" stroke="rgba(120,200,255,.7)" stroke-width="1"/>
+          <circle cx="66" cy="196" r="7" fill="rgba(255,200,40,.95)" filter="url(#gl)"/>
+          <circle cx="106" cy="112" r="5" fill="rgba(255,150,40,.85)" filter="url(#gl)"/>
+          <circle cx="134" cy="162" r="4.5" fill="rgba(80,220,200,.9)" filter="url(#gl)"/>
+          <circle cx="116" cy="52" r="3.5" fill="rgba(100,200,255,.75)" filter="url(#gl)"/>
+          <line x1="66" y1="196" x2="106" y2="112" stroke="rgba(100,200,255,.22)" stroke-width="1"/>
+          <line x1="106" y1="112" x2="134" y2="162" stroke="rgba(100,200,255,.22)" stroke-width="1"/>
+          <line x1="66" y1="196" x2="134" y2="162" stroke="rgba(100,200,255,.18)" stroke-width="1"/>
+        </svg>
+        <!-- Monitor dashboard -->
+        <div style="position:absolute;bottom:55px;left:50%;transform:translateX(-50%);width:170px;height:85px;background:linear-gradient(135deg,#1040a0,#2060c0);border-radius:6px;box-shadow:0 0 30px rgba(80,160,255,.5);overflow:hidden;opacity:.65">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;gap:3px;padding:8px 6px 4px">
+            <div style="flex:2;background:#e24b4a;border-radius:2px 2px 0 0;height:55%"></div>
+            <div style="flex:3;background:#f0a500;border-radius:2px 2px 0 0;height:75%"></div>
+            <div style="flex:2;background:#1d9e75;border-radius:2px 2px 0 0;height:90%"></div>
+            <div style="flex:3;background:#378add;border-radius:2px 2px 0 0;height:62%"></div>
+            <div style="flex:2;background:#e24b4a;border-radius:2px 2px 0 0;height:42%"></div>
+            <div style="flex:2;background:#f0a500;border-radius:2px 2px 0 0;height:78%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ¿QUÉ PUEDES DESCUBRIR?
+═══════════════════════════════════════ -->
+<section class="section" aria-labelledby="discovery-title">
+  <div class="s-eyebrow">Explora el Observatorio</div>
+  <h2 id="discovery-title" class="s-title">¿Qué puedes descubrir en este Observatorio?</h2>
+  <p class="s-sub">Cada módulo responde una pregunta ciudadana clave sobre el sistema de compras públicas. Puedes explorar desde una visión general hasta el análisis detallado de actores, procesos y patrones.</p>
+
+  <div class="discovery-grid" role="list">
+    <div class="disc-card" role="listitem" onclick="location.href='panorama.html'" aria-label="Explorar panorama: cuánto compra el Estado">
+      <span class="disc-card-ico" aria-hidden="true">🏛️</span>
+      <div class="disc-card-q">¿Cuánto compra el Estado?</div>
+      <div class="disc-card-desc">Conoce el volumen del mercado público: montos convocados, adjudicados y contratados a nivel nacional y regional.</div>
+      <div class="disc-card-cta">Explorar panorama →</div>
+    </div>
+    <div class="disc-card" role="listitem" onclick="location.href='competencia.html'" aria-label="Ver competencia: qué tan competitivo es el mercado">
+      <span class="disc-card-ico" aria-hidden="true">⚖️</span>
+      <div class="disc-card-q">¿Qué tan competitivo es el mercado?</div>
+      <div class="disc-card-desc">Muestra la participación de proveedores, postores y la concentración de adjudicaciones por actor o entidad.</div>
+      <div class="disc-card-cta">Ver competencia →</div>
+    </div>
+    <div class="disc-card" role="listitem" onclick="location.href='eficiencia.html'" aria-label="Entender eficiencia: qué tan ágiles son los procesos">
+      <span class="disc-card-ico" aria-hidden="true">⏱️</span>
+      <div class="disc-card-q">¿Qué tan ágiles son los procesos?</div>
+      <div class="disc-card-desc">Analiza la duración promedio, procesos desiertos, nulidades y adjudicaciones dentro o fuera de plazo normativo.</div>
+      <div class="disc-card-cta">Ver eficiencia →</div>
+    </div>
+    <div class="disc-card" role="listitem" onclick="location.href='desempeno.html'" aria-label="Ver desempeño de entidades y proveedores">
+      <span class="disc-card-ico" aria-hidden="true">👥</span>
+      <div class="disc-card-q">¿Cómo participan entidades y proveedores?</div>
+      <div class="disc-card-desc">Analiza el desempeño de las entidades públicas y los proveedores: adjudicaciones, competitividad, duración de procesos, tasa de éxito, diversificación y concentración por actor.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px">
+        <span style="background:#f5f3ff;color:#7c3aed;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">🏛️ Entidades</span>
+        <span style="background:#f5f3ff;color:#7c3aed;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">🤝 Proveedores</span>
+        <span style="background:#f5f3ff;color:#7c3aed;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">📋 Fichas analíticas</span>
+      </div>
+      <div class="disc-card-cta">Ver desempeño →</div>
+    </div>
+    <div class="disc-card disc-card-fase2" role="listitem" aria-label="Módulo de riesgos y concentración - disponible en Fase 2">
+      <div style="position:absolute;top:14px;right:14px;background:#fef3c7;color:#92400e;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid #fcd34d;letter-spacing:.03em">FASE 2</div>
+      <span class="disc-card-ico" aria-hidden="true">🔍</span>
+      <div class="disc-card-q">¿Dónde pueden existir patrones de concentración o riesgo?</div>
+      <div class="disc-card-desc">Identificará señales que requieren atención analítica: proveedores recurrentes, dependencia de un solo proveedor, concentración de contratos menores y procesos con baja o nula competencia.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px">
+        <span style="background:#fef2f2;color:#991b1b;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">⚠️ Concentración</span>
+        <span style="background:#fef2f2;color:#991b1b;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">📍 Patrones atípicos</span>
+        <span style="background:#fef2f2;color:#991b1b;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">🗺️ Mapas de riesgo</span>
+      </div>
+      <div class="disc-card-cta" style="color:#d97706">Disponible en Fase 2 →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     LECTURA RÁPIDA (insights)
+═══════════════════════════════════════ -->
+<section class="section section-light" aria-labelledby="insight-title">
+  <div class="insight-panel">
+    <div class="insight-label">Lectura rápida</div>
+    <h2 id="insight-title">Lo que el Observatorio te permite entender</h2>
+    <div class="insight-grid" role="list">
+      <div class="insight-card" role="listitem">
+        <strong>📦 Volumen del mercado</strong>
+        <p>El Observatorio permite conocer la magnitud económica del mercado de compras públicas: cuánto convoca el Estado, cuánto logra adjudicar y cuánto finalmente contrata.</p>
+      </div>
+      <div class="insight-card" role="listitem">
+        <strong>🤝 Participación de actores</strong>
+        <p>Ayuda a identificar cuántos proveedores interactúan con el Estado, cuántos logran presentar ofertas válidas y cuántos finalmente consiguen adjudicación.</p>
+      </div>
+      <div class="insight-card" role="listitem">
+        <strong>📈 Tendencias y comportamiento</strong>
+        <p>Muestra cómo evoluciona el mercado año a año: diferencias regionales, cambios en la competencia y patrones que pueden señalar oportunidades de mejora.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ANÁLISIS DEL SISTEMA
+═══════════════════════════════════════ -->
+<section class="section" aria-labelledby="analysis-title">
+  <div class="s-eyebrow">Módulos analíticos</div>
+  <h2 id="analysis-title" class="s-title">Análisis del sistema de contrataciones públicas</h2>
+  <p class="s-sub">El Observatorio analiza el funcionamiento del sistema de contrataciones públicas a partir de cuatro dimensiones estratégicas que permiten identificar oportunidades de mejora, evaluar la competencia, medir la eficiencia y analizar el desempeño de entidades y proveedores.</p>
+  <div class="ac-grid" style="margin-top:40px" role="list">
+    <div class="ac-card" role="listitem" onclick="location.href='competencia.html'" aria-label="Ir a módulo de Competencia en el mercado público">
+      <div class="ac-thumb ac-thumb-1" aria-hidden="true">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+          <circle cx="28" cy="32" r="14" fill="#3b82f6" opacity=".75"/>
+          <circle cx="55" cy="28" r="14" fill="#1d4ed8" opacity=".85"/>
+          <circle cx="40" cy="52" r="12" fill="#60a5fa" opacity=".7"/>
+          <circle cx="28" cy="32" r="7" fill="#ef4444" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="ac-body">
+        <div class="ac-title">Competencia en el mercado público</div>
+        <div class="ac-desc">Identifica el nivel de competencia en los procesos de contratación pública mediante indicadores que analizan la participación de proveedores y la pluralidad de postores.</div>
+        <div class="ac-link">Explorar competencia <span aria-hidden="true">→</span></div>
+      </div>
+    </div>
+    <div class="ac-card" role="listitem" onclick="location.href='eficiencia.html'" aria-label="Ir a módulo de Eficiencia de los procesos">
+      <div class="ac-thumb ac-thumb-2" aria-hidden="true">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+          <circle cx="45" cy="42" r="26" stroke="#10b981" stroke-width="3" fill="#d1fae5" opacity=".7"/>
+          <path d="M45 22v20l13 9" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="45" cy="42" r="4" fill="#059669"/>
+        </svg>
+      </div>
+      <div class="ac-body">
+        <div class="ac-title">Eficiencia de los procesos de contratación</div>
+        <div class="ac-desc">Conoce si los procesos de contratación avanzan en plazos razonables, logran adjudicarse y reducen retrasos, nulidades y procesos desiertos.</div>
+        <div class="ac-link">Explorar eficiencia <span aria-hidden="true">→</span></div>
+      </div>
+    </div>
+    <div class="ac-card" role="listitem" onclick="location.href='desempeno.html'" aria-label="Ir a módulo de Desempeño de entidades y proveedores">
+      <div class="ac-thumb ac-thumb-3" aria-hidden="true">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+          <rect x="18" y="52" width="12" height="24" rx="2" fill="#f59e0b" opacity=".9"/>
+          <rect x="34" y="38" width="12" height="38" rx="2" fill="#f97316" opacity=".9"/>
+          <rect x="50" y="28" width="12" height="48" rx="2" fill="#fb923c" opacity=".9"/>
+          <rect x="66" y="18" width="12" height="58" rx="2" fill="#fbbf24" opacity=".9"/>
+          <circle cx="24" cy="48" r="4" fill="#fff" opacity=".9"/>
+          <circle cx="40" cy="34" r="4" fill="#fff" opacity=".9"/>
+          <circle cx="56" cy="24" r="4" fill="#fff" opacity=".9"/>
+          <circle cx="72" cy="14" r="4" fill="#fff" opacity=".9"/>
+          <polyline points="24,48 40,34 56,24 72,14" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>
+        </svg>
+      </div>
+      <div class="ac-body">
+        <div class="ac-title">Desempeño de entidades y proveedores</div>
+        <div class="ac-desc">Explora el perfil analítico de cada entidad y proveedor: adjudicaciones, competitividad, tasa de éxito, diversificación y concentración. Incluye fichas de desempeño interactivas.</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">
+          <span style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px">🏛️ Entidades</span>
+          <span style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px">🤝 Proveedores</span>
+        </div>
+        <div class="ac-link">Explorar desempeño <span aria-hidden="true">→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FLUJO DE PROCESOS
+═══════════════════════════════════════ -->
+<section class="section section-light" aria-labelledby="flujo-title">
+  <div class="s-eyebrow">Cómo funciona el sistema</div>
+  <h2 id="flujo-title" class="s-title">El camino de una contratación pública</h2>
+  <p class="s-sub">Cada proceso de contratación sigue un ciclo de vida con tres fases principales: Actuaciones Preparatorias, Proceso de Contratación y Ejecución Contractual. El Observatorio monitorea indicadores en cada etapa para detectar demoras, riesgos y patrones.</p>
+  <div class="proc-outer" style="margin-top:36px">
+    <table class="proc" aria-label="Flujo de procesos de compras públicas por actor">
+      <thead>
+        <tr>
+          <th scope="col">Actores</th>
+          <th scope="colgroup" colspan="2" class="grp">Fase 1 — Actuaciones Preparatorias</th>
+          <th scope="colgroup" colspan="3" class="grp">Fase 2 — Proceso de Contratación</th>
+          <th scope="colgroup" colspan="3" class="grp">Fase 3 — Ejecución Contractual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="actor">Entidad Pública</td>
+          <td><span class="tag t-blue">PAC</span><span class="tag t-blue">Requerimiento</span></td>
+          <td><span class="tag t-blue">Aprobación</span></td>
+          <td><span class="tag t-green">Convocatoria</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="tag t-teal">Contrato</span></td>
+          <td><span class="tag t-teal">Inspección</span></td>
+          <td><span class="tag t-teal">Conformidad</span></td>
+        </tr>
+        <tr>
+          <td class="actor">Comité de Selección</td>
+          <td><span class="tag t-orange">Designación</span></td>
+          <td><span class="tag t-blue">Bases</span></td>
+          <td><span class="tag t-blue">Abs. Consultas</span></td>
+          <td><span class="tag t-blue">Clasificación</span></td>
+          <td><span class="tag t-blue">Evaluación</span></td>
+          <td><span class="tag t-green">Buena Pro</span></td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="actor">Proveedor / Postor</td>
+          <td><span class="tag t-purple">Habilitación</span></td>
+          <td>—</td>
+          <td><span class="tag t-blue">Registro</span></td>
+          <td><span class="tag t-blue">Propuesta</span></td>
+          <td><span class="tag t-orange">Apelación</span></td>
+          <td><span class="tag t-teal">Firma</span></td>
+          <td><span class="tag t-teal">Ejecución</span></td>
+          <td><span class="tag t-teal">Facturación</span></td>
+        </tr>
+        <tr>
+          <td class="actor">Sistema SEACE</td>
+          <td><span class="tag t-red">RNP/Habilitado</span></td>
+          <td>—</td>
+          <td><span class="tag t-gray">Publicación</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="tag t-gray">Reg. Contrato</span></td>
+          <td><span class="tag t-gray">Módulo SEACE</span></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     KPI DE ALCANCE
+═══════════════════════════════════════ -->
+<section class="section" aria-labelledby="kpi-title">
+  <div class="s-eyebrow">Alcance del Observatorio</div>
+  <h2 id="kpi-title" class="s-title">Indicadores de contrataciones públicas</h2>
+  <p class="s-sub">El Observatorio integra indicadores y métricas construidos a partir del ecosistema analítico institucional, organizados en cuatro dimensiones estratégicas para facilitar el análisis ciudadano e institucional.</p>
+  <div class="kpi-grid" style="margin-top:36px" role="list">
+    <div class="kpi-box kpi-box-blue" role="listitem">
+      <div class="kpi-ico" aria-hidden="true">📊</div>
+      <div class="kpi-num" style="color:#1e40af">5,680,000+</div>
+      <div class="kpi-lbl">Procesos analizados</div>
+      <div class="kpi-desc">Refleja el volumen total de procedimientos de contratación registrados y monitoreados en el sistema.</div>
+      <div class="kpi-cta" style="color:#1a6ab5" onclick="location.href='panorama.html'">Ver procesos <span aria-hidden="true">→</span></div>
+    </div>
+    <div class="kpi-box kpi-box-yellow" role="listitem">
+      <div class="kpi-ico" aria-hidden="true">🏛️</div>
+      <div class="kpi-num" style="color:#b45309">4,000+</div>
+      <div class="kpi-lbl">Entidades monitoreadas</div>
+      <div class="kpi-desc">Entidades públicas con procesos de contratación registrados y analizados en el Observatorio.</div>
+      <div class="kpi-cta" style="color:#b45309">Ver entidades <span aria-hidden="true">→</span></div>
+    </div>
+    <div class="kpi-box kpi-box-teal" role="listitem">
+      <div class="kpi-ico" aria-hidden="true">👥</div>
+      <div class="kpi-num" style="color:#0f766e">8,560+</div>
+      <div class="kpi-lbl">Proveedores analizados</div>
+      <div class="kpi-desc">Proveedores con participación registrada en el mercado público, desde inscritos hasta adjudicatarios.</div>
+      <div class="kpi-cta" style="color:#0f766e" onclick="location.href='competencia.html'">Ver proveedores <span aria-hidden="true">→</span></div>
+    </div>
+    <div class="kpi-box kpi-box-orange" role="listitem">
+      <div class="kpi-ico" aria-hidden="true">⚠️</div>
+      <div class="kpi-num" style="color:#c2410c">48,000+</div>
+      <div class="kpi-lbl">Alertas detectadas</div>
+      <div class="kpi-desc">Situaciones que requieren seguimiento analítico: concentración, plazos superados y patrones atípicos.</div>
+      <div class="kpi-cta" style="color:#c2410c">Ver alertas <span aria-hidden="true">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TRANSPARENCIA
+═══════════════════════════════════════ -->
+<section class="section section-light" aria-labelledby="trans-title">
+  <div class="trans-grid">
+    <div>
+      <div class="s-eyebrow">Transparencia</div>
+      <h2 id="trans-title" class="trans-title">Transparencia y eficiencia en el uso de los recursos públicos</h2>
+      <p class="trans-p">El Observatorio OECE integra datos oficiales, análisis automatizados y visualizaciones dinámicas para fortalecer la integridad en la contratación pública.</p>
+      <p class="trans-p">A través del monitoreo continuo de procesos, proveedores y patrones de adjudicación, la plataforma permite identificar riesgos potenciales y promover decisiones basadas en evidencia.</p>
+      <p class="trans-p">Este enfoque contribuye a una gestión pública más transparente, competitiva y orientada a resultados, beneficiando tanto a ciudadanos como a funcionarios y proveedores del Estado.</p>
+    </div>
+    <div class="video-box" aria-label="Video explicativo del Observatorio" role="img">
+      <div class="vb-overlay" aria-hidden="true"></div>
+      <div style="position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;gap:8px" aria-hidden="true">
+        <div style="background:rgba(255,255,255,.08);border-radius:6px;padding:10px 14px">
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-bottom:4px">¿Qué es el Sistema de Inteligencia en Compras Públicas?</div>
+          <div style="display:flex;gap:3px;align-items:flex-end;height:40px">
+            <div style="flex:1;background:#378add;height:60%;border-radius:2px 2px 0 0;opacity:.8"></div>
+            <div style="flex:1;background:#f0a500;height:82%;border-radius:2px 2px 0 0;opacity:.8"></div>
+            <div style="flex:1;background:#1d9e75;height:50%;border-radius:2px 2px 0 0;opacity:.8"></div>
+            <div style="flex:1;background:#e24b4a;height:90%;border-radius:2px 2px 0 0;opacity:.8"></div>
+            <div style="flex:1;background:#378add;height:65%;border-radius:2px 2px 0 0;opacity:.8"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;background:rgba(255,255,255,.07);border-radius:6px;padding:10px">
+            <div style="font-size:10px;color:rgba(255,255,255,.5);margin-bottom:4px">Tasa adjudicación</div>
+            <div style="font-size:18px;font-weight:800;color:#fff">84%</div>
+          </div>
+          <div style="flex:2;background:rgba(255,255,255,.07);border-radius:6px;padding:8px;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 80 100" fill="none" style="width:55px;height:70px;opacity:.65">
+              <path d="M30 8L38 6 46 9 54 14 58 24 56 34 51 37 43 35 35 36 29 33 25 26 23 18Z" fill="#e24b4a" opacity=".8"/>
+              <path d="M43 35L51 37 56 34 60 42 61 51 57 57 47 54 42 51 37 45 35 36Z" fill="#f0a500" opacity=".8"/>
+              <path d="M35 36L42 51 39 59 34 61 27 58 22 51 20 44 24 40Z" fill="#378add" opacity=".8"/>
+              <path d="M39 59L34 61 27 58 24 65 22 75 24 81 31 83 39 81 46 75 48 67 43 62Z" fill="#1d9e75" opacity=".8"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="play-ring" aria-label="Reproducir video">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TENDENCIAS
+═══════════════════════════════════════ -->
+<section class="section" aria-labelledby="tend-title">
+  <div class="s-eyebrow">Evolución del mercado</div>
+  <h2 id="tend-title" class="s-title">Tendencias del sistema de contrataciones públicas</h2>
+  <p class="s-sub">Explora cómo ha evolucionado el mercado de compras públicas a lo largo del tiempo. Las visualizaciones permiten identificar patrones, variaciones estacionales y tendencias relevantes en la participación y competencia.</p>
+
+  <div class="tend-card" style="margin-top:36px">
+    <div class="tend-row">
+      <!-- Duración promedio -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:14px;font-weight:600;color:#0a2540">Duración promedio de los procesos</div>
+          <select aria-label="Seleccionar año" style="font-size:11px;border:1px solid #d0dce8;border-radius:4px;padding:4px 8px;color:#3a5070;background:#f7f9fc"><option>Actual</option><option>2024</option><option>2023</option></select>
+        </div>
+        <div style="font-size:10px;color:#9ab0c8;margin-bottom:4px">Días</div>
+        <svg width="100%" height="150" viewBox="0 0 380 150" preserveAspectRatio="none" aria-label="Gráfico de líneas: duración promedio de procesos 2021–2026">
+          <defs><linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38bdf8" stop-opacity=".3"/><stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="30" x2="380" y2="30" stroke="#eef4f8" stroke-width="1"/>
+          <line x1="0" y1="70" x2="380" y2="70" stroke="#eef4f8" stroke-width="1"/>
+          <line x1="0" y1="110" x2="380" y2="110" stroke="#eef4f8" stroke-width="1"/>
+          <text x="2" y="33" font-size="9" fill="#aac0d0">35</text>
+          <text x="2" y="73" font-size="9" fill="#aac0d0">30</text>
+          <text x="2" y="113" font-size="9" fill="#aac0d0">25</text>
+          <polygon points="20,105 83,85 146,118 210,65 273,78 336,52 375,72 375,140 20,140" fill="url(#lg1)"/>
+          <polyline points="20,105 83,85 146,118 210,65 273,78 336,52 375,72" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="336" cy="52" r="5" fill="#0ea5e9"/>
+          <text x="20" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2021</text>
+          <text x="83" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2022</text>
+          <text x="146" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2023</text>
+          <text x="210" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2024</text>
+          <text x="273" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2025</text>
+          <text x="336" y="148" font-size="9" fill="#aac0d0" text-anchor="middle">2026</text>
+        </svg>
+        <p style="font-size:12px;color:#5a7090;margin-top:10px;padding:8px 12px;background:#f5f7fb;border-radius:6px;border-left:3px solid #0ea5e9;line-height:1.6">
+          <strong>Interpretación:</strong> La duración promedio muestra una tendencia a la reducción en los últimos años, lo que puede indicar mejoras en la gestión de los procesos de contratación.
+        </p>
+      </div>
+      <!-- Donut -->
+      <div>
+        <div style="font-size:14px;font-weight:600;color:#0a2540;margin-bottom:16px">Distribución por tipo de procedimiento</div>
+        <div style="display:flex;align-items:center;gap:20px">
+          <svg width="150" height="150" viewBox="0 0 150 150" aria-label="Gráfico donut: distribución de tipos de procedimiento">
+            <circle cx="75" cy="75" r="55" fill="none" stroke="#f0f4f8" stroke-width="24"/>
+            <circle cx="75" cy="75" r="55" fill="none" stroke="#3b82f6" stroke-width="24" stroke-dasharray="108 237" stroke-dashoffset="0" transform="rotate(-90 75 75)"/>
+            <circle cx="75" cy="75" r="55" fill="none" stroke="#86efac" stroke-width="24" stroke-dasharray="65 280" stroke-dashoffset="-108" transform="rotate(-90 75 75)"/>
+            <circle cx="75" cy="75" r="55" fill="none" stroke="#d9f99d" stroke-width="24" stroke-dasharray="39 306" stroke-dashoffset="-173" transform="rotate(-90 75 75)"/>
+            <circle cx="75" cy="75" r="55" fill="none" stroke="#bbf7d0" stroke-width="24" stroke-dasharray="25 320" stroke-dashoffset="-212" transform="rotate(-90 75 75)"/>
+            <text x="75" y="70" text-anchor="middle" font-size="22" font-weight="800" fill="#0a2540" font-family="Inter">1.05</text>
+            <text x="75" y="86" text-anchor="middle" font-size="10" fill="#9ab0c8" font-family="Inter">prom. postores</text>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#3a5070"><div style="width:10px;height:10px;border-radius:50%;background:#3b82f6;flex-shrink:0" aria-hidden="true"></div>Licitación pública &nbsp;<strong>219</strong></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#3a5070"><div style="width:10px;height:10px;border-radius:50%;background:#86efac;flex-shrink:0" aria-hidden="true"></div>Adjudicación simplif. &nbsp;<strong>142</strong></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#3a5070"><div style="width:10px;height:10px;border-radius:50%;background:#d9f99d;flex-shrink:0" aria-hidden="true"></div>Comparación de precios &nbsp;<strong>345</strong></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#3a5070"><div style="width:10px;height:10px;border-radius:50%;background:#bbf7d0;flex-shrink:0" aria-hidden="true"></div>Otros &nbsp;<strong>970</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <span>Central de consultas: 01-614626 · Opción 7</span>
+    <span>Guía sorviral: Gonzalo Escobedo Soto, Tom Josás Nieto – Lima, Perú</span>
+    <a href="#">Formulario de contacto</a>
+    <a href="#metodologia">Metodología</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="footer-btn" href="#" aria-label="Soporte técnico">Soporte</a>
+    <span>© OECE – DGDIC · 2025</span>
+  </div>
+</footer>
+<script>
+
+(function () {
+  "use strict";
+
+  /* =========================================================
+     MENÚ MÓVIL
+  ========================================================= */
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuLabel = document.querySelector(".site-header__menu-label");
+  const dropdownBtn = document.getElementById("btn-servicios");
+  const dropdownPanel = document.getElementById("menu-servicios");
+  const MQ_DESKTOP = window.matchMedia("(min-width: 960px)");
+
+  function setMobileNavOpen(open) {
+    if (!menuBtn || !mobileNav) return;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    mobileNav.hidden = !open;
+    document.body.classList.toggle("is-nav-open", open);
+    if (menuLabel) menuLabel.textContent = open ? "Cerrar menú" : "Abrir menú";
+  }
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", function () {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      setMobileNavOpen(!open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setMobileNavOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") {
+        setMobileNavOpen(false);
+        menuBtn.focus();
+      }
+    });
+    function onViewportChange() { if (MQ_DESKTOP.matches) setMobileNavOpen(false); }
+    if (typeof MQ_DESKTOP.addEventListener === "function") MQ_DESKTOP.addEventListener("change", onViewportChange);
+    else MQ_DESKTOP.addListener(onViewportChange);
+  }
+
+  /* =========================================================
+     DROPDOWN SERVICIOS ANALÍTICOS
+  ========================================================= */
+  if (dropdownBtn && dropdownPanel) {
+    const dropdownRoot = dropdownBtn.closest(".nav-dropdown");
+    if (dropdownRoot) {
+      function setDropdownOpen(open) {
+        dropdownBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        dropdownPanel.hidden = !open;
+      }
+      setDropdownOpen(false);
+      dropdownRoot.addEventListener("mouseenter", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("mouseleave", function () { setDropdownOpen(false); });
+      dropdownRoot.addEventListener("focusin", function () { setDropdownOpen(true); });
+      dropdownRoot.addEventListener("focusout", function (e) {
+        if (!dropdownRoot.contains(e.relatedTarget)) setDropdownOpen(false);
+      });
+      dropdownBtn.addEventListener("click", function () {
+        const open = dropdownBtn.getAttribute("aria-expanded") === "true";
+        setDropdownOpen(!open);
+      });
+      dropdownBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setDropdownOpen(true);
+          const firstLink = dropdownPanel.querySelector("a");
+          if (firstLink) firstLink.focus();
+        }
+      });
+      dropdownPanel.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); setDropdownOpen(false); dropdownBtn.focus(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!dropdownRoot.contains(e.target)) setDropdownOpen(false);
+      });
+    }
+  }
+
+  /* =========================================================
+     FECHA Y HORA DE CARGA DEL DASHBOARD
+  ========================================================= */
+  function setDashboardLoadDates() {
+    const dashboardLoadDates = document.querySelectorAll("[data-dashboard-load-date]");
+    if (!dashboardLoadDates.length) return;
+    const now = new Date();
+    const formattedDate = now.toLocaleString("es-PE", {
+      day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    dashboardLoadDates.forEach(function (element) { element.textContent = formattedDate; });
+  }
+
+  /* =========================================================
+     DASHBOARDS EMBEBIDOS TABLEAU / POWER BI
+     Permite cargar iframe desde data-dashboard-src cuando exista.
+  ========================================================= */
+  function initEmbeddedDashboards() {
+    const dashboardFrames = document.querySelectorAll("[data-dashboard-src]");
+    dashboardFrames.forEach(function (container) {
+      const dashboardUrl = container.getAttribute("data-dashboard-src");
+      const dashboardTitle = container.getAttribute("data-dashboard-title") || "Dashboard del Observatorio";
+      const dashboardType = container.getAttribute("data-dashboard-type") || "dashboard";
+      if (!dashboardUrl || dashboardUrl.trim() === "" || dashboardUrl.includes("URL_DASHBOARD")) {
+        container.innerHTML = `
+          <div class="dashboard-error-state" role="status">
+            <h3>Dashboard en proceso de actualización</h3>
+            <p>Este tablero estará disponible próximamente. Mientras tanto, puedes revisar los indicadores principales, la narrativa explicativa y la metodología del módulo.</p>
+          </div>`;
+        return;
+      }
+      container.innerHTML = `
+        <iframe
+          src="${escapeAttr(dashboardUrl)}"
+          title="${escapeAttr(dashboardTitle)}"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+          data-dashboard-type="${escapeAttr(dashboardType)}">
+        </iframe>`;
+    });
+  }
+
+  function initDashboardFallbackTimer() {
+    document.querySelectorAll(".dashboard-frame iframe").forEach(function (iframe) {
+      const container = iframe.closest(".dashboard-frame");
+      if (!container) return;
+      let loaded = false;
+      iframe.addEventListener("load", function () {
+        loaded = true;
+        container.classList.add("dashboard-loaded");
+      });
+      setTimeout(function () {
+        if (!loaded) container.classList.add("dashboard-loading-slow");
+      }, 8000);
+    });
+  }
+
+  /* =========================================================
+     TOOLTIP NARRATIVO PARA GRÁFICOS, RANKINGS Y KPIs
+  ========================================================= */
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+  function escapeAttr(value) { return escapeHTML(value).replace(/`/g, "&#96;"); }
+  function cleanText(value) { return String(value || "").replace(/\s+/g, " ").trim(); }
+
+  function textOf(root, selector) {
+    const el = root.querySelector(selector);
+    return el ? cleanText(el.textContent) : "";
+  }
+
+  function nearestTitle(el) {
+    const scope = el.closest(".chart-card, .sec-block, .side-card, .dashboard-section, .insight-panel, .semaforo-box, .funnel-box, section, .narrative-header");
+    if (!scope) return "Indicador del Observatorio";
+    const heading = scope.querySelector("h2, h3, .side-card-title, .funnel-title, .sem-title");
+    return heading ? cleanText(heading.textContent) : "Indicador del Observatorio";
+  }
+
+  function moduleName() {
+    const h1 = document.querySelector("h1, .nh-title, .hero-title");
+    return h1 ? cleanText(h1.textContent) : "Observatorio de Contrataciones Públicas";
+  }
+
+  function buildTooltipData(el) {
+    let title = el.dataset.title || el.dataset.region || el.dataset.name || "";
+    let value = el.dataset.value || "";
+    let indicator = el.dataset.indicator || "";
+    let description = el.dataset.description || "";
+    let period = el.dataset.period || "Periodo seleccionado";
+    let source = el.dataset.source || "DWH / Cubos analíticos DGDIC";
+
+    if (!title) {
+      title = textOf(el, ".rank-name") || textOf(el, ".hbar-lbl") || textOf(el, ".kpi-eye") || textOf(el, ".k5-q") || textOf(el, ".hero-kpi-label") || textOf(el, ".ic-val") || textOf(el, ".actor-tab-label") || textOf(el, ".sem-label") || textOf(el, ".funnel-lbl") || cleanText(el.textContent).slice(0, 90);
+    }
+    if (!value) {
+      value = textOf(el, ".rank-val") || textOf(el, ".hbar-val") || textOf(el, ".kpi-val") || textOf(el, ".k5-val") || textOf(el, ".hero-kpi-val") || textOf(el, ".ic-sub") || textOf(el, ".funnel-val") || textOf(el, ".funnel-pct") || "";
+    }
+    if (!indicator) indicator = nearestTitle(el);
+
+    if (!description) {
+      if (el.classList.contains("rank-row")) {
+        description = "Este ranking permite comparar posiciones relativas según el indicador seleccionado. Úsalo como una señal analítica, no como una calificación definitiva.";
+      } else if (el.classList.contains("hbar-row")) {
+        description = "La barra muestra la magnitud relativa del valor frente a las demás categorías visibles en el gráfico.";
+      } else if (el.classList.contains("kpi-c") || el.classList.contains("kpi5-item") || el.classList.contains("hero-kpi-item") || el.classList.contains("insight-card")) {
+        description = "Este indicador resume una lectura clave del módulo y debe interpretarse junto con el periodo, filtros aplicados y metodología DGDIC.";
+      } else if (el.classList.contains("funnel-step")) {
+        description = "Esta etapa muestra cuántos actores avanzan dentro del flujo analítico. Las diferencias entre etapas ayudan a identificar oportunidades de mejora.";
+      } else if (el.classList.contains("sem-card")) {
+        description = "Este estado ayuda a interpretar el nivel de atención requerido según el comportamiento del indicador.";
+      } else if (el.classList.contains("map-tab")) {
+        description = "Selecciona esta vista para cambiar la lectura del mapa según el tipo de monto que deseas analizar.";
+      } else {
+        description = "Este elemento brinda contexto para comprender mejor la información presentada en el Observatorio.";
+      }
+    }
+
+    return { title, value, indicator, description, period, source };
+  }
+
+  function initNarrativeTooltips() {
+    const selector = [
+      "[data-tooltip-chart]",
+      ".rank-row",
+      ".hbar-row",
+      ".kpi-c",
+      ".kpi5-item",
+      ".hero-kpi-item",
+      ".insight-card",
+      ".funnel-step",
+      ".sem-card",
+      ".actor-tab",
+      ".map-tab"
+    ].join(",");
+
+    const elements = Array.from(document.querySelectorAll(selector))
+      .filter(function (el) { return !el.closest(".chart-tooltip") && el.offsetParent !== null; });
+
+    if (!elements.length) return;
+
+    let tooltip = document.querySelector(".chart-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "chart-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.id = "chart-tooltip-global";
+      document.body.appendChild(tooltip);
+    }
+
+    function showTooltip(event, el) {
+      const data = buildTooltipData(el);
+      tooltip.innerHTML = `
+        <div class="chart-tooltip__title">${escapeHTML(data.title)}</div>
+        ${data.value ? `<div class="chart-tooltip__value">${escapeHTML(data.value)} · ${escapeHTML(data.indicator)}</div>` : `<div class="chart-tooltip__value">${escapeHTML(data.indicator)}</div>`}
+        <div class="chart-tooltip__desc">${escapeHTML(data.description)}</div>
+        <div class="chart-tooltip__meta">Periodo: ${escapeHTML(data.period)}<br>Fuente: ${escapeHTML(data.source)}</div>`;
+      positionTooltip(event, el);
+      tooltip.classList.add("is-visible");
+      el.setAttribute("aria-describedby", "chart-tooltip-global");
+    }
+
+    function positionTooltip(event, el) {
+      let x = event && event.clientX;
+      let y = event && event.clientY;
+      if (!x || !y) {
+        const rect = el.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + 8;
+      }
+      const margin = 16;
+      x = Math.max(margin, Math.min(window.innerWidth - margin, x));
+      y = Math.max(70, Math.min(window.innerHeight - margin, y));
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    }
+
+    function hideTooltip(el) {
+      tooltip.classList.remove("is-visible");
+      if (el) el.removeAttribute("aria-describedby");
+    }
+
+    elements.forEach(function (el) {
+      if (el.dataset.tooltipReady === "true") return;
+      el.dataset.tooltipReady = "true";
+      if (!el.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(el.tagName)) {
+        el.setAttribute("tabindex", "0");
+      }
+      el.setAttribute("data-tooltip-chart", "");
+      el.addEventListener("mouseenter", function (event) { showTooltip(event, el); });
+      el.addEventListener("mousemove", function (event) { positionTooltip(event, el); });
+      el.addEventListener("mouseleave", function () { hideTooltip(el); });
+      el.addEventListener("focus", function (event) { showTooltip(event, el); });
+      el.addEventListener("blur", function () { hideTooltip(el); });
+      el.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideTooltip(el);
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setDashboardLoadDates();
+    initEmbeddedDashboards();
+    initDashboardFallbackTimer();
+    initNarrativeTooltips();
+  });
+})();
+
+</script>
+</body>
+</html>
